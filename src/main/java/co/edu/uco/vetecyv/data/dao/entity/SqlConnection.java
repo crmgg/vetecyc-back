@@ -3,6 +3,7 @@ package co.edu.uco.vetecyv.data.dao.entity;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import ch.qos.logback.core.joran.util.beans.BeanDescriptionFactory;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
@@ -23,6 +24,7 @@ public abstract class SqlConnection {
         if (ObjectHelper.isNull(connection)) {
             var userMessage= MessagesEnum.USER_ERROR_SQL_CONNCETION_IS_EMPTY.getContent();
             var technicalMessage=MessagesEnum.TECHNICAL_ERROR_SQL_CONNCETION_IS_EMPTY.getContent();
+            BeanDescriptionFactory vetecyvException;
             throw vetecyvException.create(userMessage, technicalMessage);
         }
 

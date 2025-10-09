@@ -16,7 +16,7 @@ public final class SqlConnectionHelper {
         if (ObjectHelper.isNull(connection)) {
             var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
-            throw VetecyvException.creat(userMessage, technicalMessage);
+            throw VetecyvException.create(userMessage, technicalMessage);
         }
     }
 
@@ -35,13 +35,13 @@ public final class SqlConnectionHelper {
                     .getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_CONNECTION_STATUS
                     .getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
             var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS
                     .getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS
                     .getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
 
@@ -53,20 +53,20 @@ public final class SqlConnectionHelper {
             if (connection.getAutoCommit()) {
                 var userMessage = MessagesEnum.USER_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
                 var technicalMessage = MessagesEnum.TECHNICAL_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
-                throw NoseException.create(userMessage, technicalMessage);
+                throw VetecyvException.create(userMessage, technicalMessage);
             }
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED
                     .getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_STARTED
                     .getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
             var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED
                     .getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED
                     .getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
 
@@ -78,20 +78,20 @@ public final class SqlConnectionHelper {
             if (!connection.getAutoCommit()) {
                 var userMessage = MessagesEnum.USER_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
                 var technicalMessage = MessagesEnum.TECHNICAL_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
-                throw NoseException.create(userMessage, technicalMessage);
+                throw VetecyvException.create(userMessage, technicalMessage);
             }
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED
                     .getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_STARTED
                     .getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
             var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED
                     .getContent();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED
                     .getContent();
-            throw NoseException.create(exception, userMessage, technicalMessage);
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
 }

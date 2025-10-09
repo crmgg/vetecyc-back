@@ -23,4 +23,3 @@ public final class TextHelper {
         return EMPTY.equals(getDefault(value));
     }
 }
-
