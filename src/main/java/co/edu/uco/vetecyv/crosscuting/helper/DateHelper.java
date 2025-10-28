@@ -14,7 +14,7 @@ public final class DateHelper {
     /**
      * Devuelve la fecha y hora actual.
      */
-    public static Integer getDefault() {
+    public static LocalDateTime getDefault() {
         return LocalDateTime.now();
     }
 

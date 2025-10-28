@@ -1,4 +1,4 @@
-package co.edu.uco.vetecyv.buisness.domain;
+package co.edu.uco.vetecyv.business.domain;
 
 import java.util.UUID;
 
@@ -15,7 +15,6 @@ public class AdministratorDomain extends Domain{
     private String secondLastName;
     private String email;
     private String phone;
-    private String userName;
     private String password;
     private Boolean emailConfirmation;
     private Boolean phoneConfirmation;
@@ -29,7 +28,6 @@ public class AdministratorDomain extends Domain{
         setSecondLastName(TextHelper.getDefault());
         setEmail(TextHelper.getDefault());
         setPhone(TextHelper.getDefault());
-        setUserName(TextHelper.getDefault());
         setPassword(TextHelper.getDefault());
         setEmailConfirmation(false);
         setPhoneConfirmation(false);
@@ -44,7 +42,6 @@ public class AdministratorDomain extends Domain{
         setSecondLastName(TextHelper.getDefault());
         setEmail(TextHelper.getDefault());
         setPhone(TextHelper.getDefault());
-        setUserName(TextHelper.getDefault());
         setPassword(TextHelper.getDefault());
         setEmailConfirmation(false);
         setPhoneConfirmation(false);
@@ -102,14 +99,6 @@ public class AdministratorDomain extends Domain{
 
     public void setPhone(String phone) {
         this.phone = TextHelper.getDefault(phone);
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = TextHelper.getDefault(userName);
     }
 
     public String getPassword() {

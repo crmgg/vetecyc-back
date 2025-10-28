@@ -1,10 +1,8 @@
-package co.edu.uco.vetecyv.buisness.domain;
+package co.edu.uco.vetecyv.business.domain;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import co.edu.uco.vetecyv.buisness.domain.Domain;
-import co.edu.uco.vetecyv.buisness.domain.SpecialityDoctorDomain;
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
