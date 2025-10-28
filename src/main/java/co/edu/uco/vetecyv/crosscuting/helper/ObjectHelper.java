@@ -1,5 +1,7 @@
 package co.edu.uco.vetecyv.crosscuting.helper;
 
+import ch.qos.logback.classic.sift.ContextBasedDiscriminator;
+
 public final class ObjectHelper {
 
     private ObjectHelper() {
@@ -15,5 +17,9 @@ public final class ObjectHelper {
 
     public static String getDefaultWithTrim(final String value) {
         return getDefaultWithTrim(value).trim();
+    }
+
+    public static ContextBasedDiscriminator getObjectHelper() {
+        return null;
     }
 }

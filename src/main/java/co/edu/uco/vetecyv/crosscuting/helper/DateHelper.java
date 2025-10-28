@@ -1,6 +1,7 @@
 package co.edu.uco.vetecyv.crosscuting.helper;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public final class DateHelper {
 
@@ -14,7 +15,7 @@ public final class DateHelper {
     /**
      * Devuelve la fecha y hora actual.
      */
-    public static LocalDateTime getDefault() {
+    public static Date getDefault() {
         return LocalDateTime.now();
     }
 
