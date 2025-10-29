@@ -2,7 +2,6 @@ package co.edu.uco.vetecyv.entity;
 
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 

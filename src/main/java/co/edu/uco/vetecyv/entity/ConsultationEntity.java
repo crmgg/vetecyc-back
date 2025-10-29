@@ -1,12 +1,8 @@
 package co.edu.uco.vetecyv.entity;
 
-import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
-import co.edu.uco.vetecyv.entity.Entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.UUID;
 
 public class ConsultationEntity extends Entity {

@@ -1,9 +1,9 @@
+// java
 package co.edu.uco.vetecyv.business.domain;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
-import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
@@ -12,30 +12,30 @@ public class AgendaDomain extends Domain {
 
     private SpecialityDoctorDomain specialityDoctor;
     private String code;
-    private LocalDateTime dateTime;
-    private LocalDateTime endDateTime;
+    private Date dateTime;
+    private Date endDateTime;
 
     public AgendaDomain() {
         super(UUIDHelper.getUUIDHelper().getDefault());
         setCode(TextHelper.getDefault());
         setSpecialityDoctor(new SpecialityDoctorDomain());
-        setDateTime(DateHelper.getDefault());
-        setEndDateTime(DateHelper.getDefault());
+        setDate(new Date());
+        setEndDateTime(new Date());
     }
 
     public AgendaDomain(final UUID id) {
         super(id);
         setCode(TextHelper.getDefault());
         setSpecialityDoctor(new SpecialityDoctorDomain());
-        setDateTime(DateHelper.getDefault());
-        setEndDateTime(DateHelper.getDefault());
+        setDate(new Date());
+        setEndDateTime(new Date());
     }
 
     public AgendaDomain(final UUID id, final String code) {
         super(id);
         this.code = TextHelper.getDefaultWithTrim(code);
-        setDateTime(DateHelper.getDefault());
-        setEndDateTime(DateHelper.getDefault());
+        setDate(new Date());
+        setEndDateTime(new Date());
     }
 
     public SpecialityDoctorDomain getSpecialityDoctor() {
@@ -54,19 +54,19 @@ public class AgendaDomain extends Domain {
         this.code = TextHelper.getDefaultWithTrim(code);
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDate() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = DateHelper.getDefault(dateTime);
+    public void setDate(Date date) {
+        this.dateTime = ObjectHelper.getDefault(date, new Date());
     }
 
-    public LocalDateTime getEndDateTime() {
+    public Date getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
-        this.endDateTime = DateHelper.getDefault(endDateTime);
+    public void setEndDateTime(Date endDateTime) {
+        this.endDateTime = ObjectHelper.getDefault(endDateTime, new Date());
     }
 }

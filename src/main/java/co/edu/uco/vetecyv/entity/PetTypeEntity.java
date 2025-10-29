@@ -32,7 +32,7 @@ public class PetTypeEntity extends Entity {
         this.name = TextHelper.getDefaultWithTrim(name);
     }
     public static PetTypeEntity createDefault() {
-        return new GenderEntity();
+        return new PetTypeEntity();
     }
 
 }

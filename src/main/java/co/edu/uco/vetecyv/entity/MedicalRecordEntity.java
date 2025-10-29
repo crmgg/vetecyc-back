@@ -1,12 +1,8 @@
 package co.edu.uco.vetecyv.entity;
 
-import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class MedicalRecordEntity extends Entity{

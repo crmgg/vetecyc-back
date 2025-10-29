@@ -31,8 +31,8 @@ public class StateEntity extends Entity {
     public void setName(final String name) {
         this.name = TextHelper.getDefaultWithTrim(name);
     }
-    public static GenderEntity createDefault() {
-        return new GenderEntity();
+    public static StateEntity createDefault() {
+        return new StateEntity();
     }
 
 }

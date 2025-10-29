@@ -1,4 +1,39 @@
 package co.edu.uco.vetecyv.dto;
 
-public class StateDTO {
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.dto.StateDTO;
+
+import java.util.UUID;
+
+public class StateDTO extends DTO{
+
+    private String name;
+
+    public StateDTO() {
+        super(UUIDHelper.getUUIDHelper().getDefault());
+        setName(TextHelper.getDefault());
+    }
+
+    public StateDTO(final UUID id) {
+        super(id);
+        setName(TextHelper.getDefault());
+    }
+
+    public StateDTO(final UUID id, final String name) {
+        super(id);
+        setName(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = TextHelper.getDefaultWithTrim(name);
+    }
+    public static StateDTO createDefault() {
+        return new StateDTO();
+    }
+
 }

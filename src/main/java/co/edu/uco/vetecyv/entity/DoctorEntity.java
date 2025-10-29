@@ -149,15 +149,16 @@ public class DoctorEntity extends Entity {
         return emailConfirmation;
     }
 
-    public void setEmailConfirmation(Boolean emailConfirmation) {
+    public void setEmailConfirmation(final boolean emailConfirmation) {
         this.emailConfirmation = emailConfirmation;
+        setEmailConfirmationIsDefaultValue(false);
     }
 
     public Boolean getPhoneConfirmationIsDefaultValue() {
         return phoneConfirmationIsDefaultValue;
     }
 
-    public void setPhoneConfirmationIsDefaultValue(Boolean phoneConfirmationIsDefaultValue) {
+    public void setPhoneConfirmationIsDefaultValue(final boolean phoneConfirmationIsDefaultValue) {
         this.phoneConfirmationIsDefaultValue = phoneConfirmationIsDefaultValue;
     }
 
@@ -165,8 +166,9 @@ public class DoctorEntity extends Entity {
         return phoneConfirmation;
     }
 
-    public void setPhoneConfirmation(Boolean phoneConfirmation) {
+    public void setPhoneConfirmation(final boolean phoneConfirmation) {
         this.phoneConfirmation = phoneConfirmation;
+        setPhoneConfirmationIsDefaultValue(false);
     }
 
     public Boolean getAccountStateIsDefaultValue() {
