@@ -77,6 +77,10 @@ public class TutorEntity extends Entity {
         setAccountState(false);
     }
 
+    public static TutorEntity createDefault() {
+        return null;
+    }
+
     private String setidentityDocument(String aDefault) {
         return identityDocument;
     }

@@ -38,6 +38,10 @@ public class AgendaEntity extends Entity {
         setEndDateTime(endDateTime);
     }
 
+    public static AgendaEntity createDefault() {
+        return null;
+    }
+
     public SpecialityDoctorEntity getSpecialityDoctor() {
         return specialityDoctor;
     }

@@ -77,6 +77,10 @@ public class DoctorEntity extends Entity {
         setAccountState(false);
     }
 
+    public static DoctorEntity createDefault() {
+        return new DoctorEntity();
+    }
+
     private String setidentityDocument(String aDefault) {
         return identityDocument;
     }

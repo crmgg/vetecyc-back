@@ -77,6 +77,10 @@ public class AdministratorEntity extends Entity {
         setAccountState(false);
     }
 
+    public static AdministratorEntity createDefault() {
+        return null;
+    }
+
     private String setidentityDocument(String aDefault) {
         return identityDocument;
     }
