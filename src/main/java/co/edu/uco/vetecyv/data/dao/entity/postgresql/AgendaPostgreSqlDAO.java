@@ -3,7 +3,6 @@ package co.edu.uco.vetecyv.data.dao.entity.postgresql;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +16,7 @@ import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.AgendaDAO;
 import co.edu.uco.vetecyv.entity.AgendaEntity;
 
-public class AgendaPostgresqlDAO extends SqlConnection implements AgendaDAO {
+public class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDAO {
 
     public AgendaPostgresqlDAO(Connection connection) {
         super(connection);

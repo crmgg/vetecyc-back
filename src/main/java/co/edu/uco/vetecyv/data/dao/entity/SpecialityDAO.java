@@ -8,5 +8,6 @@ import co.edu.uco.vetecyv.data.dao.UpdateDAO;
 import co.edu.uco.vetecyv.data.dao.DeleteDAO;
 import co.edu.uco.vetecyv.entity.SpecialityEntity;
 
-public interface SpecialityDAO extends CreateDAO<SpecialityEntity>, RetrieveDAO<SpecialityEntity, UUID>, UpdateDAO<SpecialityEntity>, DeleteDAO<SpecialityEntity> {
+public interface SpecialityDAO extends CreateDAO<SpecialityEntity>,
+        RetrieveDAO<SpecialityEntity, UUID>, UpdateDAO<SpecialityEntity>, DeleteDAO<SpecialityEntity> {
 }

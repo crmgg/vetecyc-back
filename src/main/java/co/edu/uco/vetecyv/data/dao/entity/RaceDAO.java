@@ -8,5 +8,6 @@ import co.edu.uco.vetecyv.data.dao.UpdateDAO;
 import co.edu.uco.vetecyv.data.dao.DeleteDAO;
 import co.edu.uco.vetecyv.entity.RaceEntity;
 
-public interface RaceDAO extends RetrieveDAO<RaceEntity, UUID>, UpdateDAO<RaceEntity>{
+public interface RaceDAO extends CreateDAO<RaceEntity>,
+        RetrieveDAO<RaceEntity, UUID>, UpdateDAO<RaceEntity>, DeleteDAO<RaceEntity> {
 }

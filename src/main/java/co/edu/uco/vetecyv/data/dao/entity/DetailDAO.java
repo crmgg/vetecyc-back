@@ -8,5 +8,6 @@ import co.edu.uco.vetecyv.data.dao.UpdateDAO;
 import co.edu.uco.vetecyv.data.dao.DeleteDAO;
 import co.edu.uco.vetecyv.entity.DetailEntity;
 
-public interface DetailDAO extends CreateDAO<DetailEntity>, RetrieveDAO<DetailEntity, UUID>, UpdateDAO<DetailEntity>, DeleteDAO<DetailEntity> {
+public interface DetailDAO extends CreateDAO<DetailEntity>,
+        RetrieveDAO<DetailEntity, UUID>, UpdateDAO<DetailEntity>, DeleteDAO<DetailEntity> {
 }

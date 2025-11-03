@@ -8,5 +8,6 @@ import co.edu.uco.vetecyv.data.dao.UpdateDAO;
 import co.edu.uco.vetecyv.data.dao.DeleteDAO;
 import co.edu.uco.vetecyv.entity.ReceiptEntity;
 
-public interface ReceiptDAO extends RetrieveDAO<ReceiptEntity, UUID>, UpdateDAO<ReceiptEntity>{
+public interface ReceiptDAO extends CreateDAO<ReceiptEntity>,
+        RetrieveDAO<ReceiptEntity, UUID>, UpdateDAO<ReceiptEntity>, DeleteDAO<ReceiptEntity> {
 }

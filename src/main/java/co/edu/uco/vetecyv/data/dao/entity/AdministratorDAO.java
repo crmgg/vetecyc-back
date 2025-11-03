@@ -8,5 +8,6 @@ import co.edu.uco.vetecyv.data.dao.UpdateDAO;
 import co.edu.uco.vetecyv.data.dao.DeleteDAO;
 import co.edu.uco.vetecyv.entity.AdministratorEntity;
 
-public interface AdministratorDAO extends CreateDAO<AdministratorEntity>, RetrieveDAO<AdministratorEntity, UUID>, UpdateDAO<AdministratorEntity>, DeleteDAO<AdministratorEntity> {
+public interface AdministratorDAO extends CreateDAO<AdministratorEntity>,
+        RetrieveDAO<AdministratorEntity, UUID>, UpdateDAO<AdministratorEntity>, DeleteDAO<AdministratorEntity> {
 }

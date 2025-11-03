@@ -1,4 +1,4 @@
-package co.edu.uco.vetecyv.data.dao.entity.postgersql;
+package co.edu.uco.vetecyv.data.dao.entity.postgresql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +14,10 @@ import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.AdministratorDAO;
+import co.edu.uco.vetecyv.data.dao.entity.SqlConnection;
 import co.edu.uco.vetecyv.entity.AdministratorEntity;
 
-public class AdministratorPostgresqlDAO extends SqlConnection implements AdministratorDAO {
+public class AdministratorPostgreSqlDAO extends SqlConnection implements AdministratorDAO {
 
     public AdministratorPostgresqlDAO(Connection connection) {
         super(connection);

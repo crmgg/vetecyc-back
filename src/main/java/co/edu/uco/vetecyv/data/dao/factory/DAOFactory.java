@@ -7,8 +7,7 @@ import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.helper.SqlConnectionHelper;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.*;
-import co.edu.uco.vetecyv.data.dao.factory.Postgresql.PostgresqlDAOFactory;
-import co.edu.uco.vetecyv.data.dao.factory.Postgresql.PostgresqlDAOFactory;
+import co.edu.uco.vetecyv.data.dao.factory.postgresql.PostgresqlDAOFactory;
 
 public abstract class DAOFactory {
 
@@ -17,13 +16,14 @@ public abstract class DAOFactory {
     protected static FactoryEnum factory = FactoryEnum.POSTGRESQL;
 
     public static DAOFactory getFactory() {
-
-        if (FactoryEnum.POSTGRESQL.equals(factory)) {
-            return new PostgresqlDAOFactory();
-        } else {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_DATASOURCE_NOT_AVAILABLE.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DATASOURCE_NOT_AVAILABLE.getContent();
-            throw VetecyvException.create(userMessage, technicalMessage);
+        switch (factory) {
+            case POSTGRESQL: {
+                return new PostgresqlDAOFactory();
+            }
+            default:
+                var userMessage = MessagesEnum.USER_ERROR_SQL_DATASOURCE_NOT_AVAILABLE.getContent();
+                var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DATASOURCE_NOT_AVAILABLE.getContent();
+                throw VetecyvException.create(userMessage, technicalMessage);
         }
     }
 
@@ -47,8 +47,6 @@ public abstract class DAOFactory {
     protected abstract void openConnection();
 
     public final void initTransaction() {
-        openConnection();
-
         SqlConnectionHelper.ensureTransactionIsNotStarted(connection);
 
         try {
