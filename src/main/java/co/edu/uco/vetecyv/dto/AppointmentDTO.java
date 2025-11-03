@@ -1,146 +1,114 @@
 package co.edu.uco.vetecyv.dto;
 
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
-import co.edu.uco.vetecyv.dto.AgendaDTO;
-import co.edu.uco.vetecyv.dto.PetDTO;
-import co.edu.uco.vetecyv.dto.AppointmentDTO;
-import co.edu.uco.vetecyv.dto.StateDTO;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class AppointmentDTO extends DTO{
+public final class AppointmentDTO {
 
-    private AgendaDTO agendaDTO;
-    private PetDTO petDTO;
-    private StateDTO stateDTO;
+    private UUID id;
+    private AgendaDTO agenda;
+    private PetDTO pet;
+    private StateDTO state;
     private Integer code;
     private Date dateTimeStare;
     private Date endDateTime;
 
     public AppointmentDTO() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
-        setAgendaDTO(AgendaDTO.createDefault());
-        setPetDTO(PetDTO.createDefault());
-        setStateDTO(StateDTO.createDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setAgenda(AgendaDTO.getDefaultValue());
+        setPet(PetDTO.getDefaultValue());
+        setState(StateDTO.getDefaultValue());
         setCode(Integer.valueOf(0));
         setDateTimeStare(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
-
     public AppointmentDTO(final UUID id) {
-        super(id);
-        setAgenda(AgendaDTO.createDefault());
-        setPet(PetDTO.createDefault());
-        setState(StateDTO.createDefault());
+        setId(id);
+        setAgenda(AgendaDTO.getDefaultValue());
+        setPet(PetDTO.getDefaultValue());
+        setState(StateDTO.getDefaultValue());
         setCode(Integer.valueOf(0));
         setDateTimeStare(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
     public AppointmentDTO(final UUID id, final AgendaDTO agenda, final PetDTO pet, final StateDTO state,
-                             final Integer code, final Date dateTimeStare, final Date endDateTime) {
-        super(id);
-        setAgendaEntity(agenda);
-        setPetEntity(pet);
+                          final Integer code, final Date dateTimeStare, final Date endDateTime) {
+        setId(id);
+        setAgenda(agenda);
+        setPet(pet);
+        setState(state);
         setCode(code);
-        setStateEntity(state);
         setDateTimeStare(dateTimeStare);
         setEndDateTime(endDateTime);
     }
 
-    public static AppointmentDTO createDefault() {
+    static AppointmentDTO getDefaultValue() {
         return new AppointmentDTO();
     }
 
-    private void setAgendaDTO(AgendaDTO aDefault) {
+    static AppointmentDTO getDefaultValue(final AppointmentDTO appointment) {
+        return ObjectHelper.getDefault(appointment, getDefaultValue());
     }
 
-    public AgendaDTO getAgendaEntity() {
-        return agendaDTO;
+    public UUID getId() {
+        return id;
     }
 
-    public void setAgendaEntity(AgendaDTO agendaDTO) {
-        this.agendaDTO = agendaDTO;
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
-    // alias usado en constructores
     public AgendaDTO getAgenda() {
-        return getAgendaEntity();
+        return agenda;
     }
 
-    public void setAgenda(AgendaDTO agenda) {
-        setAgendaEntity(agenda);
+    public void setAgenda(final AgendaDTO agenda) {
+        this.agenda = ObjectHelper.getDefault(agenda, AgendaDTO.getDefaultValue());
     }
 
-    public PetDTO getPetDTO() {
-        return petDTO;
-    }
-
-    public void setPetEntity(PetDTO petDTO) {
-        this.petDTO = petDTO;
-    }
-
-    // alias usado en constructores
     public PetDTO getPet() {
-        return getPetDTO();
+        return pet;
     }
 
-    public void setPet(PetDTO pet) {
-        setPetDTO(pet);
+    public void setPet(final PetDTO pet) {
+        this.pet = ObjectHelper.getDefault(pet, PetDTO.getDefaultValue());
     }
 
-    private void setPetDTO(PetDTO pet) {
-    }
-
-    public StateDTO getStateEntity() {
-        return stateDTO;
-    }
-
-    public void setStateEntity(StateDTO stateDTO) {
-        this.stateDTO = stateDTO;
-    }
-
-    // alias usado en constructores
     public StateDTO getState() {
-        return getStateDTO();
+        return state;
     }
 
-    private StateDTO getStateDTO() {
-        return stateDTO;
-    }
-
-    public void setState(StateDTO state) {
-        setStateDTO(state);
-    }
-
-    private void setStateDTO(StateDTO state) {
+    public void setState(final StateDTO state) {
+        this.state = ObjectHelper.getDefault(state, StateDTO.getDefaultValue());
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setCode(final Integer code) {
+        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
     }
 
     public Date getDateTimeStare() {
         return dateTimeStare;
     }
 
-    public void setDateTimeStare(Date dateTimeStare) {
-        this.dateTimeStare = dateTimeStare;
+    public void setDateTimeStare(final Date dateTimeStare) {
+        this.dateTimeStare = DateHelper.getDefault(dateTimeStare);
     }
 
     public Date getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(Date endDateTime) {
-        this.endDateTime = endDateTime;
+    public void setEndDateTime(final Date endDateTime) {
+        this.endDateTime = DateHelper.getDefault(endDateTime);
     }
-
 }

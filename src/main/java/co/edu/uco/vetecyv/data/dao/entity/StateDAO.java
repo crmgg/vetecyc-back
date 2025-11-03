@@ -1,4 +1,12 @@
 package co.edu.uco.vetecyv.data.dao.entity;
 
-public interface StateDAO {
+import co.edu.uco.vetecyv.data.dao.RetrieveDAO;
+import co.edu.uco.vetecyv.data.dao.CreateDAO;
+import co.edu.uco.vetecyv.data.dao.DeleteDAO;
+import co.edu.uco.vetecyv.data.dao.UpdateDAO;
+import co.edu.uco.vetecyv.entity.StateEntity;
+
+import java.util.UUID;
+
+public interface StateDAO extends RetrieveDAO <StateEntity, UUID>{
 }

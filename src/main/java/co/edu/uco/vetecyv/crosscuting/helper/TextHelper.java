@@ -22,4 +22,8 @@ public final class TextHelper {
     public static boolean isEmpty(final String value) {
         return EMPTY.equals(getDefault(value));
     }
+
+    public static boolean isEmptyWithTrim(Integer code) {
+        return false;
+    }
 }

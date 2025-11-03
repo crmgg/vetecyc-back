@@ -1,53 +1,62 @@
 package co.edu.uco.vetecyv.dto;
 
+import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
-import co.edu.uco.vetecyv.dto.DoctorDTO;
-import co.edu.uco.vetecyv.dto.SpecialityDoctorDTO;
-import co.edu.uco.vetecyv.dto.SpecialityDTO;
 
 import java.util.UUID;
 
-public class SpecialityDoctorDTO extends DTO {
+public final class SpecialityDoctorDTO {
 
+    private UUID id;
     private DoctorDTO doctor;
     private SpecialityDTO speciality;
     private Integer code;
 
-
     public SpecialityDoctorDTO() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
-        setDoctor(DoctorDTO.createDefault());
-        setSpeciality(SpecialityDTO.createDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setDoctor(DoctorDTO.getDefaultValue());
+        setSpeciality(SpecialityDTO.getDefaultValue());
         setCode(Integer.valueOf(0));
-
     }
 
     public SpecialityDoctorDTO(final UUID id) {
-        super(id);
-        setDoctor(DoctorDTO.createDefault());
-        setSpeciality(SpecialityDTO.createDefault());
+        setId(id);
+        setDoctor(DoctorDTO.getDefaultValue());
+        setSpeciality(SpecialityDTO.getDefaultValue());
         setCode(Integer.valueOf(0));
     }
 
-    public SpecialityDoctorDTO(final UUID id , final DoctorDTO doctor,
+    public SpecialityDoctorDTO(final UUID id, final DoctorDTO doctor,
                                   final SpecialityDTO speciality, final Integer code) {
-        super(id);
+        setId(id);
         setDoctor(doctor);
         setSpeciality(speciality);
         setCode(code);
     }
 
-    public static SpecialityDoctorDTO createDefault() {
+
+    static SpecialityDoctorDTO getDefaultValue() {
         return new SpecialityDoctorDTO();
     }
 
+    static SpecialityDoctorDTO getDefaultValue(final SpecialityDoctorDTO specialityDoctor) {
+        return ObjectHelper.getDefault(specialityDoctor, getDefaultValue());
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    }
 
     public DoctorDTO getDoctor() {
         return doctor;
     }
 
     public void setDoctor(final DoctorDTO doctor) {
-        this.doctor = doctor;
+        this.doctor = ObjectHelper.getDefault(doctor, DoctorDTO.getDefaultValue());
     }
 
     public SpecialityDTO getSpeciality() {
@@ -55,7 +64,7 @@ public class SpecialityDoctorDTO extends DTO {
     }
 
     public void setSpeciality(final SpecialityDTO speciality) {
-        this.speciality = speciality;
+        this.speciality = ObjectHelper.getDefault(speciality, SpecialityDTO.getDefaultValue());
     }
 
     public Integer getCode() {
@@ -63,7 +72,6 @@ public class SpecialityDoctorDTO extends DTO {
     }
 
     public void setCode(final Integer code) {
-        this.code = code;
+        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
     }
-
 }

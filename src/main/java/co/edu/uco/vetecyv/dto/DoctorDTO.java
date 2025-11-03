@@ -1,191 +1,164 @@
 package co.edu.uco.vetecyv.dto;
 
+import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
-import co.edu.uco.vetecyv.dto.DoctorDTO;
 
 import java.util.UUID;
 
-public class DoctorDTO extends DTO {
+public final class DoctorDTO {
 
-    private String identityDocument;
+    private UUID id;
+    private String identificationDocument;
     private String name;
     private String firstLastName;
     private String secondLastName;
     private String email;
     private String phoneNumber;
     private String password;
-    private Boolean emailConfirmationIsDefaultValue;
-    private Boolean emailConfirmation;
-    private Boolean phoneConfirmationIsDefaultValue;
-    private Boolean phoneConfirmation;
-    private Boolean accountStateIsDefaultValue;
-    private Boolean accountState;
+    private boolean emailConfirmed;
+    private boolean phoneConfirmed;
+    private boolean accountState;
 
     public DoctorDTO() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
-        setidentityDocument(TextHelper.getDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setIdentificationDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
         setEmail(TextHelper.getDefault());
         setPhoneNumber(TextHelper.getDefault());
         setPassword(TextHelper.getDefault());
-        setEmailConfirmation(false);
-        setEmailConfirmationIsDefaultValue(true);
-        setPhoneConfirmation(false);
-        setPhoneConfirmationIsDefaultValue(true);
+        setEmailConfirmed(false);
+        setPhoneConfirmed(false);
         setAccountState(false);
-        setAccountStateIsDefaultValue(true);
     }
-
 
     public DoctorDTO(final UUID id) {
-        super(id);
-        setidentityDocument(TextHelper.getDefault());
+        setId(id);
+        setIdentificationDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
         setEmail(TextHelper.getDefault());
         setPhoneNumber(TextHelper.getDefault());
         setPassword(TextHelper.getDefault());
-        setEmailConfirmation(false);
-        setEmailConfirmationIsDefaultValue(true);
-        setPhoneConfirmation(false);
-        setPhoneConfirmationIsDefaultValue(true);
+        setEmailConfirmed(false);
+        setPhoneConfirmed(false);
         setAccountState(false);
-        setAccountStateIsDefaultValue(true);
     }
 
-    public DoctorDTO(final UUID id, final String identityDocument, final String name, final String firstLastName, final String secondLastName,
-                        final String email, final String phoneNumber, final String password,
-                        final Boolean emailConfirmation, final Boolean phoneConfirmation,
-                        final Boolean accountState) {
-
-        super(id);
-        setidentityDocument(identityDocument);
+    public DoctorDTO(final UUID id, final String identificationDocument, final String name,
+                     final String firstLastName, final String secondLastName,
+                     final String email, final String phoneNumber, final String password,
+                     final boolean emailConfirmed, final boolean phoneConfirmed,
+                     final boolean accountState) {
+        setId(id);
+        setIdentificationDocument(identificationDocument);
         setName(name);
         setFirstLastName(firstLastName);
         setSecondLastName(secondLastName);
         setEmail(email);
         setPhoneNumber(phoneNumber);
         setPassword(password);
-        setEmailConfirmation(emailConfirmation);
-        setPhoneConfirmation(phoneConfirmation);
+        setEmailConfirmed(emailConfirmed);
+        setPhoneConfirmed(phoneConfirmed);
         setAccountState(accountState);
-        setEmailConfirmation(false);
-        setPhoneConfirmation(false);
-        setAccountState(false);
     }
 
-    public static DoctorDTO createDefault() {
+    static DoctorDTO getDefaultValue() {
         return new DoctorDTO();
     }
 
-    private String setidentityDocument(String aDefault) {
-        return identityDocument;
+    static DoctorDTO getDefaultValue(final DoctorDTO doctor) {
+        return ObjectHelper.getDefault(doctor, getDefaultValue());
     }
 
-    public void setIdentityDocument() {
-        this.identityDocument = identityDocument;
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    }
+
+    public String getIdentificationDocument() {
+        return identificationDocument;
+    }
+
+    public void setIdentificationDocument(final String identificationDocument) {
+        this.identificationDocument = TextHelper.getDefaultWithTrim(identificationDocument);
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(final String name) {
+        this.name = TextHelper.getDefaultWithTrim(name);
     }
 
     public String getFirstLastName() {
         return firstLastName;
     }
 
-    public void setFirstLastName(String firstLastName) {
-        this.firstLastName = firstLastName;
+    public void setFirstLastName(final String firstLastName) {
+        this.firstLastName = TextHelper.getDefaultWithTrim(firstLastName);
     }
 
     public String getSecondLastName() {
         return secondLastName;
     }
 
-    public void setSecondLastName(String secondLastName) {
-        this.secondLastName = secondLastName;
+    public void setSecondLastName(final String secondLastName) {
+        this.secondLastName = TextHelper.getDefaultWithTrim(secondLastName);
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(final String email) {
+        this.email = TextHelper.getDefaultWithTrim(email);
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(final String phoneNumber) {
+        this.phoneNumber = TextHelper.getDefaultWithTrim(phoneNumber);
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(final String password) {
+        this.password = TextHelper.getDefaultWithTrim(password);
     }
 
-    public Boolean getEmailConfirmationIsDefaultValue() {
-        return emailConfirmationIsDefaultValue;
+    public boolean isEmailConfirmed() {
+        return emailConfirmed;
     }
 
-    public void setEmailConfirmationIsDefaultValue(Boolean emailConfirmationIsDefaultValue) {
-        this.emailConfirmationIsDefaultValue = emailConfirmationIsDefaultValue;
+    public void setEmailConfirmed(final boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
     }
 
-    public Boolean getEmailConfirmation() {
-        return emailConfirmation;
+    public boolean isPhoneConfirmed() {
+        return phoneConfirmed;
     }
 
-    public void setEmailConfirmation(final boolean emailConfirmation) {
-        this.emailConfirmation = emailConfirmation;
-        setEmailConfirmationIsDefaultValue(false);
+    public void setPhoneConfirmed(final boolean phoneConfirmed) {
+        this.phoneConfirmed = phoneConfirmed;
     }
 
-    public Boolean getPhoneConfirmationIsDefaultValue() {
-        return phoneConfirmationIsDefaultValue;
-    }
-
-    public void setPhoneConfirmationIsDefaultValue(final boolean phoneConfirmationIsDefaultValue) {
-        this.phoneConfirmationIsDefaultValue = phoneConfirmationIsDefaultValue;
-    }
-
-    public Boolean getPhoneConfirmation() {
-        return phoneConfirmation;
-    }
-
-    public void setPhoneConfirmation(final boolean phoneConfirmation) {
-        this.phoneConfirmation = phoneConfirmation;
-        setPhoneConfirmationIsDefaultValue(false);
-    }
-
-    public Boolean getAccountStateIsDefaultValue() {
-        return accountStateIsDefaultValue;
-    }
-
-    public void setAccountStateIsDefaultValue(Boolean accountStateIsDefaultValue) {
-        this.accountStateIsDefaultValue = accountStateIsDefaultValue;
-    }
-
-    public Boolean getAccountState() {
+    public boolean isAccountState() {
         return accountState;
     }
 
-    public void setAccountState(Boolean accountState) {
+    public void setAccountState(final boolean accountState) {
         this.accountState = accountState;
     }
-
 }

@@ -1,4 +1,12 @@
 package co.edu.uco.vetecyv.data.dao.entity;
 
-public interface AppointmentDAO {
+import java.util.UUID;
+
+import co.edu.uco.vetecyv.data.dao.CreateDAO;
+import co.edu.uco.vetecyv.data.dao.RetrieveDAO;
+import co.edu.uco.vetecyv.data.dao.UpdateDAO;
+import co.edu.uco.vetecyv.data.dao.DeleteDAO;
+import co.edu.uco.vetecyv.entity.AppointmentEntity;
+
+public interface AppointmentDAO extends CreateDAO<AppointmentEntity>, RetrieveDAO<AppointmentEntity, UUID>, UpdateDAO<AppointmentEntity>, DeleteDAO<AppointmentEntity> {
 }

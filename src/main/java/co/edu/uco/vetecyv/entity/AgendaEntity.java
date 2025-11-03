@@ -5,17 +5,17 @@ import java.util.UUID;
 
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
-import co.edu.uco.vetecyv.entity.SpecialityDoctorEntity;
 
-public class AgendaEntity extends Entity {
+public final class AgendaEntity {
 
+    private UUID id;
     private SpecialityDoctorEntity specialityDoctor;
     private Integer code;
     private Date dateTime;
     private Date endDateTime;
 
     public AgendaEntity() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
         setCode(Integer.valueOf(0));
         setSpecialityDoctor(SpecialityDoctorEntity.createDefault());
         setDateTime(DateHelper.getDefault());
@@ -23,7 +23,7 @@ public class AgendaEntity extends Entity {
     }
 
     public AgendaEntity(final UUID id) {
-        super(id);
+        setId(id);
         setCode(Integer.valueOf(0));
         setSpecialityDoctor(SpecialityDoctorEntity.createDefault());
         setDateTime(DateHelper.getDefault());
@@ -32,45 +32,53 @@ public class AgendaEntity extends Entity {
 
     public AgendaEntity(final UUID id, final SpecialityDoctorEntity specialityDoctor,
                         final Date dateTime, final Date endDateTime) {
-        super(id);
+        setId(id);
         setSpecialityDoctor(specialityDoctor);
         setDateTime(dateTime);
         setEndDateTime(endDateTime);
     }
 
     public static AgendaEntity createDefault() {
-        return null;
+        return new AgendaEntity();
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
     public SpecialityDoctorEntity getSpecialityDoctor() {
         return specialityDoctor;
     }
 
-    public void setSpecialityDoctor(SpecialityDoctorEntity specialityDoctor) {
-        this.specialityDoctor = specialityDoctor;
+    public void setSpecialityDoctor(final SpecialityDoctorEntity specialityDoctor) {
+        this.specialityDoctor = specialityDoctor == null ? SpecialityDoctorEntity.createDefault() : specialityDoctor;
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setCode(final Integer code) {
+        this.code = code == null ? Integer.valueOf(0) : code;
     }
 
     public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setDateTime(final Date dateTime) {
+        this.dateTime = DateHelper.getDefault(dateTime);
     }
 
     public Date getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(Date endDateTime) {
-        this.endDateTime = endDateTime;
+    public void setEndDateTime(final Date endDateTime) {
+        this.endDateTime = DateHelper.getDefault(endDateTime);
     }
 }

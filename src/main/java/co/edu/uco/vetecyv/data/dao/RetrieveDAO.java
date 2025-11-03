@@ -1,13 +1,13 @@
-package co.edu.uco.nose.data.dao;
+package co.edu.uco.vetecyv.data.dao;
 
 import java.util.List;
 
-public interface RetrieveDAO<E, UUID> {
+public interface RetrieveDAO <E, ID>{
 
-    List<E> findAll();
+    List<E>findAll();
 
-    List<E> findByFilter(E filterEntity);
+    List<E>findByFilter(E filterEntity);
 
-    E findById(UUID id);
+    E findById(ID id);
 
 }

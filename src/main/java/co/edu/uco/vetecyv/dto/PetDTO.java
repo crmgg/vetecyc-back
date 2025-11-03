@@ -1,16 +1,16 @@
 package co.edu.uco.vetecyv.dto;
 
+import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
-import co.edu.uco.vetecyv.dto.GenderDTO;
-import co.edu.uco.vetecyv.dto.PetDTO;
-import co.edu.uco.vetecyv.dto.RaceDTO;
-import co.edu.uco.vetecyv.dto.TutorDTO;
+import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class PetDTO extends DTO{
+public final class PetDTO {
 
+    private UUID id;
     private TutorDTO tutor;
     private GenderDTO gender;
     private RaceDTO race;
@@ -22,35 +22,35 @@ public class PetDTO extends DTO{
     private String color;
 
     public PetDTO() {
-        super(UUID.randomUUID());
-        setTutor(TutorDTO.createDefault());
-        setGender(GenderDTO.createDefault());
-        setRace(RaceDTO.createDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setTutor(TutorDTO.getDefaultValue());
+        setGender(GenderDTO.getDefaultValue());
+        setRace(RaceDTO.getDefaultValue());
         setCode(Integer.valueOf(0));
         setName(TextHelper.getDefault());
         setSize(TextHelper.getDefault());
-        setDateBirth(new Date());
-        setState(true);
+        setDateBirth(DateHelper.getDefault());
+        setState(Boolean.TRUE);
         setColor(TextHelper.getDefault());
     }
 
     public PetDTO(final UUID id) {
-        super(id);
-        setTutor(TutorDTO.createDefault());
-        setGender(GenderDTO.createDefault());
-        setRace(RaceDTO.createDefault());
+        setId(id);
+        setTutor(TutorDTO.getDefaultValue());
+        setGender(GenderDTO.getDefaultValue());
+        setRace(RaceDTO.getDefaultValue());
         setCode(Integer.valueOf(0));
         setName(TextHelper.getDefault());
         setSize(TextHelper.getDefault());
-        setDateBirth(new Date());
-        setState(true);
+        setDateBirth(DateHelper.getDefault());
+        setState(Boolean.TRUE);
         setColor(TextHelper.getDefault());
     }
 
     public PetDTO(final UUID id, final TutorDTO tutor, final GenderDTO gender,
-                     final RaceDTO race, final Integer code, final String name, final String size,
-                     final Date dateBirth, final Boolean state, final String color) {
-        super(id);
+                  final RaceDTO race, final Integer code, final String name, final String size,
+                  final Date dateBirth, final Boolean state, final String color) {
+        setId(id);
         setTutor(tutor);
         setGender(gender);
         setRace(race);
@@ -62,43 +62,59 @@ public class PetDTO extends DTO{
         setColor(color);
     }
 
+    static PetDTO getDefaultValue() {
+        return new PetDTO();
+    }
+
+    static PetDTO getDefaultValue(final PetDTO pet) {
+        return ObjectHelper.getDefault(pet, getDefaultValue());
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    }
+
     public TutorDTO getTutor() {
         return tutor;
     }
 
-    public void setTutor(TutorDTO tutor) {
-        this.tutor = tutor;
+    public void setTutor(final TutorDTO tutor) {
+        this.tutor = ObjectHelper.getDefault(tutor, TutorDTO.getDefaultValue());
     }
 
     public GenderDTO getGender() {
         return gender;
     }
 
-    public void setGender(GenderDTO gender) {
-        this.gender = gender;
+    public void setGender(final GenderDTO gender) {
+        this.gender = ObjectHelper.getDefault(gender, GenderDTO.getDefaultValue());
     }
 
     public RaceDTO getRace() {
         return race;
     }
 
-    public void setRace(RaceDTO race) {
-        this.race = race;
+    public void setRace(final RaceDTO race) {
+        this.race = ObjectHelper.getDefault(race, RaceDTO.getDefaultValue());
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setCode(final Integer code) {
+        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = TextHelper.getDefaultWithTrim(name);
     }
 
@@ -106,7 +122,7 @@ public class PetDTO extends DTO{
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(final String size) {
         this.size = TextHelper.getDefaultWithTrim(size);
     }
 
@@ -114,29 +130,23 @@ public class PetDTO extends DTO{
         return dateBirth;
     }
 
-    public void setDateBirth(Date dateBirth) {
-        this.dateBirth = dateBirth;
+    public void setDateBirth(final Date dateBirth) {
+        this.dateBirth = DateHelper.getDefault(dateBirth);
     }
 
     public Boolean getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
-        this.state = state;
+    public void setState(final Boolean state) {
+        this.state = ObjectHelper.getDefault(state, Boolean.TRUE);
     }
 
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(final String color) {
         this.color = TextHelper.getDefaultWithTrim(color);
     }
-
-    public static PetDTO createDefault() {
-        return new PetDTO();
-    }
-
 }
-

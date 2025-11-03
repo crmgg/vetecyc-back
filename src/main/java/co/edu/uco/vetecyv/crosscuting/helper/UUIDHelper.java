@@ -27,4 +27,8 @@ public final class UUIDHelper {
                 :UUID.fromString(uuidAsString);
 
     }
+
+    public boolean isDefaultUUID(Object identityDocument) {
+        return getDefault().equals(identityDocument);
+    }
 }

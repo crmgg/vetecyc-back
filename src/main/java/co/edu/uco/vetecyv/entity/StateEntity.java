@@ -5,23 +5,36 @@ import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.UUID;
 
-public class StateEntity extends Entity {
+public final class StateEntity {
 
+    private UUID id;
     private String name;
 
     public StateEntity() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
         setName(TextHelper.getDefault());
     }
 
     public StateEntity(final UUID id) {
-        super(id);
+        setId(id);
         setName(TextHelper.getDefault());
     }
 
     public StateEntity(final UUID id, final String name) {
-        super(id);
+        setId(id);
         setName(name);
+    }
+
+    public static StateEntity createDefault() {
+        return new StateEntity();
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
     public String getName() {
@@ -31,8 +44,4 @@ public class StateEntity extends Entity {
     public void setName(final String name) {
         this.name = TextHelper.getDefaultWithTrim(name);
     }
-    public static StateEntity createDefault() {
-        return new StateEntity();
-    }
-
 }

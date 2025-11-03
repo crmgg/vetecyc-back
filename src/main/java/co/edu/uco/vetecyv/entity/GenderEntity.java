@@ -5,23 +5,36 @@ import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.UUID;
 
-public class GenderEntity extends Entity {
+public final class GenderEntity {
 
+    private UUID id;
     private String name;
 
     public GenderEntity() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
         setName(TextHelper.getDefault());
     }
 
     public GenderEntity(final UUID id) {
-        super(id);
+        setId(id);
         setName(TextHelper.getDefault());
     }
 
     public GenderEntity(final UUID id, final String name) {
-        super(id);
+        setId(id);
         setName(name);
+    }
+
+    public static GenderEntity createDefault() {
+        return new GenderEntity();
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
     public String getName() {
@@ -31,8 +44,4 @@ public class GenderEntity extends Entity {
     public void setName(final String name) {
         this.name = TextHelper.getDefaultWithTrim(name);
     }
-    public static GenderEntity createDefault() {
-        return new GenderEntity();
-    }
-
 }

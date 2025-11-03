@@ -1,45 +1,58 @@
 package co.edu.uco.vetecyv.dto;
 
+import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
-import co.edu.uco.vetecyv.dto.PetTypeDTO;
-import co.edu.uco.vetecyv.dto.RaceDTO;
 
 import java.util.UUID;
 
-public class RaceDTO extends DTO {
+public final class RaceDTO {
 
+    private UUID id;
     private PetTypeDTO petType;
     private String name;
 
     public RaceDTO() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
-        setpetType(PetTypeDTO.createDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setPetType(PetTypeDTO.getDefaultValue());
         setName(TextHelper.getDefault());
     }
 
     public RaceDTO(final UUID id) {
-        super(id);
-        setpetType(PetTypeDTO.createDefault());
+        setId(id);
+        setPetType(PetTypeDTO.getDefaultValue());
         setName(TextHelper.getDefault());
     }
 
-    public RaceDTO(final UUID id, final PetTypeDTO petTypeDTO,
-                      final String name) {
-        super(id);
-        setpetType(petType);
+    public RaceDTO(final UUID id, final PetTypeDTO petType, final String name) {
+        setId(id);
+        setPetType(petType);
         setName(name);
     }
 
+    static RaceDTO getDefaultValue() {
+        return new RaceDTO();
+    }
 
-    public PetTypeDTO getpetType() {
+    static RaceDTO getDefaultValue(final RaceDTO race) {
+        return ObjectHelper.getDefault(race, getDefaultValue());
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    }
+
+    public PetTypeDTO getPetType() {
         return petType;
     }
 
-    public void setpetType(final PetTypeDTO petType) {
-        this.petType = petType;
+    public void setPetType(final PetTypeDTO petType) {
+        this.petType = ObjectHelper.getDefault(petType, PetTypeDTO.getDefaultValue());
     }
-
 
     public String getName() {
         return name;
@@ -48,8 +61,4 @@ public class RaceDTO extends DTO {
     public void setName(final String name) {
         this.name = TextHelper.getDefaultWithTrim(name);
     }
-    public static RaceDTO createDefault() {
-        return new RaceDTO();
-    }
-
 }

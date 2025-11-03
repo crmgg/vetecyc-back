@@ -1,28 +1,46 @@
 package co.edu.uco.vetecyv.dto;
 
+import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
-import co.edu.uco.vetecyv.dto.StateDTO;
 
 import java.util.UUID;
 
-public class StateDTO extends DTO{
+public final class StateDTO {
 
+    private UUID id;
     private String name;
 
     public StateDTO() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
         setName(TextHelper.getDefault());
     }
 
     public StateDTO(final UUID id) {
-        super(id);
+        setId(id);
         setName(TextHelper.getDefault());
     }
 
     public StateDTO(final UUID id, final String name) {
-        super(id);
+        setId(id);
         setName(name);
+    }
+
+
+    static StateDTO getDefaultValue() {
+        return new StateDTO();
+    }
+
+    static StateDTO getDefaultValue(final StateDTO state) {
+        return ObjectHelper.getDefault(state, getDefaultValue());
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
     public String getName() {
@@ -32,8 +50,4 @@ public class StateDTO extends DTO{
     public void setName(final String name) {
         this.name = TextHelper.getDefaultWithTrim(name);
     }
-    public static StateDTO createDefault() {
-        return new StateDTO();
-    }
-
 }

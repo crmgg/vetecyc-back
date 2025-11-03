@@ -3,12 +3,12 @@ package co.edu.uco.vetecyv.entity;
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
-public class AppointmentEntity extends Entity {
+public final class AppointmentEntity {
 
+    private UUID id;
     private AgendaEntity agendaEntity;
     private PetEntity petEntity;
     private StateEntity stateEntity;
@@ -17,7 +17,7 @@ public class AppointmentEntity extends Entity {
     private Date endDateTime;
 
     public AppointmentEntity() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
         setAgendaEntity(AgendaEntity.createDefault());
         setPetEntity(PetEntity.createDefault());
         setStateEntity(StateEntity.createDefault());
@@ -27,10 +27,10 @@ public class AppointmentEntity extends Entity {
     }
 
     public AppointmentEntity(final UUID id) {
-        super(id);
-        setAgenda(AgendaEntity.createDefault());
-        setPet(PetEntity.createDefault());
-        setState(StateEntity.createDefault());
+        setId(id);
+        setAgendaEntity(AgendaEntity.createDefault());
+        setPetEntity(PetEntity.createDefault());
+        setStateEntity(StateEntity.createDefault());
         setCode(Integer.valueOf(0));
         setDateTimeStare(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
@@ -38,11 +38,11 @@ public class AppointmentEntity extends Entity {
 
     public AppointmentEntity(final UUID id, final AgendaEntity agenda, final PetEntity pet, final StateEntity state,
                              final Integer code, final Date dateTimeStare, final Date endDateTime) {
-        super(id);
+        setId(id);
         setAgendaEntity(agenda);
         setPetEntity(pet);
-        setCode(code);
         setStateEntity(state);
+        setCode(code);
         setDateTimeStare(dateTimeStare);
         setEndDateTime(endDateTime);
     }
@@ -51,20 +51,27 @@ public class AppointmentEntity extends Entity {
         return new AppointmentEntity();
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    }
+
     public AgendaEntity getAgendaEntity() {
         return agendaEntity;
     }
 
-    public void setAgendaEntity(AgendaEntity agendaEntity) {
-        this.agendaEntity = agendaEntity;
+    public void setAgendaEntity(final AgendaEntity agendaEntity) {
+        this.agendaEntity = agendaEntity == null ? AgendaEntity.createDefault() : agendaEntity;
     }
 
-    // alias usado en constructores
     public AgendaEntity getAgenda() {
         return getAgendaEntity();
     }
 
-    public void setAgenda(AgendaEntity agenda) {
+    public void setAgenda(final AgendaEntity agenda) {
         setAgendaEntity(agenda);
     }
 
@@ -72,16 +79,15 @@ public class AppointmentEntity extends Entity {
         return petEntity;
     }
 
-    public void setPetEntity(PetEntity petEntity) {
-        this.petEntity = petEntity;
+    public void setPetEntity(final PetEntity petEntity) {
+        this.petEntity = petEntity == null ? PetEntity.createDefault() : petEntity;
     }
 
-    // alias usado en constructores
     public PetEntity getPet() {
         return getPetEntity();
     }
 
-    public void setPet(PetEntity pet) {
+    public void setPet(final PetEntity pet) {
         setPetEntity(pet);
     }
 
@@ -89,16 +95,15 @@ public class AppointmentEntity extends Entity {
         return stateEntity;
     }
 
-    public void setStateEntity(StateEntity stateEntity) {
-        this.stateEntity = stateEntity;
+    public void setStateEntity(final StateEntity stateEntity) {
+        this.stateEntity = stateEntity == null ? StateEntity.createDefault() : stateEntity;
     }
 
-    // alias usado en constructores
     public StateEntity getState() {
         return getStateEntity();
     }
 
-    public void setState(StateEntity state) {
+    public void setState(final StateEntity state) {
         setStateEntity(state);
     }
 
@@ -106,23 +111,23 @@ public class AppointmentEntity extends Entity {
         return code;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setCode(final Integer code) {
+        this.code = code == null ? Integer.valueOf(0) : code;
     }
 
     public Date getDateTimeStare() {
         return dateTimeStare;
     }
 
-    public void setDateTimeStare(Date dateTimeStare) {
-        this.dateTimeStare = dateTimeStare;
+    public void setDateTimeStare(final Date dateTimeStare) {
+        this.dateTimeStare = DateHelper.getDefault(dateTimeStare);
     }
 
     public Date getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(Date endDateTime) {
-        this.endDateTime = endDateTime;
+    public void setEndDateTime(final Date endDateTime) {
+        this.endDateTime = DateHelper.getDefault(endDateTime);
     }
 }

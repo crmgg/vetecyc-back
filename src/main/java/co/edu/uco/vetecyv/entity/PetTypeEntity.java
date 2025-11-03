@@ -5,23 +5,36 @@ import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.UUID;
 
-public class PetTypeEntity extends Entity {
+public final class PetTypeEntity {
 
+    private UUID id;
     private String name;
 
     public PetTypeEntity() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
         setName(TextHelper.getDefault());
     }
 
     public PetTypeEntity(final UUID id) {
-        super(id);
+        setId(id);
         setName(TextHelper.getDefault());
     }
 
     public PetTypeEntity(final UUID id, final String name) {
-        super(id);
+        setId(id);
         setName(name);
+    }
+
+    public static PetTypeEntity createDefault() {
+        return new PetTypeEntity();
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
     public String getName() {
@@ -31,8 +44,4 @@ public class PetTypeEntity extends Entity {
     public void setName(final String name) {
         this.name = TextHelper.getDefaultWithTrim(name);
     }
-    public static PetTypeEntity createDefault() {
-        return new PetTypeEntity();
-    }
-
 }

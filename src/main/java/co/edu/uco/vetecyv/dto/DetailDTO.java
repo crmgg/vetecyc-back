@@ -1,77 +1,91 @@
 package co.edu.uco.vetecyv.dto;
 
+import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.UUID;
 
-public class DetailDTO extends DTO {
+public final class DetailDTO {
 
+    private UUID id;
     private ConsultationDTO consultation;
     private MedicalRecordDTO medicalRecord;
     private Integer code;
     private String annotations;
 
     public DetailDTO() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
-        setConsultation(ConsultationDTO.createDefault());
-        setMedicalRecord(MedicalRecordDTO.createDefault());
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setConsultation(ConsultationDTO.getDefaultValue());
+        setMedicalRecord(MedicalRecordDTO.getDefaultValue());
         setCode(Integer.valueOf(0));
         setAnnotations(TextHelper.getDefault());
     }
 
     public DetailDTO(final UUID id) {
-        super(id);
-        setConsultation(ConsultationDTO.createDefault());
-        setMedicalRecord(MedicalRecordDTO.createDefault());
+        setId(id);
+        setConsultation(ConsultationDTO.getDefaultValue());
+        setMedicalRecord(MedicalRecordDTO.getDefaultValue());
         setCode(Integer.valueOf(0));
         setAnnotations(TextHelper.getDefault());
     }
 
     public DetailDTO(final UUID id, final ConsultationDTO consultation,
-                        final MedicalRecordDTO medicalRecord, final Integer code,
-                        final String annotations) {
-        super(id);
+                     final MedicalRecordDTO medicalRecord, final Integer code,
+                     final String annotations) {
+        setId(id);
         setConsultation(consultation);
         setMedicalRecord(medicalRecord);
         setCode(code);
         setAnnotations(annotations);
     }
 
+
+    static DetailDTO getDefaultValue() {
+        return new DetailDTO();
+    }
+
+    static DetailDTO getDefaultValue(final DetailDTO detail) {
+        return ObjectHelper.getDefault(detail, getDefaultValue());
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    }
+
     public ConsultationDTO getConsultation() {
         return consultation;
     }
 
-    public void setConsultation(ConsultationDTO consultation) {
-        this.consultation = consultation == null ? ConsultationDTO.createDefault() : consultation;
+    public void setConsultation(final ConsultationDTO consultation) {
+        this.consultation = ObjectHelper.getDefault(consultation, ConsultationDTO.getDefaultValue());
     }
 
     public MedicalRecordDTO getMedicalRecord() {
         return medicalRecord;
     }
 
-    public void setMedicalRecord(MedicalRecordDTO medicalRecord) {
-        this.medicalRecord = medicalRecord == null ? MedicalRecordDTO.createDefault() : medicalRecord;
+    public void setMedicalRecord(final MedicalRecordDTO medicalRecord) {
+        this.medicalRecord = ObjectHelper.getDefault(medicalRecord, MedicalRecordDTO.getDefaultValue());
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
-        this.code = code == null ? Integer.valueOf(0) : code;
+    public void setCode(final Integer code) {
+        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
     }
 
     public String getAnnotations() {
         return annotations;
     }
 
-    public void setAnnotations(String annotations) {
+    public void setAnnotations(final String annotations) {
         this.annotations = TextHelper.getDefaultWithTrim(annotations);
     }
-
-    public static DetailDTO createDefault() {
-        return new DetailDTO();
-    }
-
 }
