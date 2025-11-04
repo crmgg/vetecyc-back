@@ -9,5 +9,5 @@ import co.edu.uco.vetecyv.entity.StateEntity;
 import java.util.UUID;
 
 public interface StateDAO extends CreateDAO<StateEntity>,
-        RetrieveDAO<StateEntity, UUID>, UpdateDAO<StateEntity>, DeleteDAO<StateEntity> {
+        RetrieveDAO<StateEntity, UUID>, UpdateDAO<StateEntity>, DeleteDAO<UUID> {
 }

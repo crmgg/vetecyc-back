@@ -1,3 +1,4 @@
+// java
 package co.edu.uco.vetecyv.data.dao.entity;
 
 import java.util.UUID;
@@ -9,5 +10,5 @@ import co.edu.uco.vetecyv.data.dao.DeleteDAO;
 import co.edu.uco.vetecyv.entity.AdministratorEntity;
 
 public interface AdministratorDAO extends CreateDAO<AdministratorEntity>,
-        RetrieveDAO<AdministratorEntity, UUID>, UpdateDAO<AdministratorEntity>, DeleteDAO<AdministratorEntity> {
+        RetrieveDAO<AdministratorEntity, UUID>, UpdateDAO<AdministratorEntity>, DeleteDAO<UUID> {
 }

@@ -77,11 +77,11 @@ package co.edu.uco.vetecyv.entity;
         }
 
         public String getIdentityDocument() {
-            return identityDocument;
+            return IdentityDocument;
         }
 
         public void setIdentityDocument(final String identityDocument) {
-            this.identityDocument = TextHelper.getDefaultWithTrim(identityDocument);
+            this.IdentityDocument = TextHelper.getDefaultWithTrim(identityDocument);
         }
 
         public String getName() {

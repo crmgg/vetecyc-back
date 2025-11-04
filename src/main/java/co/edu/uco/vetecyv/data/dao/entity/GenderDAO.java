@@ -9,5 +9,5 @@ import co.edu.uco.vetecyv.data.dao.UpdateDAO;
 import co.edu.uco.vetecyv.entity.GenderEntity;
 
 public interface GenderDAO extends CreateDAO<GenderEntity>,
-        RetrieveDAO<GenderEntity, UUID>, UpdateDAO<GenderEntity>, DeleteDAO<GenderEntity> {
+        RetrieveDAO<GenderEntity, UUID>, UpdateDAO<GenderEntity>, DeleteDAO<UUID> {
 }

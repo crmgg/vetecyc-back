@@ -21,7 +21,7 @@ public final class DoctorEntity {
 
     public DoctorEntity() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
-        setIdentificationDocument(TextHelper.getDefault());
+        setIdentityDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
@@ -35,7 +35,7 @@ public final class DoctorEntity {
 
     public DoctorEntity(final UUID id) {
         setId(id);
-        setIdentificationDocument(TextHelper.getDefault());
+        setIdentityDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
@@ -53,7 +53,7 @@ public final class DoctorEntity {
                         final Boolean emailConfirmation, final Boolean phoneConfirmation,
                         final Boolean accountState) {
         setId(id);
-        setIdentificationDocument(identificationDocument);
+        setIdentityDocument(identificationDocument);
         setName(name);
         setFirstLastName(firstLastName);
         setSecondLastName(secondLastName);
@@ -77,12 +77,12 @@ public final class DoctorEntity {
         this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
-    public String getIdentificationDocument() {
+    public String getIdentityDocument() {
         return identificationDocument;
     }
 
-    public void setIdentificationDocument(final String identificationDocument) {
-        this.identificationDocument = TextHelper.getDefaultWithTrim(identificationDocument);
+    public void setIdentityDocument(final String identityDocument) {
+        this.identificationDocument = TextHelper.getDefaultWithTrim(identityDocument);
     }
 
     public String getName() {

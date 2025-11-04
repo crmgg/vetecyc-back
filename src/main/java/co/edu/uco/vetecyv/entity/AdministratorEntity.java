@@ -8,7 +8,7 @@ import java.util.UUID;
 public final class AdministratorEntity {
 
     private UUID id;
-    private String identificationDocument;
+    private String IdentityDocument;
     private String name;
     private String firstLastName;
     private String secondLastName;
@@ -21,7 +21,7 @@ public final class AdministratorEntity {
 
     public AdministratorEntity() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
-        setIdentificationDocument(TextHelper.getDefault());
+        setIdentityDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
@@ -35,7 +35,7 @@ public final class AdministratorEntity {
 
     public AdministratorEntity(final UUID id) {
         setId(id);
-        setIdentificationDocument(TextHelper.getDefault());
+        setIdentityDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
@@ -53,7 +53,7 @@ public final class AdministratorEntity {
                                final Boolean emailConfirmation, final Boolean phoneConfirmation,
                                final Boolean accountState) {
         setId(id);
-        setIdentificationDocument(identificationDocument);
+        setIdentityDocument(identificationDocument);
         setName(name);
         setFirstLastName(firstLastName);
         setSecondLastName(secondLastName);
@@ -77,12 +77,12 @@ public final class AdministratorEntity {
         this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
-    public String getIdentificationDocument() {
-        return identificationDocument;
+    public String getIdentityDocument() {
+        return IdentityDocument;
     }
 
-    public void setIdentificationDocument(final String identificationDocument) {
-        this.identificationDocument = TextHelper.getDefaultWithTrim(identificationDocument);
+    public void setIdentityDocument(final String IdentityDocument) {
+        this.IdentityDocument = TextHelper.getDefaultWithTrim(IdentityDocument);
     }
 
     public String getName() {

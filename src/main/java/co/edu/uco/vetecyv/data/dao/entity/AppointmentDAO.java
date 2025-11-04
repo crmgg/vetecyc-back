@@ -9,5 +9,5 @@ import co.edu.uco.vetecyv.data.dao.DeleteDAO;
 import co.edu.uco.vetecyv.entity.AppointmentEntity;
 
 public interface AppointmentDAO extends CreateDAO<AppointmentEntity>,
-        RetrieveDAO<AppointmentEntity, UUID>, UpdateDAO<AppointmentEntity>, DeleteDAO<AppointmentEntity> {
+        RetrieveDAO<AppointmentEntity, UUID>, UpdateDAO<AppointmentEntity>, DeleteDAO<UUID> {
 }

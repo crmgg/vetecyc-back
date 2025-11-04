@@ -9,5 +9,5 @@ import co.edu.uco.vetecyv.data.dao.DeleteDAO;
 import co.edu.uco.vetecyv.entity.AgendaEntity;
 
 public interface AgendaDAO extends CreateDAO<AgendaEntity>,
-        RetrieveDAO<AgendaEntity, UUID>, UpdateDAO<AgendaEntity>, DeleteDAO<AgendaEntity> {
+        RetrieveDAO<AgendaEntity, UUID>, UpdateDAO<AgendaEntity>, DeleteDAO<UUID> {
 }

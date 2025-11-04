@@ -23,7 +23,21 @@ public final class TextHelper {
         return EMPTY.equals(getDefault(value));
     }
 
-    public static boolean isEmptyWithTrim(Integer code) {
-        return false;
+    public static boolean isEmptyWithTrim(final String value) {
+        return getDefaultWithTrim(value).isEmpty();
+    }
+
+    public static boolean isEmptyWithTrim(final Integer code) {
+        return code == null;
+    }
+
+    public static boolean isValidPhoneNumber(final String value) {
+        final var phone = getDefaultWithTrim(value);
+        return !isEmpty(phone) && phone.matches("^\\+?[0-9]{7,20}$");
+    }
+
+    public static boolean isValidEmail(final String value) {
+        final var email = getDefaultWithTrim(value);
+        return !isEmpty(email) && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }
 }
