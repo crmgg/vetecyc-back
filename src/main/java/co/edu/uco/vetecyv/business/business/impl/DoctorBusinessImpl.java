@@ -28,7 +28,7 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
 
         UUID id = UUID.randomUUID();
         // Reintentar mientras el id ya exista
-        while (ObjectHelper.isNull(daoFactory.getDoctorDAO().findById(id))) {
+        while (!ObjectHelper.isNull(daoFactory.getDoctorDAO().findById(id))) {
             id = UUID.randomUUID();
         }
 

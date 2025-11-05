@@ -2,7 +2,7 @@ package co.edu.uco.vetecyv.business.assembler.entity.impl;
 
 import static co.edu.uco.vetecyv.business.assembler.entity.impl.GenderEntityAssembler.getGenderEntityAssembler;
 import static co.edu.uco.vetecyv.business.assembler.entity.impl.RaceEntityAssembler.getRaceEntityAssembler;
-import static co.edu.uco.vetecyv.business.assembler.entity.impl.TutorEntityAssembler.getTutorDTOAssembler;
+import static co.edu.uco.vetecyv.business.assembler.entity.impl.TutorEntityAssembler.getTutorEntityAssembler;
 import static co.edu.uco.vetecyv.business.assembler.entity.impl.TutorEntityAssembler.getTutorEntityAssembler;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public final class PetEntityAssembler implements EntityAssembler<PetEntity, PetD
     @Override
     public PetEntity toEntity(final PetDomain domain) {
         var domainTmp = ObjectHelper.getDefault(domain, new PetDomain(UUIDHelper.getUUIDHelper().getDefault()));
-        var tutorEntity = getTutorDTOAssembler().toEntity(domainTmp.getTutor());
+        var tutorEntity = getTutorEntityAssembler().toEntity(domainTmp.getTutor());
         var genderEntity = getGenderEntityAssembler().toEntity(domainTmp.getGender());
         var raceEntity = getRaceEntityAssembler().toEntity(domainTmp.getRace());
 
@@ -49,7 +49,7 @@ public final class PetEntityAssembler implements EntityAssembler<PetEntity, PetD
     @Override
     public PetDomain toDomain(final PetEntity entity) {
         var entityTmp = ObjectHelper.getDefault(entity, new PetEntity());
-        var tutorDomain = getTutorDTOAssembler().toDomain(entityTmp.getTutor());
+        var tutorDomain = getTutorEntityAssembler().toDomain(entityTmp.getTutor());
         var genderDomain = getGenderEntityAssembler().toDomain(entityTmp.getGender());
         var raceDomain = getRaceEntityAssembler().toDomain(entityTmp.getRace());
 

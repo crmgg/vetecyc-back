@@ -38,11 +38,11 @@ public final class StatePostgreSqlDAO extends SqlConnection implements StateDAO 
             ps.executeUpdate();
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_INSERT_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         } catch (final Exception exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_UNEXPECTED_ERROR_INSERT_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_STATE.getContent()+ exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
     }
@@ -62,11 +62,11 @@ public final class StatePostgreSqlDAO extends SqlConnection implements StateDAO 
             ps.executeUpdate();
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_UPDATE_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         } catch (final Exception exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_STATE.getContent(), exception.getMessage());
+            var technicalMessage =MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
     }
@@ -82,11 +82,11 @@ public final class StatePostgreSqlDAO extends SqlConnection implements StateDAO 
             ps.executeUpdate();
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_DELETE_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_DELETE_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DELETE_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         } catch (final Exception exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_UNEXPECTED_ERROR_DELETE_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
     }
@@ -105,11 +105,11 @@ public final class StatePostgreSqlDAO extends SqlConnection implements StateDAO 
             return executeSentenceFindByFilter(ps);
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_EXECUTING_FIND_BY_FILTER_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         } catch (final Exception exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_UNEXPECTED_ERROR_EXECUTING_FIND_BY_FILTER_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_EXECUTING_FIND_BY_FILTER_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_EXECUTING_FIND_BY_FILTER_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
     }
@@ -168,11 +168,11 @@ public final class StatePostgreSqlDAO extends SqlConnection implements StateDAO 
             }
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_MAPPING_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_MAPPING_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_MAPPING_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         } catch (final Exception exception) {
             var userMessage = MessagesEnum.STATE_ERROR_SQL_UNEXPECTED_MAPPING_STATE.getTitle();
-            var technicalMessage = MessageFormat.format(MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_MAPPING_STATE.getContent(), exception.getMessage());
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_MAPPING_STATE.getContent() + exception.getMessage();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
 

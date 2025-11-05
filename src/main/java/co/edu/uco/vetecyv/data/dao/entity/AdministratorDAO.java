@@ -1,4 +1,3 @@
-// java
 package co.edu.uco.vetecyv.data.dao.entity;
 
 import java.util.UUID;

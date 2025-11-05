@@ -10,6 +10,7 @@ import co.edu.uco.vetecyv.business.domain.AdministratorDomain;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
+import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.factory.DAOFactory;
 import co.edu.uco.vetecyv.entity.AdministratorEntity;
 
@@ -27,7 +28,8 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
         validateDuplicatedAdministrator(administratorDomain);
 
         UUID id = UUID.randomUUID();
-        while (ObjectHelper.isNull(daoFactory.getAdministratorDAO().findById(id))) {
+        // Asegurar id único (si existe, generar otro)
+        while (!ObjectHelper.isNull(daoFactory.getAdministratorDAO().findById(id))) {
             id = UUID.randomUUID();
         }
 
@@ -45,9 +47,7 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
     public void updateAdministratorInformation(final UUID id, final AdministratorDomain administratorDomain) {
         var existing = daoFactory.getAdministratorDAO().findById(id);
         if (ObjectHelper.isNull(existing)) {
-            var userMessage = MessagesEnum.ADMIN_ERROR_NOT_FOUND.getContent();
-            var technicalMessage = MessagesEnum.ADMIN_TECHNICAL_NOT_FOUND.getContent();
-            throw VetecyvException.create(userMessage, technicalMessage);
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_NOT_FOUND.getTitle(), MessagesEnum.ADMIN_ERROR_NOT_FOUND.getContent());
         }
 
         validateAdministratorData(administratorDomain);
@@ -81,7 +81,7 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
     public void confirmMobileNumber(final UUID id, final int confirmationCode) {
         var entity = daoFactory.getAdministratorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Administrador no encontrado", "No existe administrador con id proporcionado");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_NOT_FOUND.getTitle(), MessagesEnum.ADMIN_ERROR_NOT_FOUND.getContent());
         }
 
         // Validación del código debe implementarse si se persiste; aquí sólo se marca confirmado.
@@ -97,7 +97,7 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
     public void confirmEmail(final UUID id, final int confirmationCode) {
         var entity = daoFactory.getAdministratorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Administrador no encontrado", "No existe administrador con id proporcionado");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_NOT_FOUND.getTitle(), MessagesEnum.ADMIN_ERROR_NOT_FOUND.getContent());
         }
 
         // Validación del código debe implementarse si se persiste; aquí sólo se marca confirmado.
@@ -113,7 +113,7 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
     public void accountState(final UUID id, final int accountStateCode) {
         var entity = daoFactory.getAdministratorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Administrador no encontrado", "No existe administrador con id proporcionado");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_NOT_FOUND.getTitle(), MessagesEnum.ADMIN_ERROR_NOT_FOUND.getContent());
         }
 
         var domain = AdministratorEntityAssembler.getAdministratorEntityAssembler().toDomain(entity);
@@ -127,31 +127,31 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
 
     private void validateAdministratorData(final AdministratorDomain admin) {
         if (ObjectHelper.isNull(admin)) {
-            throw VetecyvException.create("Administrador inválido", "El objeto AdministratorDomain es nulo");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_INVALID.getTitle(), MessagesEnum.ADMIN_ERROR_INVALID.getContent());
         }
 
         if (TextHelper.isEmptyWithTrim(admin.getName()) || admin.getName().length() > 50) {
-            throw VetecyvException.create("Nombre inválido", "Nombre del administrador nulo o demasiado largo");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_INVALID_NAME.getTitle(), MessagesEnum.ADMIN_ERROR_INVALID_NAME.getContent());
         }
 
         if (TextHelper.isEmptyWithTrim(admin.getFirstLastName()) || admin.getFirstLastName().length() > 50) {
-            throw VetecyvException.create("Primer apellido inválido", "Primer apellido nulo o demasiado largo");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_INVALID_FIRSTLASTNAME.getTitle(), MessagesEnum.ADMIN_ERROR_INVALID_FIRSTLASTNAME.getContent());
         }
 
         if (TextHelper.isEmptyWithTrim(admin.getSecondLastName()) || admin.getSecondLastName().length() > 50) {
-            throw VetecyvException.create("Segundo apellido inválido", "Segundo apellido nulo o demasiado largo");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_INVALID_SECONDLASTNAME.getTitle(), MessagesEnum.ADMIN_ERROR_INVALID_SECONDLASTNAME.getContent());
         }
 
         if (!TextHelper.isValidEmail(admin.getEmail()) || admin.getEmail().length() > 100) {
-            throw VetecyvException.create("Email inválido", "Email nulo o con formato incorrecto");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_INVALID_EMAIL.getTitle(), MessagesEnum.ADMIN_ERROR_INVALID_EMAIL.getContent());
         }
 
         if (TextHelper.isEmptyWithTrim(admin.getPassword()) || admin.getPassword().length() > 26) {
-            throw VetecyvException.create("Password inválido", "Password nulo o demasiado largo");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_INVALID_PASSWORD.getTitle(), MessagesEnum.ADMIN_ERROR_INVALID_PASSWORD.getContent());
         }
 
         if (!TextHelper.isValidPhoneNumber(admin.getPhoneNumber()) || admin.getPhoneNumber().length() > 13) {
-            throw VetecyvException.create("Teléfono inválido", "Número de teléfono nulo o con formato incorrecto");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_INVALID_PHONE.getTitle(), MessagesEnum.ADMIN_ERROR_INVALID_PHONE.getContent());
         }
     }
 
@@ -163,14 +163,14 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
         byEmail.setEmail(adminEntity.getEmail());
         var existingByEmail = dao.findByFilter(byEmail);
         if (!existingByEmail.isEmpty()) {
-            throw VetecyvException.create("Email duplicado", "Ya existe un administrador con ese email");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_DUPLICATED_EMAIL.getTitle(), MessagesEnum.ADMIN_ERROR_DUPLICATED_EMAIL.getContent());
         }
 
         var byPhone = new AdministratorEntity();
         byPhone.setPhoneNumber(adminEntity.getPhoneNumber());
         var existingByPhone = dao.findByFilter(byPhone);
         if (!existingByPhone.isEmpty()) {
-            throw VetecyvException.create("Teléfono duplicado", "Ya existe un administrador con ese número de teléfono");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_DUPLICATED_PHONE.getTitle(), MessagesEnum.ADMIN_ERROR_DUPLICATED_PHONE.getContent());
         }
     }
 
@@ -181,15 +181,15 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
         var byEmail = new AdministratorEntity();
         byEmail.setEmail(adminEntity.getEmail());
         var existingByEmail = dao.findByFilter(byEmail);
-        if (!existingByEmail.isEmpty() && !existingByEmail.get(false).getId().equals(id)) {
-            throw VetecyvException.create("Email duplicado", "Otro administrador ya usa ese email");
+        if (!existingByEmail.isEmpty() && !existingByEmail.get(0).getId().equals(id)) {
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_DUPLICATED_EMAIL_ON_UPDATE.getTitle(), MessagesEnum.ADMIN_ERROR_DUPLICATED_EMAIL_ON_UPDATE.getContent());
         }
 
         var byPhone = new AdministratorEntity();
         byPhone.setPhoneNumber(adminEntity.getPhoneNumber());
         var existingByPhone = dao.findByFilter(byPhone);
         if (!existingByPhone.isEmpty() && !existingByPhone.get(0).getId().equals(id)) {
-            throw VetecyvException.create("Teléfono duplicado", "Otro administrador ya usa ese teléfono");
+            throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_DUPLICATED_PHONE_ON_UPDATE.getTitle(), MessagesEnum.ADMIN_ERROR_DUPLICATED_PHONE_ON_UPDATE.getContent());
         }
     }
 

@@ -142,7 +142,7 @@ public final class PetPostgreSqlDAO extends SqlConnection implements PetDAO {
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_PET.getContent();
             throw VetecyvException.create(userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.PET_ERROR_SQL_EXECUTING_FIND_BY_FILTER_PET.getTitle();
+            var userMessage = MessagesEnum.PET_ERROR_SQL_UNEXECUTING_FIND_BY_FILTER_PET.getTitle();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_EXECUTING_FIND_BY_FILTER_PET.getContent();
             throw VetecyvException.create(userMessage, technicalMessage);
         }

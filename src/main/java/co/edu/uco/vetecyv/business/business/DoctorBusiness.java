@@ -25,4 +25,9 @@ public interface DoctorBusiness {
 
     void accountState(UUID id, int accountStateCode);
 
+    void sendMobileNumberConfirmation(UUID id);
+
+    void sendEmailConfirmation(UUID id);
+
+    void sendAccountState(UUID id);
 }

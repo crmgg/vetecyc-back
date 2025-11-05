@@ -34,8 +34,8 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
 
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_INSERT_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_REGISTER.getTitle();
+            var technicalMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_REGISTER.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
 
         } finally {
@@ -63,8 +63,8 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_DELETE_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_DELETE.getTitle();
+            var technicalMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_DELETE.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
 
         } finally {
@@ -90,8 +90,8 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
 
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_UPDATE.getTitle();
+            var technicalMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_UPDATE.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
 
         } finally {
@@ -113,8 +113,8 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
             throw exception;
         } catch (final Exception exception) {
 
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_EXECUTING_FIND_BY_FILTER_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getTitle();
+            var technicalMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
 
         } finally {
@@ -138,8 +138,8 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         } catch (final Exception exception) {
             throw VetecyvException.create(
                     exception,
-                    "Se presentó un error inesperado consultando administradores por filtro.",
-                    "Unexpected technical error finding administrators by filter: " + exception.getMessage()
+                    MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getTitle(),
+                    MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getContent() + " - " + exception.getMessage()
             );
         } finally {
             daoFactory.closeConnection();
@@ -161,8 +161,8 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         } catch (final Exception exception) {
             throw VetecyvException.create(
                     exception,
-                    "Se presentó un error inesperado consultando el administrador.",
-                    "Unexpected technical error finding administrator: " + exception.getMessage()
+                    MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getTitle(),
+                    MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getContent() + " - " + exception.getMessage()
             );
         } finally {
             daoFactory.closeConnection();
@@ -187,8 +187,8 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
             daoFactory.rollbackTransaction();
             throw VetecyvException.create(
                     exception,
-                    "Se presentó un error inesperado confirmando el estado de la cuenta del administrador.",
-                    "Unexpected technical error confirming administrator account status: " + exception.getMessage()
+                    MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_CONFIRM_ACCOUNT_STATUS.getTitle(),
+                    MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_CONFIRM_ACCOUNT_STATUS.getContent() + " - " + exception.getMessage()
             );
         } finally {
             daoFactory.closeConnection();
@@ -212,8 +212,8 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
 
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_MAPPING_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_MAPPING_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_SEND_PHONE_CODE.getTitle();
+            var technicalMessage = MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_SEND_PHONE_CODE.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
 
         } finally {
@@ -239,13 +239,11 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
             daoFactory.rollbackTransaction();
             throw VetecyvException.create(
                     exception,
-                    "Se presentó un error inesperado enviando código de confirmación por email.",
-                    "Unexpected technical error sending email confirmation code: " + exception.getMessage()
+                    MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_SEND_EMAIL_CODE.getTitle(),
+                    MessagesEnum.ADMINISTRATOR_FACADE_ERROR_UNEXPECTED_SEND_EMAIL_CODE.getContent() + " - " + exception.getMessage()
             );
         } finally {
             daoFactory.closeConnection();
         }
     }
-
 }
-

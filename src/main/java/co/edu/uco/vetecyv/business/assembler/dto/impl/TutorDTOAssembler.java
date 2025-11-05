@@ -29,7 +29,7 @@ public final class TutorDTOAssembler implements DTOAssembler<TutorDTO, TutorDoma
                 domainTmp.getFirstLastName(),
                 domainTmp.getSecondLastName(),
                 domainTmp.getEmail(),
-                domainTmp.getPhone(),
+                domainTmp.getPhoneNumber(),
                 domainTmp.getPassword(),
                 domainTmp.isEmailConfirmation(),
                 domainTmp.isPhoneConfirmation(),
@@ -41,7 +41,7 @@ public final class TutorDTOAssembler implements DTOAssembler<TutorDTO, TutorDoma
     public TutorDomain toDomain(final TutorDTO dto) {
         var dtoTmp = ObjectHelper.getDefault(dto, new TutorDTO());
         return new TutorDomain(
-                UUIDHelper.getUUIDHelper().getDefault(entityTmp.getId()), dtoTmp.getIdentityDocument(),
+                UUIDHelper.getUUIDHelper().getDefault(dtoTmp.getId()), dtoTmp.getIdentityDocument(),
                 dtoTmp.getName(),
                 dtoTmp.getFirstLastName(),
                 dtoTmp.getSecondLastName(),

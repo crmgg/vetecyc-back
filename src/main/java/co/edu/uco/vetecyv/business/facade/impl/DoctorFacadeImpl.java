@@ -30,8 +30,8 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_ERROR_INSERT_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_DOCTOR.getContent() + " - " + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -51,8 +51,8 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_ERROR_DELETE_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_DOCTOR.getContent() + " - " + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_DELETE.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_DELETE.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -73,8 +73,8 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_DOCTOR.getContent() + " - " + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -93,8 +93,8 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado consultando doctores.",
-                    "Unexpected technical error finding doctors: " + exception.getMessage());
+                    MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getTitle(),
+                    MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getContent() + " - " + exception.getMessage());
         } finally {
             daoFactory.closeConnection();
         }
@@ -113,8 +113,8 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado consultando doctores por filtro.",
-                    "Unexpected technical error finding doctors by filter: " + exception.getMessage());
+                    MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getTitle(),
+                    MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getContent() + " - " + exception.getMessage());
         } finally {
             daoFactory.closeConnection();
         }
@@ -132,8 +132,8 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado consultando el doctor.",
-                    "Unexpected technical error finding doctor: " + exception.getMessage());
+                    MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getTitle(),
+                    MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getContent() + " - " + exception.getMessage());
         } finally {
             daoFactory.closeConnection();
         }
@@ -152,9 +152,9 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado confirmando el teléfono del doctor.",
-                    "Unexpected technical error confirming doctor phone: " + exception.getMessage());
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_PHONE.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_PHONE.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -173,9 +173,9 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado confirmando el email del doctor.",
-                    "Unexpected technical error confirming doctor email: " + exception.getMessage());
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_EMAIL.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_EMAIL.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -194,9 +194,9 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado confirmando el estado de cuenta del doctor.",
-                    "Unexpected technical error confirming doctor account status: " + exception.getMessage());
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_ACCOUNT_STATUS.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_ACCOUNT_STATUS.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -215,9 +215,9 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado enviando código de confirmación por teléfono.",
-                    "Unexpected technical error sending doctor phone confirmation code: " + exception.getMessage());
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_SEND_PHONE_CODE.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_SEND_PHONE_CODE.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -236,9 +236,9 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado enviando código de confirmación por email.",
-                    "Unexpected technical error sending doctor email confirmation code: " + exception.getMessage());
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_SEND_EMAIL_CODE.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_SEND_EMAIL_CODE.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -257,9 +257,9 @@ public final class DoctorFacadeImpl implements DoctorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    "Se presentó un error inesperado enviando notificación de estado de cuenta.",
-                    "Unexpected technical error sending doctor account state notification: " + exception.getMessage());
+            var userMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_SEND_ACCOUNT_STATUS.getTitle();
+            var technicalMessage = MessagesEnum.DOCTOR_FACADE_ERROR_UNEXPECTED_SEND_ACCOUNT_STATUS.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
