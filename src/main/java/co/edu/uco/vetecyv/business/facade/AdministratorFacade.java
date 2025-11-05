@@ -9,9 +9,9 @@ public interface AdministratorFacade {
 
     void registerNewInformation(AdministratorDTO administratorDTO);
 
-    void dropAdministrtorInformation(UUID id);
+    void dropAdministratorInformation(UUID id);
 
-    void updateAdministratorInformation(UUID id);
+    void updateAdministratorInformation(UUID id, AdministratorDTO administratorDTO);
 
     List<AdministratorDTO> findAllAdministrators();
 
@@ -19,16 +19,11 @@ public interface AdministratorFacade {
 
     AdministratorDTO findAdministratorById(UUID id);
 
-    void confirmPhoneNumber(UUID id, int confirmationCode);
+    void sendPhoneNumberConfirmationCode(UUID id, int confirmationCode);
 
-    void confirEmal(UUID id, int confirmationCode);
+    void sendEmailConfirmationCode(UUID id, int confirmationCode);
 
     void confirAccountStatus(UUID id, int confirmationCode);
 
-    void sendPhoneNumberConfirmationCode(UUID id);
-
-    void sendEmailConfirmationCode(UUID id);
-
-    void sendAccountStatusConfirmationCode(UUID id);
 
 }

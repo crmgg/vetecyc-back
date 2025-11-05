@@ -21,24 +21,29 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         try {
             daoFactory.initTransaction();
 
-            var domain = AdministratorDTOAssembler.getInstance().toDomainFromDTO(administratorDTO);
-            business.registerNewInformation(domain);
+            var domain = AdministratorDTOAssembler.getAdministratorDTOAssembler().toDomain(administratorDTO);
+
+            business.registerNewAdministratorInformation(domain);
 
             daoFactory.commitTransaction();
+
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
+
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(
-                    exception,
-                    MessagesEnum.ADMIN_ERROR_UNEXPECTED_EXCEPTION_REGISTERING.getContent(),
-                    MessagesEnum.ADMIN_TECHNICAL_UNEXPECTED_EXCEPTION_REGISTERING.getContent() + " - " + exception.getMessage()
-            );
+
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_INSERT_ADMINISTRATOR.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
+
     }
+
 
     @Override
     public void dropAdministratorInformation(final UUID id) {
@@ -46,21 +51,22 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         var business = new AdministratorBusinessImpl(daoFactory);
 
         try {
+
             daoFactory.initTransaction();
 
             business.dropAdministratorInformation(id);
 
             daoFactory.commitTransaction();
+
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(
-                    exception,
-                    "Se presentó un error inesperado eliminando el administrador.",
-                    "Unexpected technical error deleting administrator: " + exception.getMessage()
-            );
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_DELETE_ADMINISTRATOR.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
@@ -74,7 +80,7 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         try {
             daoFactory.initTransaction();
 
-            var domain = AdministratorDTOAssembler.getInstance().toDomainFromDTO(administratorDTO);
+            var domain = AdministratorDTOAssembler.getAdministratorDTOAssembler().toDomain(administratorDTO);
             business.updateAdministratorInformation(id, domain);
 
             daoFactory.commitTransaction();
@@ -83,11 +89,11 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(
-                    exception,
-                    "Se presentó un error inesperado actualizando el administrador.",
-                    "Unexpected technical error updating administrator: " + exception.getMessage()
-            );
+
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_ADMINISTRATOR.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
@@ -102,15 +108,15 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
             daoFactory.initTransaction();
 
             var domainList = business.findAllAdministrators();
-            return AdministratorDTOAssembler.getInstance().toDTOList(domainList);
+            return AdministratorDTOAssembler.getAdministratorDTOAssembler().toDTO(domainList);
         } catch (final VetecyvException exception) {
             throw exception;
         } catch (final Exception exception) {
-            throw VetecyvException.create(
-                    exception,
-                    MessagesEnum.ADMIN_ERROR_UNEXPECTED_EXCEPTION_FINDING.getContent(),
-                    "Unexpected technical error finding administrators: " + exception.getMessage()
-            );
+
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_EXECUTING_FIND_BY_FILTER_ADMINISTRATOR.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
@@ -124,9 +130,9 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         try {
             daoFactory.initTransaction();
 
-            var domainFilter = AdministratorDTOAssembler.getInstance().toDomainFromDTO(filter);
+            var domainFilter = AdministratorDTOAssembler.getAdministratorDTOAssembler().toDomain(filter);
             var domainList = business.findAdministratorsByFilter(domainFilter);
-            return AdministratorDTOAssembler.getInstance().toDTOList(domainList);
+            return AdministratorDTOAssembler.getAdministratorDTOAssembler().toDTO(domainList);
         } catch (final VetecyvException exception) {
             throw exception;
         } catch (final Exception exception) {
@@ -149,7 +155,7 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
             daoFactory.initTransaction();
 
             var domain = business.findAdministratorById(id);
-            return AdministratorDTOAssembler.getInstance().toDTO(domain);
+            return AdministratorDTOAssembler.getAdministratorDTOAssembler().toDTO(domain);
         } catch (final VetecyvException exception) {
             throw exception;
         } catch (final Exception exception) {
@@ -157,58 +163,6 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
                     exception,
                     "Se presentó un error inesperado consultando el administrador.",
                     "Unexpected technical error finding administrator: " + exception.getMessage()
-            );
-        } finally {
-            daoFactory.closeConnection();
-        }
-    }
-
-    @Override
-    public void confirmPhoneNumber(final UUID id, final int confirmationCode) {
-        var daoFactory = DAOFactory.getFactory();
-        var business = new AdministratorBusinessImpl(daoFactory);
-
-        try {
-            daoFactory.initTransaction();
-
-            business.confirmMobileNumber(id, confirmationCode);
-
-            daoFactory.commitTransaction();
-        } catch (final VetecyvException exception) {
-            daoFactory.rollbackTransaction();
-            throw exception;
-        } catch (final Exception exception) {
-            daoFactory.rollbackTransaction();
-            throw VetecyvException.create(
-                    exception,
-                    "Se presentó un error inesperado confirmando el teléfono del administrador.",
-                    "Unexpected technical error confirming administrator phone: " + exception.getMessage()
-            );
-        } finally {
-            daoFactory.closeConnection();
-        }
-    }
-
-    @Override
-    public void sendEmailConfirmationCode(final UUID id, final int confirmationCode) {
-        var daoFactory = DAOFactory.getFactory();
-        var business = new AdministratorBusinessImpl(daoFactory);
-
-        try {
-            daoFactory.initTransaction();
-
-            business.confirmEmail(id, confirmationCode);
-
-            daoFactory.commitTransaction();
-        } catch (final VetecyvException exception) {
-            daoFactory.rollbackTransaction();
-            throw exception;
-        } catch (final Exception exception) {
-            daoFactory.rollbackTransaction();
-            throw VetecyvException.create(
-                    exception,
-                    "Se presentó un error inesperado confirmando el email del administrador.",
-                    "Unexpected technical error confirming administrator email: " + exception.getMessage()
             );
         } finally {
             daoFactory.closeConnection();
@@ -242,14 +196,14 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
     }
 
     @Override
-    public void sendPhoneNumberConfirmationCode(final UUID id) {
+    public void sendPhoneNumberConfirmationCode(final UUID id, int confirmationCode) {
         var daoFactory = DAOFactory.getFactory();
         var business = new AdministratorBusinessImpl(daoFactory);
 
         try {
             daoFactory.initTransaction();
 
-            business.sendPhoneNumberConfirmationCode(id);
+            business.confirmMobileNumber(id, confirmationCode);
 
             daoFactory.commitTransaction();
         } catch (final VetecyvException exception) {
@@ -257,25 +211,25 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(
-                    exception,
-                    "Se presentó un error inesperado enviando código de confirmación telefónico.",
-                    "Unexpected technical error sending phone confirmation code: " + exception.getMessage()
-            );
+
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_MAPPING_ADMINISTRATOR.getContent();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_MAPPING_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
     }
 
     @Override
-    public void sendEmailConfirmationCode(final UUID id) {
+    public void sendEmailConfirmationCode(final UUID id, int confirmationCode) {
         var daoFactory = DAOFactory.getFactory();
         var business = new AdministratorBusinessImpl(daoFactory);
 
         try {
             daoFactory.initTransaction();
 
-            business.sendEmailConfirmationCode(id);
+            business.confirmEmail(id, confirmationCode);
 
             daoFactory.commitTransaction();
         } catch (final VetecyvException exception) {
@@ -293,29 +247,5 @@ public final class AdministratorFacadeImpl implements AdministratorFacade {
         }
     }
 
-    @Override
-    public void sendAccountStatusConfirmationCode(final UUID id) {
-        var daoFactory = DAOFactory.getFactory();
-        var business = new AdministratorBusinessImpl(daoFactory);
-
-        try {
-            daoFactory.initTransaction();
-
-            business.sendAccountStatusConfirmationCode(id);
-
-            daoFactory.commitTransaction();
-        } catch (final VetecyvException exception) {
-            daoFactory.rollbackTransaction();
-            throw exception;
-        } catch (final Exception exception) {
-            daoFactory.rollbackTransaction();
-            throw VetecyvException.create(
-                    exception,
-                    "Se presentó un error inesperado enviando código de confirmación de estado de cuenta.",
-                    "Unexpected technical error sending account status confirmation code: " + exception.getMessage()
-            );
-        } finally {
-            daoFactory.closeConnection();
-        }
-    }
 }
+

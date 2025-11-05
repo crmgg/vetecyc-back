@@ -45,7 +45,9 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
     public void updateAdministratorInformation(final UUID id, final AdministratorDomain administratorDomain) {
         var existing = daoFactory.getAdministratorDAO().findById(id);
         if (ObjectHelper.isNull(existing)) {
-            throw VetecyvException.create("Administrador no encontrado", "No existe administrador con id proporcionado");
+            var userMessage = MessagesEnum.ADMIN_ERROR_NOT_FOUND.getContent();
+            var technicalMessage = MessagesEnum.ADMIN_TECHNICAL_NOT_FOUND.getContent();
+            throw VetecyvException.create(userMessage, technicalMessage);
         }
 
         validateAdministratorData(administratorDomain);
@@ -179,7 +181,7 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
         var byEmail = new AdministratorEntity();
         byEmail.setEmail(adminEntity.getEmail());
         var existingByEmail = dao.findByFilter(byEmail);
-        if (!existingByEmail.isEmpty() && !existingByEmail.get(0).getId().equals(id)) {
+        if (!existingByEmail.isEmpty() && !existingByEmail.get(false).getId().equals(id)) {
             throw VetecyvException.create("Email duplicado", "Otro administrador ya usa ese email");
         }
 

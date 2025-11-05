@@ -15,25 +15,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.uco.vetecyv.business.facade.impl.AdministratorFacadeImpl;
+import co.edu.uco.vetecyv.business.facade.impl.DoctorFacadeImpl;
 import co.edu.uco.vetecyv.controller.dto.Response;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
-import co.edu.uco.vetecyv.dto.AdministratorDTO;
+import co.edu.uco.vetecyv.dto.DoctorDTO;
 
 @RestController
-@RequestMapping("/vetecyv/v1/administrators")
-public class AdministratorController {
+@RequestMapping("/vetecyv/v1/doctors")
+public class DoctorController{
 
     @GetMapping
-    public ResponseEntity<Response<AdministratorDTO>> findAllAdministrators() {
+    public ResponseEntity<Response<DoctorDTO>> findAllDoctors() {
 
-        Response<AdministratorDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DoctorDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new AdministratorFacadeImpl();
-            responseObjectData.setData(facade.findAllAdministrators());
+            var facade = new DoctorFacadeImpl();
+            responseObjectData.setData(facade.findAllDoctors());
             responseObjectData.addMessage(MessagesEnum.SUCCESS_FILTERED.getTitle());
 
         } catch (final VetecyvException exception) {
@@ -53,14 +53,14 @@ public class AdministratorController {
     }
 
     @PostMapping
-    public ResponseEntity<Response<AdministratorDTO>> registerNewAdministrator(@RequestBody AdministratorDTO administrator) {
+    public ResponseEntity<Response<DoctorDTO>> registerNewDoctor(@RequestBody DoctorDTO doctor) {
 
-        Response<AdministratorDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DoctorDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new AdministratorFacadeImpl();
-            facade.registerNewInformation(administrator);
+            var facade = new DoctorFacadeImpl();
+            facade.registerNewDoctorInformation(doctor);
             responseObjectData.addMessage(MessagesEnum.SUCCESS_REGISTERED.getTitle());
 
         } catch (final VetecyvException exception) {
@@ -80,14 +80,14 @@ public class AdministratorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response<AdministratorDTO>> updateAdministrator(@PathVariable UUID id, @RequestBody AdministratorDTO administrator) {
+    public ResponseEntity<Response<DoctorDTO>> updateDoctor(@PathVariable UUID id, @RequestBody DoctorDTO doctor) {
 
-        Response<AdministratorDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DoctorDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new AdministratorFacadeImpl();
-            facade.updateAdministratorInformation(id, administrator);
+            var facade = new DoctorFacadeImpl();
+            facade.updateDoctorInformation(id, doctor);
             responseObjectData.addMessage(MessagesEnum.SUCCESS_UPDATED.getTitle());
 
         } catch (final VetecyvException exception) {
@@ -107,14 +107,14 @@ public class AdministratorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response<AdministratorDTO>> dropAdministrator(@PathVariable UUID id) {
+    public ResponseEntity<Response<DoctorDTO>> dropDoctor(@PathVariable UUID id) {
 
-        Response<AdministratorDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DoctorDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new AdministratorFacadeImpl();
-            facade.dropAdministratorInformation(id);
+            var facade = new DoctorFacadeImpl();
+            facade.dropDoctorInformation(id);
             responseObjectData.addMessage(MessagesEnum.SUCCESS_DELETED.getTitle());
 
         } catch (final VetecyvException exception) {
@@ -134,14 +134,14 @@ public class AdministratorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<AdministratorDTO>> findAdministratorById(@PathVariable UUID id) {
+    public ResponseEntity<Response<DoctorDTO>> findDoctorById(@PathVariable UUID id) {
 
-        Response<AdministratorDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DoctorDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new AdministratorFacadeImpl();
-            responseObjectData.setData(List.of(facade.findAdministratorById(id)));
+            var facade = new DoctorFacadeImpl();
+            responseObjectData.setData(List.of(facade.findDoctorById(id)));
             responseObjectData.addMessage(MessagesEnum.SUCCESS_FILTERED.getTitle());
 
         } catch (final VetecyvException exception) {
@@ -161,14 +161,14 @@ public class AdministratorController {
     }
 
     @PostMapping("/filter")
-    public ResponseEntity<Response<AdministratorDTO>> findAdministratorsByFilter(@RequestBody AdministratorDTO administratorFilters) {
+    public ResponseEntity<Response<DoctorDTO>> findDoctorsByFilter(@RequestBody DoctorDTO doctorFilters) {
 
-        Response<AdministratorDTO> responseObjectData = Response.createSuccededResponse();
+        Response<DoctorDTO> responseObjectData = Response.createSuccededResponse();
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new AdministratorFacadeImpl();
-            responseObjectData.setData(facade.findAdministratorsByFilter(administratorFilters));
+            var facade = new DoctorFacadeImpl();
+            responseObjectData.setData(facade.findDoctorsByFilter(doctorFilters));
             responseObjectData.addMessage(MessagesEnum.SUCCESS_FILTERED.getTitle());
 
         } catch (final VetecyvException exception) {

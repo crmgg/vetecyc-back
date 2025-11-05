@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.uco.vetecyv.business.facade.impl.TutorFacadeImpl;
 import co.edu.uco.vetecyv.controller.dto.Response;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
+import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.dto.TutorDTO;
 
 @RestController
@@ -32,9 +33,9 @@ public class TutorController {
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new TutorFacadeImpl();
+            TutorFacadeImpl facade = new TutorFacadeImpl();
             responseObjectData.setData(facade.findAllTutors());
-            responseObjectData.addMessage("Tutors filtered succesfully");
+            responseObjectData.addMessage(MessagesEnum.SUCCESS_FILTERED.getTitle());
 
         } catch (final VetecyvException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -42,7 +43,7 @@ public class TutorController {
             responseStatusCode = HttpStatus.BAD_REQUEST;
             exception.printStackTrace();
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED.getTitle();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessage(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -59,9 +60,9 @@ public class TutorController {
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new TutorFacadeImpl();
-            facade.registerNewTutorInformation(tutor);
-            responseObjectData.addMessage("Tutor registered sucesfully");
+            TutorFacadeImpl facade = new TutorFacadeImpl();
+            facade.registerNewInformation(tutor);
+            responseObjectData.addMessage(MessagesEnum.SUCCESS_REGISTERED.getTitle());
 
         } catch (final VetecyvException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -69,7 +70,7 @@ public class TutorController {
             responseStatusCode = HttpStatus.BAD_REQUEST;
             exception.printStackTrace();
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED.getTitle();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessage(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -86,9 +87,9 @@ public class TutorController {
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new TutorFacadeImpl();
+            TutorFacadeImpl facade = new TutorFacadeImpl();
             facade.updateTutorInformation(id, tutor);
-            responseObjectData.addMessage("Tutor updated sucesfully");
+            responseObjectData.addMessage(MessagesEnum.SUCCESS_UPDATED.getTitle());
 
         } catch (final VetecyvException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -96,7 +97,7 @@ public class TutorController {
             responseStatusCode = HttpStatus.BAD_REQUEST;
             exception.printStackTrace();
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED.getTitle();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessage(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -113,9 +114,9 @@ public class TutorController {
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new TutorFacadeImpl();
+            TutorFacadeImpl facade = new TutorFacadeImpl();
             facade.dropTutorInformation(id);
-            responseObjectData.addMessage("Tutor deleted sucesfully");
+            responseObjectData.addMessage(MessagesEnum.SUCCESS_DELETED.getTitle());
 
         } catch (final VetecyvException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -123,7 +124,7 @@ public class TutorController {
             responseStatusCode = HttpStatus.BAD_REQUEST;
             exception.printStackTrace();
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED.getTitle();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessage(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -140,9 +141,9 @@ public class TutorController {
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new TutorFacadeImpl();
+            TutorFacadeImpl facade = new TutorFacadeImpl();
             responseObjectData.setData(List.of(facade.findTutorById(id)));
-            responseObjectData.addMessage("Tutor filtered succesfully");
+            responseObjectData.addMessage(MessagesEnum.SUCCESS_FILTERED.getTitle());
 
         } catch (final VetecyvException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -150,7 +151,7 @@ public class TutorController {
             responseStatusCode = HttpStatus.BAD_REQUEST;
             exception.printStackTrace();
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED.getTitle();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessage(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -167,9 +168,9 @@ public class TutorController {
         HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
-            var facade = new TutorFacadeImpl();
-            responseObjectData.setData(facade.findTutorByFilter(tutorFilters));
-            responseObjectData.addMessage("Tutors filtered succesfully");
+            TutorFacadeImpl facade = new TutorFacadeImpl();
+            responseObjectData.setData(facade.findTutorsByFilter(tutorFilters));
+            responseObjectData.addMessage(MessagesEnum.SUCCESS_FILTERED.getTitle());
 
         } catch (final VetecyvException exception) {
             responseObjectData = Response.createFailedResponse();
@@ -177,7 +178,7 @@ public class TutorController {
             responseStatusCode = HttpStatus.BAD_REQUEST;
             exception.printStackTrace();
         } catch (final Exception exception) {
-            var userMessage = "Unexpected error";
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED.getTitle();
             responseObjectData = Response.createFailedResponse();
             responseObjectData.addMessage(userMessage);
             responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
