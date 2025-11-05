@@ -11,14 +11,14 @@ public final class DetailDTO {
     private UUID id;
     private ConsultationDTO consultation;
     private MedicalRecordDTO medicalRecord;
-    private Integer code;
+    private String code;
     private String annotations;
 
     public DetailDTO() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setConsultation(ConsultationDTO.getDefaultValue());
         setMedicalRecord(MedicalRecordDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setAnnotations(TextHelper.getDefault());
     }
 
@@ -26,12 +26,12 @@ public final class DetailDTO {
         setId(id);
         setConsultation(ConsultationDTO.getDefaultValue());
         setMedicalRecord(MedicalRecordDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setAnnotations(TextHelper.getDefault());
     }
 
     public DetailDTO(final UUID id, final ConsultationDTO consultation,
-                     final MedicalRecordDTO medicalRecord, final Integer code,
+                     final MedicalRecordDTO medicalRecord, final String code,
                      final String annotations) {
         setId(id);
         setConsultation(consultation);
@@ -39,7 +39,6 @@ public final class DetailDTO {
         setCode(code);
         setAnnotations(annotations);
     }
-
 
     static DetailDTO getDefaultValue() {
         return new DetailDTO();
@@ -73,12 +72,12 @@ public final class DetailDTO {
         this.medicalRecord = ObjectHelper.getDefault(medicalRecord, MedicalRecordDTO.getDefaultValue());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public String getAnnotations() {

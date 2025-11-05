@@ -11,6 +11,7 @@ import java.util.UUID;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.SqlConnectionHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.DetailDAO;
@@ -37,8 +38,8 @@ public final class DetailPostgreSqlDAO extends SqlConnection implements DetailDA
             ps.setObject(1, entity.getId());
             ps.setObject(2, entity.getConsultation().getId());
             ps.setObject(3, entity.getMedicalRecord().getId());
-            ps.setObject(4, entity.getCode());
-            ps.setObject(5, entity.getAnotations());
+            ps.setString(4, entity.getCode());
+            ps.setString(5, entity.getAnnotations());
             ps.executeUpdate();
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.DETAIL_ERROR_SQL_INSERT_DETAIL.getTitle();
@@ -66,8 +67,8 @@ public final class DetailPostgreSqlDAO extends SqlConnection implements DetailDA
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, entity.getConsultation().getId());
             ps.setObject(2, entity.getMedicalRecord().getId());
-            ps.setObject(3, entity.getCode());
-            ps.setObject(4, entity.getAnotations());
+            ps.setString(3, entity.getCode());
+            ps.setString(4, entity.getAnnotations());
             ps.setObject(5, entity.getId());
             ps.executeUpdate();
         } catch (final SQLException exception) {
@@ -160,11 +161,11 @@ public final class DetailPostgreSqlDAO extends SqlConnection implements DetailDA
                 "\"medicalRecord\" = ", validated.getMedicalRecord().getId());
 
         addCondition(conditions, parameters,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(validated.getCode()),
+                !TextHelper.isEmptyWithTrim(validated.getCode()),
                 "\"code\" = ", validated.getCode());
 
         addCondition(conditions, parameters,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(validated.getAnnotations()),
+                !TextHelper.isEmptyWithTrim(validated.getAnnotations()),
                 "\"anotations\" = ", validated.getAnnotations());
 
         if (!conditions.isEmpty()) {
@@ -189,7 +190,7 @@ public final class DetailPostgreSqlDAO extends SqlConnection implements DetailDA
                 entity.setId(UUIDHelper.getUUIDHelper().getFromString(rs.getString("id")));
                 entity.setConsultation(new ConsultationEntity(UUIDHelper.getUUIDHelper().getFromString(rs.getString("consultation"))));
                 entity.setMedicalRecord(new MedicalRecordEntity(UUIDHelper.getUUIDHelper().getFromString(rs.getString("medicalRecord"))));
-                entity.setCode(rs.getInt("code"));
+                entity.setCode(rs.getString("code"));
                 entity.setAnnotations(rs.getString("annotations"));
                 detail.add(entity);
             }

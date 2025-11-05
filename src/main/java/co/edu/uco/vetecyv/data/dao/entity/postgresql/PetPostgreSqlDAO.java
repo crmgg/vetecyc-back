@@ -9,10 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
-import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.SqlConnectionHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.*;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.PetDAO;
 import co.edu.uco.vetecyv.data.dao.entity.SqlConnection;
@@ -39,15 +36,15 @@ public final class PetPostgreSqlDAO extends SqlConnection implements PetDAO {
         try (var ps = getConnection().prepareStatement(sql.toString())) {
 
             ps.setObject(1, entity.getId());
-            ps.setObject(2, entity.getTutor() != null ? entity.getTutor().getId() : null);
-            ps.setObject(3, entity.getGender() != null ? entity.getGender().getId() : null);
-            ps.setObject(4, entity.getRace() != null ? entity.getRace().getId() : null);
-            ps.setObject(5, entity.getCode());
-            ps.setObject(6, entity.getName());
-            ps.setObject(7, entity.getSize());
-            ps.setObject(8, entity.getDateBirth() != null ? new Timestamp(entity.getDateBirth().getTime()) : null);
-            ps.setObject(9, entity.getState() != null ? entity.getState().getId() : null);
-            ps.setObject(10, entity.getColor());
+            ps.setObject(2, entity.getTutor().getId());
+            ps.setObject(3, entity.getGender().getId());
+            ps.setObject(4, entity.getRace().getId());
+            ps.setString(5, entity.getCode());
+            ps.setString(6, entity.getName());
+            ps.setString(7, entity.getSize());
+            ps.setTimestamp(8, new Timestamp(DateHelper.getDefault(entity.getDateBirth()).getTime()));
+            ps.setBoolean(9, entity.getState());
+            ps.setString(10, entity.getColor());
 
             ps.executeUpdate();
 
@@ -173,26 +170,45 @@ public final class PetPostgreSqlDAO extends SqlConnection implements PetDAO {
         final var filter = ObjectHelper.getDefault(filterEntity, new PetEntity());
         final var conditions = new ArrayList<String>();
 
-        addCondition(conditions, parameters, !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getId()),
+        addCondition(conditions, parameters,
+                !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getId()),
                 "\"id\" =", filter.getId());
-        addCondition(conditions, parameters, !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getTutor().getId()),
+
+        addCondition(conditions, parameters,
+                !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getTutor().getId()),
                 "\"tutor\" =", filter.getTutor().getId());
-        addCondition(conditions, parameters, !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getGender().getId()),
+
+        addCondition(conditions, parameters,
+                !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getGender().getId()),
                 "\"gender\" =", filter.getGender().getId());
-        addCondition(conditions, parameters, !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getRace().getId()),
+
+        addCondition(conditions, parameters,
+                !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getRace().getId()),
                 "\"race\" =", filter.getRace().getId());
-        addCondition(conditions, parameters, !TextHelper.isEmptyWithTrim(filter.getCode()),
+
+        addCondition(conditions, parameters,
+                !TextHelper.isEmptyWithTrim(filter.getCode()),
                 "\"code\" =", filter.getCode());
-        addCondition(conditions, parameters, validated.getName() != null,
-                "\"name\" =", validated.getName());
-        addCondition(conditions, parameters, validated.getSize() != null,
-                "\"size\" =", validated.getSize());
-        addCondition(conditions, parameters, validated.getDateBirth() != null,
-                "\"dateBirth\" =", validated.getDateBirth());
-        addCondition(conditions, parameters, validated.getState() != null,
-                "\"state\" =", validated.getState() != null ? validated.getState().getId() : null);
-        addCondition(conditions, parameters, validated.getColor() != null,
-                "\"color\" =", validated.getColor());
+
+        addCondition(conditions, parameters,
+                !TextHelper.isEmptyWithTrim(filter.getName()),
+                "\"name\" =", filter.getName());
+
+        addCondition(conditions, parameters,
+                !TextHelper.isEmptyWithTrim(filter.getSize()),
+                "\"size\" =", filter.getSize());
+
+        addCondition(conditions, parameters,
+                !DateHelper.isValid(filter.getDateBirth()),
+                "\"dateBirth\" =", filter.getDateBirth());
+
+        addCondition(conditions, parameters,
+                !filter.getState(),
+                "\"state\" =", filter.getState());
+
+        addCondition(conditions, parameters,
+                !TextHelper.isEmptyWithTrim(filter.getColor()),
+                "\"color\" =", filter.getColor());
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ").append(String.join(" AND ", conditions));
@@ -229,10 +245,10 @@ public final class PetPostgreSqlDAO extends SqlConnection implements PetDAO {
                 pet.setTutor(tutor);
                 pet.setGender(gender);
                 pet.setRace(race);
-                pet.setCode(rs.getInt("code"));
+                pet.setCode(rs.getString("code"));
                 pet.setName(rs.getString("name"));
                 pet.setSize(rs.getString("size"));
-                pet.setDateBirth(DateHelper.toDate(rs.getTimestamp("dateBirth")));
+                pet.setDateBirth(rs.getTimestamp("dateBirth"));
                 pet.setState(rs.getBoolean("state"));
                 pet.setColor(rs.getString("color"));
 

@@ -2,6 +2,7 @@ package co.edu.uco.vetecyv.dto;
 
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 
 import java.util.UUID;
 
@@ -10,30 +11,29 @@ public final class SpecialityDoctorDTO {
     private UUID id;
     private DoctorDTO doctor;
     private SpecialityDTO speciality;
-    private Integer code;
+    private String code;
 
     public SpecialityDoctorDTO() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setDoctor(DoctorDTO.getDefaultValue());
         setSpeciality(SpecialityDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
     }
 
     public SpecialityDoctorDTO(final UUID id) {
         setId(id);
         setDoctor(DoctorDTO.getDefaultValue());
         setSpeciality(SpecialityDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
     }
 
     public SpecialityDoctorDTO(final UUID id, final DoctorDTO doctor,
-                                  final SpecialityDTO speciality, final Integer code) {
+                                final SpecialityDTO speciality, final String code) {
         setId(id);
         setDoctor(doctor);
         setSpeciality(speciality);
         setCode(code);
     }
-
 
     static SpecialityDoctorDTO getDefaultValue() {
         return new SpecialityDoctorDTO();
@@ -67,11 +67,11 @@ public final class SpecialityDoctorDTO {
         this.speciality = ObjectHelper.getDefault(speciality, SpecialityDTO.getDefaultValue());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 }

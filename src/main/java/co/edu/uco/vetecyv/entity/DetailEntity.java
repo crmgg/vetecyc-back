@@ -11,14 +11,14 @@ public final class DetailEntity {
     private UUID id;
     private ConsultationEntity consultation;
     private MedicalRecordEntity medicalRecord;
-    private Integer code;
+    private String code;
     private String annotations;
 
     public DetailEntity() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setConsultation(ConsultationEntity.createDefault());
         setMedicalRecord(MedicalRecordEntity.createDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setAnnotations(TextHelper.getDefault());
     }
 
@@ -26,12 +26,12 @@ public final class DetailEntity {
         setId(id);
         setConsultation(ConsultationEntity.createDefault());
         setMedicalRecord(MedicalRecordEntity.createDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setAnnotations(TextHelper.getDefault());
     }
 
     public DetailEntity(final UUID id, final ConsultationEntity consultation,
-                        final MedicalRecordEntity medicalRecord, final Integer code,
+                        final MedicalRecordEntity medicalRecord, final String code,
                         final String annotations) {
         setId(id);
         setConsultation(consultation);
@@ -68,12 +68,12 @@ public final class DetailEntity {
         this.medicalRecord = Optional.ofNullable(medicalRecord).orElse(MedicalRecordEntity.createDefault());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = Optional.ofNullable(code).orElse(Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public String getAnnotations() {

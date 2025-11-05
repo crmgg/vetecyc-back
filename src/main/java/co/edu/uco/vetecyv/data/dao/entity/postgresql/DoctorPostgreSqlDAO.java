@@ -33,7 +33,7 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, entity.getId());
-            preparedStatement.setString(2, entity.getIdentificationDocument());
+            preparedStatement.setString(2, entity.getIdentityDocument());
             preparedStatement.setString(3, entity.getName());
             preparedStatement.setString(4, entity.getFirstLastName());
             preparedStatement.setString(5, entity.getSecondLastName());
@@ -75,7 +75,7 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         sql.append("WHERE id = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
-            preparedStatement.setString(1, entity.getIdentificationDocument());
+            preparedStatement.setString(1, entity.getIdentityDocument());
             preparedStatement.setString(2, entity.getName());
             preparedStatement.setString(3, entity.getFirstLastName());
             preparedStatement.setString(4, entity.getSecondLastName());
@@ -195,6 +195,18 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPassword()),
                 "contrasena = ", filter.getPassword());
+
+        addCondition(conditions, parameterList,
+                !filter.isEmailConfirmation(),
+                "\"correoElectronicoConfirmado\" = ", filter.isEmailConfirmation());
+
+        addCondition(conditions, parameterList,
+                !filter.isPhoneConfirmation(),
+                "\"numeroTelefonoMovilConfirmado\" = ", filter.isPhoneConfirmation());
+
+        addCondition(conditions, parameterList,
+                !filter.isAccountState(),
+                "\"cuentaConfirmada\" = ", filter.isAccountState());
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");

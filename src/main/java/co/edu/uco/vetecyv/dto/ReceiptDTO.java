@@ -2,10 +2,9 @@ package co.edu.uco.vetecyv.dto;
 
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
-import co.edu.uco.vetecyv.dto.ConsultationDTO;
-
-import java.math.BigDecimal;
+import co.edu.uco.vetecyv.crosscuting.helper.NumericHelper;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,30 +13,30 @@ public final class ReceiptDTO {
     private UUID id;
     private AdministratorDTO administrator;
     private ConsultationDTO consultation;
-    private Integer code;
+    private String code;
     private Date date;
-    private BigDecimal totalCoast;
+    private Double totalCoast;
 
     public ReceiptDTO() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setAdministrator(AdministratorDTO.getDefaultValue());
         setConsultation(ConsultationDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setDate(DateHelper.getDefault());
-        setTotalCoast(BigDecimal.ZERO);
+        setTotalCoast(NumericHelper.getDefaultWithZero());
     }
 
     public ReceiptDTO(final UUID id) {
         setId(id);
         setAdministrator(AdministratorDTO.getDefaultValue());
         setConsultation(ConsultationDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setDate(DateHelper.getDefault());
-        setTotalCoast(BigDecimal.ZERO);
+        setTotalCoast(NumericHelper.getDefaultWithZero());
     }
 
     public ReceiptDTO(final UUID id, final AdministratorDTO administrator, final ConsultationDTO consultation,
-                      final Integer code, final Date date, final BigDecimal totalCoast) {
+                      final String code, final Date date, final Double totalCoast) {
         setId(id);
         setAdministrator(administrator);
         setConsultation(consultation);
@@ -78,12 +77,12 @@ public final class ReceiptDTO {
         this.consultation = ObjectHelper.getDefault(consultation, ConsultationDTO.getDefaultValue());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = code;
     }
 
     public Date getDate() {
@@ -94,11 +93,11 @@ public final class ReceiptDTO {
         this.date = DateHelper.getDefault(date);
     }
 
-    public BigDecimal getTotalCoast() {
+    public Double getTotalCoast() {
         return totalCoast;
     }
 
-    public void setTotalCoast(final BigDecimal totalCoast) {
-        this.totalCoast = ObjectHelper.getDefault(totalCoast, BigDecimal.ZERO);
+    public void setTotalCoast(final Double totalCoast) {
+        this.totalCoast = NumericHelper.getDefaultWithZero(totalCoast);
     }
 }

@@ -3,6 +3,7 @@ package co.edu.uco.vetecyv.dto;
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 
 import java.util.Date;
 import java.util.UUID;
@@ -13,7 +14,7 @@ public final class AppointmentDTO {
     private AgendaDTO agenda;
     private PetDTO pet;
     private StateDTO state;
-    private Integer code;
+    private String code;
     private Date dateTimeStare;
     private Date endDateTime;
 
@@ -22,7 +23,7 @@ public final class AppointmentDTO {
         setAgenda(AgendaDTO.getDefaultValue());
         setPet(PetDTO.getDefaultValue());
         setState(StateDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setDateTimeStare(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
@@ -32,13 +33,13 @@ public final class AppointmentDTO {
         setAgenda(AgendaDTO.getDefaultValue());
         setPet(PetDTO.getDefaultValue());
         setState(StateDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setDateTimeStare(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
     public AppointmentDTO(final UUID id, final AgendaDTO agenda, final PetDTO pet, final StateDTO state,
-                          final Integer code, final Date dateTimeStare, final Date endDateTime) {
+                          final String code, final Date dateTimeStare, final Date endDateTime) {
         setId(id);
         setAgenda(agenda);
         setPet(pet);
@@ -88,12 +89,12 @@ public final class AppointmentDTO {
         this.state = ObjectHelper.getDefault(state, StateDTO.getDefaultValue());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public Date getDateTimeStare() {

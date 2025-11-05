@@ -10,6 +10,7 @@ import java.util.UUID;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.SqlConnectionHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.GenderDAO;
@@ -32,8 +33,10 @@ public final class GenderPostgreSqlDAO extends SqlConnection implements GenderDA
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, entity.getId());
-            ps.setObject(2, entity.getName());
+            ps.setString(2, entity.getName());
+
             ps.executeUpdate();
+
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.GENDER_ERROR_SQL_INSERT_GENDER.getTitle();
             var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_GENDER.getContent();
@@ -55,8 +58,9 @@ public final class GenderPostgreSqlDAO extends SqlConnection implements GenderDA
         sql.append("WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
-            ps.setObject(1, entity.getName());
+            ps.setString(1, entity.getName());
             ps.setObject(2, entity.getId());
+
             ps.executeUpdate();
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.GENDER_ERROR_SQL_UPDATE_GENDER.getTitle();
@@ -140,7 +144,7 @@ public final class GenderPostgreSqlDAO extends SqlConnection implements GenderDA
                 "\"id\" = ", validated.getId());
 
         addCondition(conditions, parameters,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(validated.getName()),
+                !TextHelper.isEmptyWithTrim(validated.getName()),
                 "\"name\" = ", validated.getName());
 
         if (!conditions.isEmpty()) {

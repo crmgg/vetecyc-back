@@ -2,6 +2,7 @@ package co.edu.uco.vetecyv.dto;
 
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.Date;
@@ -11,13 +12,13 @@ public final class AgendaDTO {
 
     private UUID id;
     private SpecialityDoctorDTO specialityDoctor;
-    private Integer code;
+    private String code;
     private Date dateTime;
     private Date endDateTime;
 
     public AgendaDTO() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setSpecialityDoctor(SpecialityDoctorDTO.getDefaultValue());
         setDateTime(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
@@ -25,7 +26,7 @@ public final class AgendaDTO {
 
     public AgendaDTO(final UUID id) {
         setId(id);
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setSpecialityDoctor(SpecialityDoctorDTO.getDefaultValue());
         setDateTime(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
@@ -63,12 +64,12 @@ public final class AgendaDTO {
         this.specialityDoctor = ObjectHelper.getDefault(specialityDoctor, SpecialityDoctorDTO.getDefaultValue());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public Date getDateTime() {

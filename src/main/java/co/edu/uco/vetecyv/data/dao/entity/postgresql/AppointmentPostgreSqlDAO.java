@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
-import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.SqlConnectionHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.*;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.AppointmentDAO;
 import co.edu.uco.vetecyv.data.dao.entity.SqlConnection;
@@ -41,9 +39,8 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
             preparedStatement.setObject(3, entity.getState().getId());
             preparedStatement.setObject(4, entity.getPet().getId());
             preparedStatement.setObject(5, entity.getCode());
-            preparedStatement.setObject(6, new Timestamp(entity.getDateTimeStare().getTime()));
-            preparedStatement.setObject(7,  new Timestamp(entity.getEndDateTime().getTime()));
-
+            preparedStatement.setTimestamp(6, new Timestamp(DateHelper.getDefault(entity.getDateTimeStare()).getTime()));
+            preparedStatement.setTimestamp(7, new Timestamp(DateHelper.getDefault(entity.getEndDateTime()).getTime()));
             preparedStatement.executeUpdate();
 
         } catch (final SQLException exception) {
@@ -72,14 +69,14 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
         sql.append("WHERE \"id\" = ?");
 
         try (var preparedStatement = getConnection().prepareStatement(sql.toString())) {
-            preparedStatement.setObject(1, entity.getAgenda().getId());
-            preparedStatement.setObject(2, entity.getState().getId());
-            preparedStatement.setObject(3, entity.getPet().getId());
-            preparedStatement.setObject(4, entity.getCode());
-            preparedStatement.setObject(5, entity.getDateTimeStare() != null ? new Timestamp(entity.getDateTimeStare().getTime()) : null);
-            preparedStatement.setObject(6, entity.getEndDateTime() != null ? new Timestamp(entity.getEndDateTime().getTime()) : null);
-            preparedStatement.setObject(7, entity.getId());
-            preparedStatement.executeUpdate();
+            preparedStatement.setObject(1, entity.getId());
+            preparedStatement.setObject(2, entity.getAgenda().getId());
+            preparedStatement.setObject(3, entity.getState().getId());
+            preparedStatement.setObject(4, entity.getPet().getId());
+            preparedStatement.setObject(5, entity.getCode());
+            preparedStatement.setTimestamp(6, new Timestamp(DateHelper.getDefault(entity.getDateTimeStare()).getTime()));
+            preparedStatement.setTimestamp(7, new Timestamp(DateHelper.getDefault(entity.getEndDateTime()).getTime()));
+            preparedStatement.setObject(11, entity.getId());
 
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.USER_ERROR_SQL_EXCEPTION_UPDATING_APPOINTMENT.getContent();
@@ -124,7 +121,7 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
         try (var preparedStatement = getConnection().prepareStatement(sql)) {
 
             for (int index = 0; index < parametersList.size(); index++) {
-                preparedStatement.setObject(index + 1, parametersList.get(i));
+                preparedStatement.setObject(index + 1, parametersList.get(index));
             }
 
             return executeSentenceFindByFilter(preparedStatement);
@@ -182,15 +179,15 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
                 "\"mascota\" = ", filterEntityValidated.getPet().getId());
 
         addCondition(conditions, parametersList,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getCode()),
+                !TextHelper.isEmptyWithTrim(filterEntityValidated.getCode()),
                 "\"codigo\" = ", filterEntityValidated.getCode());
 
         addCondition(conditions, parametersList,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getDateTimeStare()),
+                !DateHelper.isValid(filterEntityValidated.getDateTimeStare()),
                 "\"fechaHoraInicio\" = ", new Timestamp(filterEntityValidated.getDateTimeStare().getTime()));
 
         addCondition(conditions, parametersList,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getEndDateTime()),
+                !DateHelper.isValid(filterEntityValidated.getEndDateTime()),
                 "\"fechaHoraFin\" = ", new Timestamp(filterEntityValidated.getEndDateTime().getTime()));
 
         if (!conditions.isEmpty()) {
@@ -220,7 +217,7 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
                 appointment.setAgenda(new AgendaEntity(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("agenda"))));
                 appointment.setState(new StateEntity(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("estado"))));
                 appointment.setPet(new PetEntity(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("mascota"))));
-                appointment.setCode(resultSet.getObject("codigo", Integer.class));
+                appointment.setCode(String.valueOf(resultSet.getObject("codigo", Integer.class)));
 
                 var dateTimeStart = resultSet.getTimestamp("fechaHoraInicio");
                 appointment.setDateTimeStare(dateTimeStart != null ? new java.util.Date(dateTimeStart.getTime()) : null);

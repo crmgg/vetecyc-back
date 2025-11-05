@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
-import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.SqlConnectionHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.*;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.MedicalRecordDAO;
 import co.edu.uco.vetecyv.data.dao.entity.SqlConnection;
@@ -36,8 +34,10 @@ public final class MedicalRecordPostgreSqlDAO extends SqlConnection implements M
             ps.setObject(1, entity.getId());
             ps.setObject(2, entity.getPet().getId());
             ps.setObject(3, entity.getCode());
-            ps.setObject(4, new Timestamp(entity.getCreationDate().getTime()));
+            ps.setTimestamp(4, new Timestamp(DateHelper.getDefault(entity.getCreationDate()).getTime()));
+
             ps.executeUpdate();
+
         } catch (final SQLException exception) {
             throw VetecyvException.create(
                     MessagesEnum.MEDICAL_RECORD_ERROR_SQL_INSERT_MEDICAL_RECORD.getTitle(),
@@ -63,10 +63,12 @@ public final class MedicalRecordPostgreSqlDAO extends SqlConnection implements M
         sql.append("WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
-            ps.setObject(1, entity.getPet() != null ? entity.getPet().getId() : null);
-            ps.setObject(2, entity.getCode());
-            ps.setObject(3, entity.getCreationDate() != null ? new Timestamp(entity.getCreationDate().getTime()) : null);
+            ps.setObject(1, entity.getId());
+            ps.setObject(2, entity.getPet().getId());
+            ps.setObject(3, entity.getCode());
+            ps.setTimestamp(4, new Timestamp(DateHelper.getDefault(entity.getCreationDate()).getTime()));
             ps.setObject(4, entity.getId());
+
             ps.executeUpdate();
         } catch (final SQLException exception) {
             throw VetecyvException.create(
@@ -160,11 +162,11 @@ public final class MedicalRecordPostgreSqlDAO extends SqlConnection implements M
                 "\"pet\" = ", filter.getPet().getId());
 
         addCondition(conditions, parameters,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getCode()),
+                !TextHelper.isEmptyWithTrim(filter.getCode()),
                 "\"code\" = ", filter.getCode());
 
         addCondition(conditions, parameters,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getCreationDate()),
+                !DateHelper.isValid(filter.getCreationDate()),
                 "\"creationDate\" = ", new Timestamp(filter.getCreationDate().getTime()));
 
         if (!conditions.isEmpty()) {
@@ -191,7 +193,7 @@ public final class MedicalRecordPostgreSqlDAO extends SqlConnection implements M
                 var petIdStr = rs.getString("pet");
                 record.setPet(petIdStr != null ? new PetEntity(UUIDHelper.getUUIDHelper().getFromString(petIdStr)) : new PetEntity());
 
-                record.setCode(rs.getInt("code"));
+                record.setCode(rs.getString("code"));
 
                 var ts = rs.getTimestamp("creationDate");
                 record.setCreationDate(ts != null ? new java.util.Date(ts.getTime()) : null);

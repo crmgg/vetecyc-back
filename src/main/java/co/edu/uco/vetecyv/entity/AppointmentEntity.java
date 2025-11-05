@@ -1,6 +1,7 @@
 package co.edu.uco.vetecyv.entity;
 
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ public final class AppointmentEntity {
     private AgendaEntity agendaEntity;
     private PetEntity petEntity;
     private StateEntity stateEntity;
-    private Integer code;
+    private String code;
     private Date dateTimeStare;
     private Date endDateTime;
 
@@ -21,7 +22,7 @@ public final class AppointmentEntity {
         setAgendaEntity(AgendaEntity.createDefault());
         setPetEntity(PetEntity.createDefault());
         setStateEntity(StateEntity.createDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setDateTimeStare(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
@@ -31,13 +32,13 @@ public final class AppointmentEntity {
         setAgendaEntity(AgendaEntity.createDefault());
         setPetEntity(PetEntity.createDefault());
         setStateEntity(StateEntity.createDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setDateTimeStare(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
     public AppointmentEntity(final UUID id, final AgendaEntity agenda, final PetEntity pet, final StateEntity state,
-                             final Integer code, final Date dateTimeStare, final Date endDateTime) {
+                             final String code, final Date dateTimeStare, final Date endDateTime) {
         setId(id);
         setAgendaEntity(agenda);
         setPetEntity(pet);
@@ -107,12 +108,12 @@ public final class AppointmentEntity {
         setStateEntity(state);
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = code == null ? Integer.valueOf(0) : code;
+    public void setCode(final String code) {
+        this.code = code;
     }
 
     public Date getDateTimeStare() {

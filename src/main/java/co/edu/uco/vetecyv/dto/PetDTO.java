@@ -14,7 +14,7 @@ public final class PetDTO {
     private TutorDTO tutor;
     private GenderDTO gender;
     private RaceDTO race;
-    private Integer code;
+    private String code;
     private String name;
     private String size;
     private Date dateBirth;
@@ -26,11 +26,11 @@ public final class PetDTO {
         setTutor(TutorDTO.getDefaultValue());
         setGender(GenderDTO.getDefaultValue());
         setRace(RaceDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setSize(TextHelper.getDefault());
         setDateBirth(DateHelper.getDefault());
-        setState(Boolean.TRUE);
+        setState(false);
         setColor(TextHelper.getDefault());
     }
 
@@ -39,16 +39,16 @@ public final class PetDTO {
         setTutor(TutorDTO.getDefaultValue());
         setGender(GenderDTO.getDefaultValue());
         setRace(RaceDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setSize(TextHelper.getDefault());
         setDateBirth(DateHelper.getDefault());
-        setState(Boolean.TRUE);
+        setState(false);
         setColor(TextHelper.getDefault());
     }
 
     public PetDTO(final UUID id, final TutorDTO tutor, final GenderDTO gender,
-                  final RaceDTO race, final Integer code, final String name, final String size,
+                  final RaceDTO race, final String code, final String name, final String size,
                   final Date dateBirth, final Boolean state, final String color) {
         setId(id);
         setTutor(tutor);
@@ -102,12 +102,12 @@ public final class PetDTO {
         this.race = ObjectHelper.getDefault(race, RaceDTO.getDefaultValue());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public String getName() {

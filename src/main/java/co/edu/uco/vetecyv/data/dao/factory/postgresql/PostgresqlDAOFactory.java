@@ -50,9 +50,9 @@
         @Override
         protected void openConnection() {
             try {
-                this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vetecyvdb", "postgres", "postgres");
+                this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vetecyv", "postgres", "park");
             } catch (final SQLException exception) {
-                var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
+                var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_EXPECTED_ERROR_VALIDATING_CONNECTION_STATUS.getContent();
                 var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_CONNECTION_STATUS.getContent();
                 throw VetecyvException.create(userMessage, technicalMessage);
             } catch (final Exception exception) {

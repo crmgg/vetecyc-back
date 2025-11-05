@@ -1,8 +1,9 @@
 package co.edu.uco.vetecyv.entity;
 
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.NumericHelper;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 public final class ConsultationEntity {
@@ -10,27 +11,27 @@ public final class ConsultationEntity {
     private UUID id;
     private AppointmentEntity appointment;
     private DetailEntity detail;
-    private Integer code;
-    private BigDecimal consultationPrice;
+    private String code;
+    private Double consultationPrice;
 
     public ConsultationEntity() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setAppointment(AppointmentEntity.createDefault());
         setDetail(DetailEntity.createDefault());
-        setCode(Integer.valueOf(0));
-        setConsultationPrice(BigDecimal.ZERO);
+        setCode(TextHelper.getDefault());
+        setConsultationPrice(NumericHelper.getDefaultWithZero());
     }
 
     public ConsultationEntity(final UUID id) {
         setId(id);
         setAppointment(AppointmentEntity.createDefault());
         setDetail(DetailEntity.createDefault());
-        setCode(Integer.valueOf(0));
-        setConsultationPrice(BigDecimal.ZERO);
+        setCode(TextHelper.getDefault());
+        setConsultationPrice(NumericHelper.getDefaultWithZero());
     }
 
     public ConsultationEntity(final UUID id, final AppointmentEntity appointment, final DetailEntity detail,
-                              final Integer code, final BigDecimal consultationPrice) {
+                              final String code, final Double consultationPrice) {
         setId(id);
         setAppointment(appointment);
         setDetail(detail);
@@ -66,19 +67,19 @@ public final class ConsultationEntity {
         this.detail = detail == null ? DetailEntity.createDefault() : detail;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = code == null ? Integer.valueOf(0) : code;
+    public void setCode(final String code) {
+        this.code = code;
     }
 
-    public BigDecimal getConsultationPrice() {
+    public Double getConsultationPrice() {
         return consultationPrice;
     }
 
-    public void setConsultationPrice(final BigDecimal consultationPrice) {
-        this.consultationPrice = consultationPrice == null ? BigDecimal.ZERO : consultationPrice;
+    public void setConsultationPrice(final Double consultationPrice) {
+        this.consultationPrice = NumericHelper.getDefaultWithZero(consultationPrice);
     }
 }

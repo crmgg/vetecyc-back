@@ -196,6 +196,19 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
                 !TextHelper.isEmptyWithTrim(filter.getPassword()),
                 "contrasena = ", filter.getPassword());
 
+        addCondition(conditions, parameterList,
+                !filter.isEmailConfirmation(),
+                "\"correoElectronicoConfirmado\" = ", filter.isEmailConfirmation());
+
+        addCondition(conditions, parameterList,
+                !filter.isPhoneConfirmation(),
+                "\"numeroTelefonoMovilConfirmado\" = ", filter.isPhoneConfirmation());
+
+        addCondition(conditions, parameterList,
+                !filter.isAccountState(),
+                "\"cuentaConfirmada\" = ", filter.isAccountState());
+
+
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
             sql.append(String.join(" AND ", conditions));

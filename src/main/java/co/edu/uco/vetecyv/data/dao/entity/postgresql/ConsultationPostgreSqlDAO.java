@@ -9,15 +9,14 @@ import java.util.List;
 import java.util.UUID;
 
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
-import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.SqlConnectionHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.*;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.ConsultationDAO;
 import co.edu.uco.vetecyv.data.dao.entity.SqlConnection;
 import co.edu.uco.vetecyv.entity.AppointmentEntity;
 import co.edu.uco.vetecyv.entity.ConsultationEntity;
 import co.edu.uco.vetecyv.entity.DetailEntity;
+import org.springframework.validation.annotation.Validated;
 
 public final class ConsultationPostgreSqlDAO extends SqlConnection implements ConsultationDAO {
 
@@ -37,8 +36,8 @@ public final class ConsultationPostgreSqlDAO extends SqlConnection implements Co
             ps.setObject(1, entity.getId());
             ps.setObject(2, entity.getAppointment().getId());
             ps.setObject(3, entity.getDetail().getId());
-            ps.setObject(4, entity.getCode());
-            ps.setBigDecimal(5, entity.getConsultationPrice());
+            ps.setString(4, entity.getCode());
+            ps.setDouble(5, entity.getConsultationPrice());
 
             ps.executeUpdate();
         } catch (final SQLException exception) {
@@ -67,8 +66,8 @@ public final class ConsultationPostgreSqlDAO extends SqlConnection implements Co
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, entity.getAppointment().getId());
             ps.setObject(2, entity.getDetail().getId());
-            ps.setObject(3, entity.getCode());
-            ps.setBigDecimal(4, entity.getConsultationPrice());
+            ps.setString(3, entity.getCode());
+            ps.setDouble(4, entity.getConsultationPrice());
             ps.setObject(5, entity.getId());
 
             ps.executeUpdate();
@@ -163,11 +162,11 @@ public final class ConsultationPostgreSqlDAO extends SqlConnection implements Co
                 "\"detail\" = ", validated.getDetail().getId());
 
         addCondition(conditions, parameters,
-                validated.getCode() != 0,
+                !TextHelper.isEmptyWithTrim(validated.getCode()),
                 "\"code\" = ", validated.getCode());
 
         addCondition(conditions, parameters,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(validated.getConsultationPrice()),
+                !NumericHelper.getDefaultWithZero().equals(validated.getConsultationPrice()),
                 "\"consultationPrice\" = ", validated.getConsultationPrice());
 
         if (!conditions.isEmpty()) {
@@ -192,8 +191,8 @@ public final class ConsultationPostgreSqlDAO extends SqlConnection implements Co
                 entity.setId(UUIDHelper.getUUIDHelper().getFromString(rs.getString("id")));
                 entity.setAppointment(new AppointmentEntity(UUIDHelper.getUUIDHelper().getFromString(rs.getString("appointment"))));
                 entity.setDetail(new DetailEntity(UUIDHelper.getUUIDHelper().getFromString(rs.getString("detail"))));
-                entity.setCode(rs.getInt("code"));
-                entity.setConsultationPrice(rs.getBigDecimal("consultationPrice"));
+                entity.setCode(rs.getString("code"));
+                entity.setConsultationPrice(rs.getDouble("consultationPrice"));
 
                 consultation.add(entity);
             }

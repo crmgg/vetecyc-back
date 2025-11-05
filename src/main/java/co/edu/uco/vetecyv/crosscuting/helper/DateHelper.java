@@ -1,4 +1,3 @@
-// java
 package co.edu.uco.vetecyv.crosscuting.helper;
 
 import java.util.Date;

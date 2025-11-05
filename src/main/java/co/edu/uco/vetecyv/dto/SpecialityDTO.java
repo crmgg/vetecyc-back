@@ -11,25 +11,25 @@ import java.util.UUID;
 public final class SpecialityDTO {
 
     private UUID id;
-    private Integer code;
+    private String code;
     private Date dateTime;
     private String name;
 
     public SpecialityDTO() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setDateTime(DateHelper.getDefault());
     }
 
     public SpecialityDTO(final UUID id) {
         setId(id);
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setDateTime(DateHelper.getDefault());
     }
 
-    public SpecialityDTO(final UUID id, final Integer code, final String name, final Date dateTime) {
+    public SpecialityDTO(final UUID id, final String code, final String name, final Date dateTime) {
         setId(id);
         setCode(code);
         setName(name);
@@ -52,12 +52,12 @@ public final class SpecialityDTO {
         this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public Date getDateTime() {

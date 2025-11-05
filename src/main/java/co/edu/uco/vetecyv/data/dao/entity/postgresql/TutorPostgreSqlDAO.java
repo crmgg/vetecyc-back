@@ -40,8 +40,8 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
             preparedStatement.setString(6, entity.getEmail());
             preparedStatement.setString(7, entity.getPhoneNumber());
             preparedStatement.setString(8, entity.getPassword());
-            preparedStatement.setBoolean(9, entity.isEmailConfirmed());
-            preparedStatement.setBoolean(10, entity.isPhoneConfirmed());
+            preparedStatement.setBoolean(9, entity.isEmailConfirmation());
+            preparedStatement.setBoolean(10, entity.isPhoneConfirmation());
             preparedStatement.setBoolean(11, entity.isAccountState());
 
             preparedStatement.executeUpdate();
@@ -82,8 +82,8 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
             preparedStatement.setString(5, entity.getEmail());
             preparedStatement.setString(6, entity.getPhoneNumber());
             preparedStatement.setString(7, entity.getPassword());
-            preparedStatement.setBoolean(8, entity.isEmailConfirmed());
-            preparedStatement.setBoolean(9, entity.isPhoneConfirmed());
+            preparedStatement.setBoolean(8, entity.isEmailConfirmation());
+            preparedStatement.setBoolean(9, entity.isPhoneConfirmation());
             preparedStatement.setBoolean(10, entity.isAccountState());
             preparedStatement.setObject(11, entity.getId());
 
@@ -196,6 +196,18 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
                 !TextHelper.isEmptyWithTrim(filter.getPassword()),
                 "contrasena = ", filter.getPassword());
 
+        addCondition(conditions, parameterList,
+                !filter.isEmailConfirmation(),
+                "\"correoElectronicoConfirmado\" = ", filter.isEmailConfirmation());
+
+        addCondition(conditions, parameterList,
+                !filter.isPhoneConfirmation(),
+                "\"numeroTelefonoMovilConfirmado\" = ", filter.isPhoneConfirmation());
+
+        addCondition(conditions, parameterList,
+                !filter.isAccountState(),
+                "\"cuentaConfirmada\" = ", filter.isAccountState());
+
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
             sql.append(String.join(" AND ", conditions));
@@ -224,8 +236,8 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
                 tutor.setEmail(resultSet.getString("correoElectronico"));
                 tutor.setPhoneNumber(resultSet.getString("numeroTelefono"));
                 tutor.setPassword(resultSet.getString("contrasena"));
-                tutor.setEmailConfirmed(resultSet.getBoolean("correoElectronicoConfirmado"));
-                tutor.setPhoneConfirmed(resultSet.getBoolean("numeroTelefonoConfirmado"));
+                tutor.setEmailConfirmation(resultSet.getBoolean("correoElectronicoConfirmado"));
+                tutor.setPhoneConfirmation(resultSet.getBoolean("numeroTelefonoConfirmado"));
                 tutor.setAccountState(resultSet.getBoolean("estadoCuenta"));
 
                 list.add(tutor);

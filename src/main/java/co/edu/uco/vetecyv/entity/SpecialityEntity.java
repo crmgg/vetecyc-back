@@ -1,5 +1,6 @@
 package co.edu.uco.vetecyv.entity;
 
+import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
@@ -9,29 +10,25 @@ import java.util.UUID;
 public final class SpecialityEntity {
 
     private UUID id;
-    private Integer code;
-    private Date dateTime;
+    private String code;
     private String name;
 
     public SpecialityEntity() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());
-        setDateTime(new Date());
     }
 
     public SpecialityEntity(final UUID id) {
         setId(id);
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());
-        setDateTime(new Date());
     }
 
-    public SpecialityEntity(final UUID id, final Integer code, final String name, final Date dateTime) {
+    public SpecialityEntity(final UUID id, final String code, final String name) {
         setId(id);
         setCode(code);
         setName(name);
-        setDateTime(dateTime);
     }
 
     public static SpecialityEntity createDefault() {
@@ -46,21 +43,14 @@ public final class SpecialityEntity {
         this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = code == null ? Integer.valueOf(0) : code;
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
-    public Date getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(final Date dateTime) {
-        this.dateTime = dateTime == null ? new Date() : dateTime;
-    }
 
     public String getName() {
         return name;

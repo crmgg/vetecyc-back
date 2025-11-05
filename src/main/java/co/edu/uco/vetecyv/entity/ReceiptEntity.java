@@ -1,8 +1,10 @@
 package co.edu.uco.vetecyv.entity;
 
+import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.NumericHelper;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,35 +13,35 @@ public final class ReceiptEntity {
     private UUID id;
     private AdministratorEntity administrator;
     private ConsultationEntity consultation;
-    private Integer code;
-    private Date date;
-    private BigDecimal totalCoast;
+    private String code;
+    private Date dateTime;
+    private Double totalCoast;
 
     public ReceiptEntity() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setAdministrator(AdministratorEntity.createDefault());
         setConsultation(ConsultationEntity.createDefault());
-        setCode(Integer.valueOf(0));
-        setDate(new Date());
-        setTotalCoast(BigDecimal.ZERO);
+        setCode(TextHelper.getDefault());
+        setDateTime(DateHelper.getDefault());
+        setTotalCoast(NumericHelper.getDefaultWithZero());
     }
 
     public ReceiptEntity(final UUID id) {
         setId(id);
         setAdministrator(AdministratorEntity.createDefault());
         setConsultation(ConsultationEntity.createDefault());
-        setCode(Integer.valueOf(0));
-        setDate(new Date());
-        setTotalCoast(BigDecimal.ZERO);
+        setCode(TextHelper.getDefault());
+        setDateTime(DateHelper.getDefault());
+        setTotalCoast(NumericHelper.getDefaultWithZero());
     }
 
     public ReceiptEntity(final UUID id, final AdministratorEntity administrator, final ConsultationEntity consultation,
-                         final Integer code, final Date date, final BigDecimal totalCoast) {
+                         final String code, final Date dateTime, final Double totalCoast) {
         setId(id);
         setAdministrator(administrator);
         setConsultation(consultation);
         setCode(code);
-        setDate(date);
+        setDateTime(dateTime);
         setTotalCoast(totalCoast);
     }
 
@@ -71,27 +73,27 @@ public final class ReceiptEntity {
         this.consultation = consultation == null ? ConsultationEntity.createDefault() : consultation;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = code == null ? Integer.valueOf(0) : code;
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(final Date date) {
-        this.date = date == null ? new Date() : date;
+    public void setDateTime(final Date dateTime) {
+        this.dateTime = DateHelper.getDefault(dateTime);
     }
 
-    public BigDecimal getTotalCoast() {
+    public Double getTotalCoast() {
         return totalCoast;
     }
 
-    public void setTotalCoast(final BigDecimal totalCoast) {
-        this.totalCoast = totalCoast == null ? BigDecimal.ZERO : totalCoast;
+    public void setTotalCoast(final Double totalCoast) {
+        this.totalCoast = NumericHelper.getDefaultWithZero(totalCoast);
     }
 }

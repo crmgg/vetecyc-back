@@ -1,5 +1,7 @@
 package co.edu.uco.vetecyv.entity;
 
+import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.Date;
@@ -10,25 +12,25 @@ public final class MedicalRecordEntity {
 
     private UUID id;
     private PetEntity pet;
-    private Integer code;
+    private String code;
     private Date creationDate;
 
     public MedicalRecordEntity() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setPet(PetEntity.createDefault());
-        setCode(Integer.valueOf(0));
-        setCreationDate(new Date());
+        setCode(TextHelper.getDefault());
+        setCreationDate(DateHelper.getDefault());
     }
 
     public MedicalRecordEntity(final UUID id){
         setId(id);
         setPet(PetEntity.createDefault());
-        setCode(Integer.valueOf(0));
-        setCreationDate(new Date());
+        setCode(TextHelper.getDefault());
+        setCreationDate(DateHelper.getDefault());
     }
 
     public MedicalRecordEntity(final UUID id, final PetEntity pet,
-                               final Integer code, final Date creationDate) {
+                               final String code, final Date creationDate) {
         setId(id);
         setPet(pet);
         setCode(code);
@@ -55,12 +57,12 @@ public final class MedicalRecordEntity {
         this.pet = Optional.ofNullable(pet).orElse(PetEntity.createDefault());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = Optional.ofNullable(code).orElse(Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public Date getCreationDate() {

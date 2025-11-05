@@ -1,9 +1,10 @@
 package co.edu.uco.vetecyv.dto;
 
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.NumericHelper;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 public final class ConsultationDTO {
@@ -11,27 +12,27 @@ public final class ConsultationDTO {
     private UUID id;
     private AppointmentDTO appointment;
     private DetailDTO detail;
-    private Integer code;
-    private BigDecimal consultationPrice;
+    private String code;
+    private Double consultationPrice;
 
     public ConsultationDTO() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
         setAppointment(AppointmentDTO.getDefaultValue());
         setDetail(DetailDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
-        setConsultationPrice(BigDecimal.ZERO);
+        setCode(TextHelper.getDefault());
+        setConsultationPrice(NumericHelper.getDefaultWithZero());
     }
 
     public ConsultationDTO(final UUID id) {
         setId(id);
         setAppointment(AppointmentDTO.getDefaultValue());
         setDetail(DetailDTO.getDefaultValue());
-        setCode(Integer.valueOf(0));
-        setConsultationPrice(BigDecimal.ZERO);
+        setCode(TextHelper.getDefault());
+        setConsultationPrice(NumericHelper.getDefaultWithZero());
     }
 
     public ConsultationDTO(final UUID id, final AppointmentDTO appointment, final DetailDTO detail,
-                           final Integer code, final BigDecimal consultationPrice) {
+                           final String code, final Double consultationPrice) {
         setId(id);
         setAppointment(appointment);
         setDetail(detail);
@@ -71,19 +72,19 @@ public final class ConsultationDTO {
         this.detail = ObjectHelper.getDefault(detail, DetailDTO.getDefaultValue());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = ObjectHelper.getDefault(code, Integer.valueOf(0));
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
-    public BigDecimal getConsultationPrice() {
+    public Double getConsultationPrice() {
         return consultationPrice;
     }
 
-    public void setConsultationPrice(final BigDecimal consultationPrice) {
-        this.consultationPrice = ObjectHelper.getDefault(consultationPrice, BigDecimal.ZERO);
+    public void setConsultationPrice(final Double consultationPrice) {
+        this.consultationPrice = NumericHelper.getDefaultWithZero(consultationPrice);
     }
 }

@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
-import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.SqlConnectionHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.*;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.entity.AgendaDAO;
 import co.edu.uco.vetecyv.data.dao.entity.SqlConnection;
@@ -37,9 +35,9 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
 
             preparedStatement.setObject(1, entity.getId());
             preparedStatement.setObject(2, entity.getSpecialityDoctor().getId());
-            preparedStatement.setObject(3, entity.getCode());
-            preparedStatement.setTimestamp(4, new Timestamp(entity.getDateTime().getTime()));
-            preparedStatement.setTimestamp(5, new Timestamp(entity.getEndDateTime().getTime()));
+            preparedStatement.setString(3, entity.getCode());
+            preparedStatement.setTimestamp(4, new Timestamp(DateHelper.getDefault(entity.getDateTime()).getTime()));
+            preparedStatement.setTimestamp(5, new Timestamp(DateHelper.getDefault(entity.getEndDateTime()).getTime()));
 
             preparedStatement.executeUpdate();
 
@@ -120,15 +118,15 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
                 "a.\"especialidadDoctor\" = ", filterEntityValidated.getSpecialityDoctor().getId());
 
         addCondition(conditions, parametersList,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getCode()),
+                !TextHelper.isEmptyWithTrim(filterEntityValidated.getCode()),
                 "a.\"codigo\" = ", filterEntityValidated.getCode());
 
         addCondition(conditions, parametersList,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getDateTime()),
+                !DateHelper.isValid(filterEntityValidated.getDateTime()),
                 "a.\"fechaInicio\" = ", new Timestamp(filterEntityValidated.getDateTime().getTime()));
 
         addCondition(conditions, parametersList,
-                !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getEndDateTime()),
+                !DateHelper.isValid(filterEntityValidated.getEndDateTime()),
                 "a.\"fechaFin\" = ", new Timestamp(filterEntityValidated.getEndDateTime().getTime()));
 
         if (!conditions.isEmpty()) {
@@ -159,7 +157,7 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
                 var agenda = new AgendaEntity();
                 agenda.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idAgenda")));
                 agenda.setSpecialityDoctor(speciality);
-                agenda.setCode(resultSet.getInt("codigo"));
+                agenda.setCode(resultSet.getString("codigo"));
                 agenda.setDateTime(resultSet.getTimestamp("fechaInicio"));
                 agenda.setEndDateTime(resultSet.getTimestamp("fechaFin"));
 

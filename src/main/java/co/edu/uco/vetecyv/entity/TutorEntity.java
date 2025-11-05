@@ -1,158 +1,158 @@
 package co.edu.uco.vetecyv.entity;
 
-    import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
-    import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
-    import java.util.UUID;
+import java.util.UUID;
 
-    public final class TutorEntity {
+public final class TutorEntity {
 
-        private UUID id;
-        private String identityDocument;
-        private String name;
-        private String firstLastName;
-        private String secondLastName;
-        private String email;
-        private String phoneNumber;
-        private String password;
-        private boolean emailConfirmed;
-        private boolean phoneConfirmed;
-        private boolean accountState;
+    private UUID id;
+    private String identityDocument;
+    private String name;
+    private String firstLastName;
+    private String secondLastName;
+    private String email;
+    private String phoneNumber;
+    private String password;
+    private boolean emailConfirmed;
+    private boolean phoneConfirmed;
+    private boolean accountState;
 
-        public TutorEntity() {
-            setId(UUIDHelper.getUUIDHelper().getDefault());
-            setIdentityDocument(TextHelper.getDefault());
-            setName(TextHelper.getDefault());
-            setFirstLastName(TextHelper.getDefault());
-            setSecondLastName(TextHelper.getDefault());
-            setEmail(TextHelper.getDefault());
-            setPhoneNumber(TextHelper.getDefault());
-            setPassword(TextHelper.getDefault());
-            setEmailConfirmed(false);
-            setPhoneConfirmed(false);
-            setAccountState(false);
-        }
-
-        public TutorEntity(final UUID id) {
-            setId(id);
-            setIdentityDocument(TextHelper.getDefault());
-            setName(TextHelper.getDefault());
-            setFirstLastName(TextHelper.getDefault());
-            setSecondLastName(TextHelper.getDefault());
-            setEmail(TextHelper.getDefault());
-            setPhoneNumber(TextHelper.getDefault());
-            setPassword(TextHelper.getDefault());
-            setEmailConfirmed(false);
-            setPhoneConfirmed(false);
-            setAccountState(false);
-        }
-
-        public TutorEntity(final UUID id, final String identityDocument, final String name, final String firstLastName,
-                           final String secondLastName, final String email, final String phoneNumber, final String password,
-                           final boolean emailConfirmed, final boolean phoneConfirmed, final boolean accountState) {
-
-            setId(id);
-            setIdentityDocument(identityDocument);
-            setName(name);
-            setFirstLastName(firstLastName);
-            setSecondLastName(secondLastName);
-            setEmail(email);
-            setPhoneNumber(phoneNumber);
-            setPassword(password);
-            setEmailConfirmed(emailConfirmed);
-            setPhoneConfirmed(phoneConfirmed);
-            setAccountState(accountState);
-        }
-
-        public static TutorEntity createDefault() {
-            return new TutorEntity();
-        }
-
-        public UUID getId() {
-            return id;
-        }
-
-        public void setId(final UUID id) {
-            this.id = UUIDHelper.getUUIDHelper().getDefault(id);
-        }
-
-        public String getIdentityDocument() {
-            return IdentityDocument;
-        }
-
-        public void setIdentityDocument(final String identityDocument) {
-            this.IdentityDocument = TextHelper.getDefaultWithTrim(identityDocument);
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(final String name) {
-            this.name = TextHelper.getDefaultWithTrim(name);
-        }
-
-        public String getFirstLastName() {
-            return firstLastName;
-        }
-
-        public void setFirstLastName(final String firstLastName) {
-            this.firstLastName = TextHelper.getDefaultWithTrim(firstLastName);
-        }
-
-        public String getSecondLastName() {
-            return secondLastName;
-        }
-
-        public void setSecondLastName(final String secondLastName) {
-            this.secondLastName = TextHelper.getDefaultWithTrim(secondLastName);
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(final String email) {
-            this.email = TextHelper.getDefaultWithTrim(email);
-        }
-
-        public String getPhoneNumber() {
-            return phoneNumber;
-        }
-
-        public void setPhoneNumber(final String phoneNumber) {
-            this.phoneNumber = TextHelper.getDefaultWithTrim(phoneNumber);
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(final String password) {
-            this.password = TextHelper.getDefaultWithTrim(password);
-        }
-
-        public boolean isEmailConfirmed() {
-            return emailConfirmed;
-        }
-
-        public void setEmailConfirmed(final boolean emailConfirmed) {
-            this.emailConfirmed = emailConfirmed;
-        }
-
-        public boolean isPhoneConfirmed() {
-            return phoneConfirmed;
-        }
-
-        public void setPhoneConfirmed(final boolean phoneConfirmed) {
-            this.phoneConfirmed = phoneConfirmed;
-        }
-
-        public boolean isAccountState() {
-            return accountState;
-        }
-
-        public void setAccountState(final boolean accountState) {
-            this.accountState = accountState;
-        }
+    public TutorEntity() {
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+        setIdentityDocument(TextHelper.getDefault());
+        setName(TextHelper.getDefault());
+        setFirstLastName(TextHelper.getDefault());
+        setSecondLastName(TextHelper.getDefault());
+        setEmail(TextHelper.getDefault());
+        setPhoneNumber(TextHelper.getDefault());
+        setPassword(TextHelper.getDefault());
+        setEmailConfirmation(false);
+        setPhoneConfirmation(false);
+        setAccountState(false);
     }
+
+    public TutorEntity(final UUID id) {
+        setId(id);
+        setIdentityDocument(TextHelper.getDefault());
+        setName(TextHelper.getDefault());
+        setFirstLastName(TextHelper.getDefault());
+        setSecondLastName(TextHelper.getDefault());
+        setEmail(TextHelper.getDefault());
+        setPhoneNumber(TextHelper.getDefault());
+        setPassword(TextHelper.getDefault());
+        setEmailConfirmation(false);
+        setPhoneConfirmation(false);
+        setAccountState(false);
+    }
+
+    public TutorEntity(final UUID id, final String identityDocument, final String name, final String firstLastName,
+                       final String secondLastName, final String email, final String phoneNumber, final String password,
+                       final boolean emailConfirmation, final boolean phoneConfirmation, final boolean accountState) {
+
+        setId(id);
+        setIdentityDocument(identityDocument);
+        setName(name);
+        setFirstLastName(firstLastName);
+        setSecondLastName(secondLastName);
+        setEmail(email);
+        setPhoneNumber(phoneNumber);
+        setPassword(password);
+        setEmailConfirmation(emailConfirmation);
+        setPhoneConfirmation(phoneConfirmation);
+        setAccountState(accountState);
+    }
+
+    public static TutorEntity createDefault() {
+        return new TutorEntity();
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = UUIDHelper.getUUIDHelper().getDefault(id);
+    }
+
+    public String getIdentityDocument() {
+        return identityDocument;
+    }
+
+    public void setIdentityDocument(final String identityDocument) {
+        this.identityDocument = TextHelper.getDefaultWithTrim(identityDocument);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = TextHelper.getDefaultWithTrim(name);
+    }
+
+    public String getFirstLastName() {
+        return firstLastName;
+    }
+
+    public void setFirstLastName(final String firstLastName) {
+        this.firstLastName = TextHelper.getDefaultWithTrim(firstLastName);
+    }
+
+    public String getSecondLastName() {
+        return secondLastName;
+    }
+
+    public void setSecondLastName(final String secondLastName) {
+        this.secondLastName = TextHelper.getDefaultWithTrim(secondLastName);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = TextHelper.getDefaultWithTrim(email);
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(final String phoneNumber) {
+        this.phoneNumber = TextHelper.getDefaultWithTrim(phoneNumber);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(final String password) {
+        this.password = TextHelper.getDefaultWithTrim(password);
+    }
+
+    public boolean isEmailConfirmation() {
+        return emailConfirmed;
+    }
+
+    public void setEmailConfirmation(final boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
+    }
+
+    public boolean isPhoneConfirmation() {
+        return phoneConfirmed;
+    }
+
+    public void setPhoneConfirmation(final boolean phoneConfirmed) {
+        this.phoneConfirmed = phoneConfirmed;
+    }
+
+    public boolean isAccountState() {
+        return accountState;
+    }
+
+    public void setAccountState(final boolean accountState) {
+        this.accountState = accountState;
+    }
+}

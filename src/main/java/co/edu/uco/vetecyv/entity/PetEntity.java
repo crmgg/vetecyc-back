@@ -1,9 +1,11 @@
 package co.edu.uco.vetecyv.entity;
 
+import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 public final class PetEntity {
@@ -12,7 +14,7 @@ public final class PetEntity {
     private TutorEntity tutor;
     private GenderEntity gender;
     private RaceEntity race;
-    private Integer code;
+    private String code;
     private String name;
     private String size;
     private Date dateBirth;
@@ -24,11 +26,11 @@ public final class PetEntity {
         setTutor(TutorEntity.createDefault());
         setGender(GenderEntity.createDefault());
         setRace(RaceEntity.createDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setSize(TextHelper.getDefault());
-        setDateBirth(new Date());
-        setState(Boolean.TRUE);
+        setDateBirth(DateHelper.getDefault());
+        setState(false);
         setColor(TextHelper.getDefault());
     }
 
@@ -37,16 +39,16 @@ public final class PetEntity {
         setTutor(TutorEntity.createDefault());
         setGender(GenderEntity.createDefault());
         setRace(RaceEntity.createDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setSize(TextHelper.getDefault());
-        setDateBirth(new Date());
-        setState(Boolean.TRUE);
+        setDateBirth(DateHelper.getDefault());
+        setState(false);
         setColor(TextHelper.getDefault());
     }
 
     public PetEntity(final UUID id, final TutorEntity tutor, final GenderEntity gender,
-                     final RaceEntity race, final Integer code, final String name, final String size,
+                     final RaceEntity race, final String code, final String name, final String size,
                      final Date dateBirth, final Boolean state, final String color) {
         setId(id);
         setTutor(tutor);
@@ -96,12 +98,12 @@ public final class PetEntity {
         this.race = race == null ? RaceEntity.createDefault() : race;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = code == null ? Integer.valueOf(0) : code;
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public String getName() {
@@ -125,7 +127,7 @@ public final class PetEntity {
     }
 
     public void setDateBirth(final Date dateBirth) {
-        this.dateBirth = dateBirth == null ? new Date() : dateBirth;
+        this.dateBirth = Optional.ofNullable(dateBirth).orElse(DateHelper.getDefault());
     }
 
     public Boolean getState() {
@@ -133,7 +135,7 @@ public final class PetEntity {
     }
 
     public void setState(final Boolean state) {
-        this.state = state == null ? Boolean.TRUE : state;
+        this.state = Optional.ofNullable(state).orElse(Boolean.FALSE);
     }
 
     public String getColor() {

@@ -1,4 +1,3 @@
-// java
 package co.edu.uco.vetecyv.business.domain;
 
 import java.util.Date;

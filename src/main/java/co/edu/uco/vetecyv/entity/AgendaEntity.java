@@ -4,19 +4,20 @@ import java.util.Date;
 import java.util.UUID;
 
 import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 
 public final class AgendaEntity {
 
     private UUID id;
     private SpecialityDoctorEntity specialityDoctor;
-    private Integer code;
+    private String code;
     private Date dateTime;
     private Date endDateTime;
 
     public AgendaEntity() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setSpecialityDoctor(SpecialityDoctorEntity.createDefault());
         setDateTime(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
@@ -24,15 +25,16 @@ public final class AgendaEntity {
 
     public AgendaEntity(final UUID id) {
         setId(id);
-        setCode(Integer.valueOf(0));
+        setCode(TextHelper.getDefault());
         setSpecialityDoctor(SpecialityDoctorEntity.createDefault());
         setDateTime(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
-    public AgendaEntity(final UUID id, final SpecialityDoctorEntity specialityDoctor,
+    public AgendaEntity(final UUID id, final String code, final SpecialityDoctorEntity specialityDoctor,
                         final Date dateTime, final Date endDateTime) {
         setId(id);
+        setCode(code);
         setSpecialityDoctor(specialityDoctor);
         setDateTime(dateTime);
         setEndDateTime(endDateTime);
@@ -58,12 +60,12 @@ public final class AgendaEntity {
         this.specialityDoctor = specialityDoctor == null ? SpecialityDoctorEntity.createDefault() : specialityDoctor;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(final Integer code) {
-        this.code = code == null ? Integer.valueOf(0) : code;
+    public void setCode(final String code) {
+        this.code = TextHelper.getDefaultWithTrim(code);
     }
 
     public Date getDateTime() {

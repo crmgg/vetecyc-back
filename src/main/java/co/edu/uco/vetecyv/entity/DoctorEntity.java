@@ -8,7 +8,7 @@ import java.util.UUID;
 public final class DoctorEntity {
 
     private UUID id;
-    private String identificationDocument;
+    private String identityDocument;
     private String name;
     private String firstLastName;
     private String secondLastName;
@@ -47,22 +47,22 @@ public final class DoctorEntity {
         setAccountState(false);
     }
 
-    public DoctorEntity(final UUID id, final String identificationDocument, final String name,
+    public DoctorEntity(final UUID id, final String identityDocument, final String name,
                         final String firstLastName, final String secondLastName,
                         final String email, final String phoneNumber, final String password,
                         final Boolean emailConfirmation, final Boolean phoneConfirmation,
                         final Boolean accountState) {
         setId(id);
-        setIdentityDocument(identificationDocument);
+        setIdentityDocument(identityDocument);
         setName(name);
         setFirstLastName(firstLastName);
         setSecondLastName(secondLastName);
         setEmail(email);
         setPhoneNumber(phoneNumber);
         setPassword(password);
-        setEmailConfirmation(emailConfirmation != null ? emailConfirmation : false);
-        setPhoneConfirmation(phoneConfirmation != null ? phoneConfirmation : false);
-        setAccountState(accountState != null ? accountState : false);
+        setEmailConfirmation(emailConfirmation);
+        setPhoneConfirmation(phoneConfirmation);
+        setAccountState(accountState);
     }
 
     public static DoctorEntity createDefault() {
@@ -78,11 +78,11 @@ public final class DoctorEntity {
     }
 
     public String getIdentityDocument() {
-        return identificationDocument;
+        return identityDocument;
     }
 
     public void setIdentityDocument(final String identityDocument) {
-        this.identificationDocument = TextHelper.getDefaultWithTrim(identityDocument);
+        this.identityDocument = TextHelper.getDefaultWithTrim(identityDocument);
     }
 
     public String getName() {
