@@ -28,7 +28,7 @@ public final class GenderPostgreSqlDAO extends SqlConnection implements GenderDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO \"Gender\" (\"id\", \"name\") ");
+        sql.append("INSERT INTO \"gender\" (\"id\", \"name\") ");
         sql.append("VALUES (?, ?)");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
@@ -53,7 +53,7 @@ public final class GenderPostgreSqlDAO extends SqlConnection implements GenderDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE \"Gender\" SET ");
+        sql.append("UPDATE \"gender\" SET ");
         sql.append("\"name\" = ? ");
         sql.append("WHERE \"id\" = ?");
 
@@ -77,7 +77,7 @@ public final class GenderPostgreSqlDAO extends SqlConnection implements GenderDA
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        final var sql = new StringBuilder("DELETE FROM \"Gender\" WHERE \"id\" = ?");
+        final var sql = new StringBuilder("DELETE FROM \"gender\" WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, id);
@@ -129,7 +129,7 @@ public final class GenderPostgreSqlDAO extends SqlConnection implements GenderDA
     private String createSentenceFindByFilter(final GenderEntity filterEntity, final List<Object> parameters) {
         final var sql = new StringBuilder();
         sql.append("SELECT \"id\", \"name\" ");
-        sql.append("FROM \"Gender\" ");
+        sql.append("FROM \"gender\" ");
         createWhereClauseFindByFilter(sql, parameters, filterEntity);
         return sql.toString();
     }

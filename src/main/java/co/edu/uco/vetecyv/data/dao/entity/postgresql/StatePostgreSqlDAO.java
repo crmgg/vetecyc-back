@@ -52,7 +52,7 @@ public final class StatePostgreSqlDAO extends SqlConnection implements StateDAO 
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE \"State\" SET ");
+        sql.append("UPDATE \"state\" SET ");
         sql.append("\"name\" = ? ");
         sql.append("WHERE \"id\" = ?");
 
@@ -75,7 +75,7 @@ public final class StatePostgreSqlDAO extends SqlConnection implements StateDAO 
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        final var sql = new StringBuilder("DELETE FROM \"State\" WHERE \"id\" = ?");
+        final var sql = new StringBuilder("DELETE FROM \"state\" WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, id);
@@ -127,7 +127,7 @@ public final class StatePostgreSqlDAO extends SqlConnection implements StateDAO 
     private String createSentenceFindByFilter(final StateEntity filterEntity, final List<Object> parameters) {
         final var sql = new StringBuilder();
         sql.append("SELECT \"id\", \"name\" ");
-        sql.append("FROM \"State\" ");
+        sql.append("FROM \"state\" ");
         createWhereClauseFindByFilter(sql, parameters, filterEntity);
         return sql.toString();
     }

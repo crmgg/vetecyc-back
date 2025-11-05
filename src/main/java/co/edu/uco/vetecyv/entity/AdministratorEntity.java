@@ -8,7 +8,7 @@ import java.util.UUID;
 public final class AdministratorEntity {
 
     private UUID id;
-    private String IdentityDocument;
+    private String identityDocument;
     private String name;
     private String firstLastName;
     private String secondLastName;
@@ -47,13 +47,13 @@ public final class AdministratorEntity {
         setAccountState(false);
     }
 
-    public AdministratorEntity(final UUID id, final String identificationDocument, final String name,
+    public AdministratorEntity(final UUID id, final String identityDocument, final String name,
                                final String firstLastName, final String secondLastName,
                                final String email, final String phoneNumber, final String password,
                                final Boolean emailConfirmation, final Boolean phoneConfirmation,
                                final Boolean accountState) {
         setId(id);
-        setIdentityDocument(identificationDocument);
+        setIdentityDocument(identityDocument);
         setName(name);
         setFirstLastName(firstLastName);
         setSecondLastName(secondLastName);
@@ -78,11 +78,11 @@ public final class AdministratorEntity {
     }
 
     public String getIdentityDocument() {
-        return IdentityDocument;
+        return identityDocument;
     }
 
-    public void setIdentityDocument(final String IdentityDocument) {
-        this.IdentityDocument = TextHelper.getDefaultWithTrim(IdentityDocument);
+    public void setIdentityDocument(final String identityDocument) {
+        this.identityDocument = TextHelper.getDefaultWithTrim(identityDocument);
     }
 
     public String getName() {

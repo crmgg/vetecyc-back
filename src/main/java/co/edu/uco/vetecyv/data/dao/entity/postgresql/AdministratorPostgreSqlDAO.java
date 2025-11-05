@@ -28,7 +28,7 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO Administrador (id, identityDocument, nombre, primerApellido, segundoApellido, correoElectronico, numeroTelefono, contrasena, correoElectronicoConfirmado, numeroTelefonoConfirmado, estadoCuenta) ");
+        sql.append("INSERT INTO administrator (id, identityDocument, name, firstLastName, secondLastName, email, phoneNumber, password, emailConfirmation, phoneConfirmation, accountState) ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
@@ -46,12 +46,12 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
 
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_INSERT_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_INSERT_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_INSERT_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_INSERT_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -61,18 +61,18 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE Administrador ");
-        sql.append("SET identificationDocument = ?, ");
-        sql.append("    nombre = ?, ");
-        sql.append("    primerApellido = ?, ");
-        sql.append("    segundoApellido = ?, ");
-        sql.append("    correoElectronico = ?, ");
-        sql.append("    numeroTelefono = ?, ");
-        sql.append("    contrasena = ?, ");
-        sql.append("    correoElectronicoConfirmado = ?, ");
-        sql.append("    numeroTelefonoConfirmado = ?, ");
-        sql.append("    estadoCuenta = ? ");
-        sql.append("WHERE id = ?");
+        sql.append("UPDATE \"administrator\" ");
+        sql.append("SET \"identityDocument\" = ?, ");
+        sql.append("    \"name\" = ?, ");
+        sql.append("    \"firstLastName\" = ?, ");
+        sql.append("    \"secondLastName\" = ?, ");
+        sql.append("    \"email\" = ?, ");
+        sql.append("    \"phoneNumber\" = ?, ");
+        sql.append("    \"password\" = ?, ");
+        sql.append("    \"emailConfirmation\" = ?, ");
+        sql.append("    \"phoneConfirmation\" = ?, ");
+        sql.append("    \"accountState\" = ? ");
+        sql.append("WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setString(1, entity.getIdentityDocument());
@@ -89,12 +89,12 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
 
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UPDATE_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UPDATE_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -104,18 +104,18 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("DELETE FROM Administrador WHERE id = ?");
+        sql.append("DELETE FROM \"administrator\" WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, id);
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_DELETE_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DELETE_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_DELETE_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DELETE_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_DELETE_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_ERROR_DELETE_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -135,8 +135,8 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
         } catch (final VetecyvException exception) {
             throw exception;
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_EXECUTING_FIND_BY_FILTER_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_EXECUTING_FIND_BY_FILTER_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -153,8 +153,8 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
 
     private String createSentenceFindByFilter(final AdministratorEntity filterEntity, final List<Object> parameterList) {
         final var sql = new StringBuilder();
-        sql.append("SELECT id, identitynDocument, nombre, primerApellido, segundoApellido, correoElectronico, numeroTelefono, contrasena, correoElectronicoConfirmado, numeroTelefonoConfirmado, estadoCuenta ");
-        sql.append("FROM Administrador ");
+        sql.append("SELECT \"id\", \"identityDocument\", \"name\", \"firstLastName\", \"secondLastName\", \"email\", \"phoneNumber\", \"password\", \"emailConfirmation\", \"phoneConfirmation\", \"accountState\" ");
+        sql.append("FROM \"administrator\" ");
         createWhereClauseFindByFilter(sql, parameterList, filterEntity);
         return sql.toString();
     }
@@ -166,47 +166,47 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
 
         addCondition(conditions, parameterList,
                 !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getId()),
-                "id = ", filter.getId());
+                "\"id\" = ", filter.getId());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getIdentityDocument()),
-                "identificationDocument = ", filter.getIdentityDocument());
+                "\"identityDocument\" = ", filter.getIdentityDocument());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getName()),
-                "nombre = ", filter.getName());
+                "\"name\" = ", filter.getName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getFirstLastName()),
-                "primerApellido = ", filter.getFirstLastName());
+                "\"firstLastName\" = ", filter.getFirstLastName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getSecondLastName()),
-                "segundoApellido = ", filter.getSecondLastName());
+                "\"secondLastName\" = ", filter.getSecondLastName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getEmail()),
-                "correoElectronico = ", filter.getEmail());
+                "\"email\" = ", filter.getEmail());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPhoneNumber()),
-                "numeroTelefono = ", filter.getPhoneNumber());
+                "\"phoneNumber\" = ", filter.getPhoneNumber());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPassword()),
-                "contrasena = ", filter.getPassword());
+                "\"password\" = ", filter.getPassword());
 
         addCondition(conditions, parameterList,
                 !filter.isEmailConfirmation(),
-                "\"correoElectronicoConfirmado\" = ", filter.isEmailConfirmation());
+                "\"emailConfirmation\" = ", filter.isEmailConfirmation());
 
         addCondition(conditions, parameterList,
                 !filter.isPhoneConfirmation(),
-                "\"numeroTelefonoMovilConfirmado\" = ", filter.isPhoneConfirmation());
+                "\"phoneConfirmation\" = ", filter.isPhoneConfirmation());
 
         addCondition(conditions, parameterList,
                 !filter.isAccountState(),
-                "\"cuentaConfirmada\" = ", filter.isAccountState());
+                "\"accountState\" = ", filter.isAccountState());
 
 
         if (!conditions.isEmpty()) {
@@ -229,27 +229,27 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
         try (var resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 var administrator = new AdministratorEntity();
-                administrator.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
-                administrator.setIdentityDocument(resultSet.getString("identificationDocument"));
-                administrator.setName(resultSet.getString("nombre"));
-                administrator.setFirstLastName(resultSet.getString("primerApellido"));
-                administrator.setSecondLastName(resultSet.getString("segundoApellido"));
-                administrator.setEmail(resultSet.getString("correoElectronico"));
-                administrator.setPhoneNumber(resultSet.getString("numeroTelefono"));
-                administrator.setPassword(resultSet.getString("contrasena"));
-                administrator.setEmailConfirmation(resultSet.getBoolean("correoElectronicoConfirmado"));
-                administrator.setPhoneConfirmation(resultSet.getBoolean("numeroTelefonoConfirmado"));
-                administrator.setAccountState(resultSet.getBoolean("estadoCuenta"));
+                administrator.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("\"id\"")));
+                administrator.setIdentityDocument(resultSet.getString("\"identityDocument\""));
+                administrator.setName(resultSet.getString("\"name\""));
+                administrator.setFirstLastName(resultSet.getString("\"firstLastName\""));
+                administrator.setSecondLastName(resultSet.getString("\"secondLastName\""));
+                administrator.setEmail(resultSet.getString("\"email\""));
+                administrator.setPhoneNumber(resultSet.getString("\"phoneNumber\""));
+                administrator.setPassword(resultSet.getString("\"password\""));
+                administrator.setEmailConfirmation(resultSet.getBoolean("\"emailConfirmation\""));
+                administrator.setPhoneConfirmation(resultSet.getBoolean("\"phoneConfirmation\""));
+                administrator.setAccountState(resultSet.getBoolean("\"accountState\""));
 
                 admin.add(administrator);
             }
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_MAPPING_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_MAPPING_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_MAPPING_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_MAPPING_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_MAPPING_ADMINISTRATOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_MAPPING_ADMINISTRATOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.ADMINISTRATOR_ERROR_SQL_UNEXPECTED_MAPPING_ADMINISTRATOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_MAPPING_ADMINISTRATOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
 

@@ -61,31 +61,29 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE TUTOR ");
-        sql.append("SET identificationDocument = ?, ");
-        sql.append("    nombre = ?, ");
-        sql.append("    primerApellido = ?, ");
-        sql.append("    segundoApellido = ?, ");
-        sql.append("    correoElectronico = ?, ");
-        sql.append("    numeroTelefono = ?, ");
-        sql.append("    contrasena = ?, ");
-        sql.append("    correoElectronicoConfirmado = ?, ");
-        sql.append("    numeroTelefonoConfirmado = ?, ");
-        sql.append("    estadoCuenta = ? ");
-        sql.append("WHERE id = ?");
+        sql.append("UPDATE \"tutor\" ");
+        sql.append("SET \"name\" = ?, ");
+        sql.append("    \"firstLastName\" = ?, ");
+        sql.append("    \"secondLastName\" = ?, ");
+        sql.append("    \"email\" = ?, ");
+        sql.append("    \"phoneNumber\" = ?, ");
+        sql.append("    \"password\" = ?, ");
+        sql.append("    \"emailConfirmation\" = ?, ");
+        sql.append("    \"phoneConfirmation\" = ?, ");
+        sql.append("    \"accountState\" = ? ");
+        sql.append("WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
-            preparedStatement.setString(1, entity.getIdentityDocument());
-            preparedStatement.setString(2, entity.getName());
-            preparedStatement.setString(3, entity.getFirstLastName());
-            preparedStatement.setString(4, entity.getSecondLastName());
-            preparedStatement.setString(5, entity.getEmail());
-            preparedStatement.setString(6, entity.getPhoneNumber());
-            preparedStatement.setString(7, entity.getPassword());
-            preparedStatement.setBoolean(8, entity.isEmailConfirmation());
-            preparedStatement.setBoolean(9, entity.isPhoneConfirmation());
-            preparedStatement.setBoolean(10, entity.isAccountState());
-            preparedStatement.setObject(11, entity.getId());
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setString(2, entity.getFirstLastName());
+            preparedStatement.setString(3, entity.getSecondLastName());
+            preparedStatement.setString(4, entity.getEmail());
+            preparedStatement.setString(5, entity.getPhoneNumber());
+            preparedStatement.setString(6, entity.getPassword());
+            preparedStatement.setBoolean(7, entity.isEmailConfirmation());
+            preparedStatement.setBoolean(8, entity.isPhoneConfirmation());
+            preparedStatement.setBoolean(9, entity.isAccountState());
+            preparedStatement.setObject(10, entity.getId());
 
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
@@ -153,8 +151,8 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
 
     private String createSentenceFindByFilter(final TutorEntity filterEntity, final List<Object> parameterList) {
         final var sql = new StringBuilder();
-        sql.append("SELECT id, identificationDocument, nombre, primerApellido, segundoApellido, correoElectronico, numeroTelefono, contrasena, correoElectronicoConfirmado, numeroTelefonoConfirmado, estadoCuenta ");
-        sql.append("FROM TUTOR ");
+        sql.append("SELECT \"id\", \"name\", \"firstLastName\", \"secondLastName\", \"email\", \"phoneNumber\", \"password\", \"emailConfirmation\", \"phoneConfirmation\", \"accountState\" ");
+        sql.append("FROM \"tutor\" ");
         createWhereClauseFindByFilter(sql, parameterList, filterEntity);
         return sql.toString();
     }
@@ -229,16 +227,15 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
             while (resultSet.next()) {
                 var tutor = new TutorEntity();
                 tutor.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
-                tutor.setIdentityDocument(resultSet.getString("documentoIdentificacion"));
-                tutor.setName(resultSet.getString("nombre"));
-                tutor.setFirstLastName(resultSet.getString("primerApellido"));
-                tutor.setSecondLastName(resultSet.getString("segundoApellido"));
-                tutor.setEmail(resultSet.getString("correoElectronico"));
-                tutor.setPhoneNumber(resultSet.getString("numeroTelefono"));
-                tutor.setPassword(resultSet.getString("contrasena"));
-                tutor.setEmailConfirmation(resultSet.getBoolean("correoElectronicoConfirmado"));
-                tutor.setPhoneConfirmation(resultSet.getBoolean("numeroTelefonoConfirmado"));
-                tutor.setAccountState(resultSet.getBoolean("estadoCuenta"));
+                tutor.setName(resultSet.getString("name"));
+                tutor.setFirstLastName(resultSet.getString("firstLastName"));
+                tutor.setSecondLastName(resultSet.getString("secondLastName"));
+                tutor.setEmail(resultSet.getString("email"));
+                tutor.setPhoneNumber(resultSet.getString("phoneNumber"));
+                tutor.setPassword(resultSet.getString("password"));
+                tutor.setEmailConfirmation(resultSet.getBoolean("emailConfirmation"));
+                tutor.setPhoneConfirmation(resultSet.getBoolean("phoneConfirmation"));
+                tutor.setAccountState(resultSet.getBoolean("accountState"));
 
                 list.add(tutor);
             }

@@ -29,7 +29,7 @@ public final class PetTypePostgreSqlDAO extends SqlConnection implements PetType
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO \"PetType\" (\"id\", \"name\") ");
+        sql.append("INSERT INTO \"petType\" (\"id\", \"name\") ");
         sql.append("VALUES (?, ?)");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
@@ -55,14 +55,14 @@ public final class PetTypePostgreSqlDAO extends SqlConnection implements PetType
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE \"PetType\" SET ");
+        sql.append("UPDATE \"petType\" SET ");
         sql.append("\"name\" = ? ");
         sql.append("WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
 
-            ps.setObject(1, entity.getId());
-            ps.setString(2, entity.getName());
+            ps.setString(1, entity.getName());
+            ps.setObject(2, entity.getId());
 
             ps.executeUpdate();
 
@@ -81,7 +81,7 @@ public final class PetTypePostgreSqlDAO extends SqlConnection implements PetType
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        final var sql = new StringBuilder("DELETE FROM \"PetType\" WHERE \"id\" = ?");
+        final var sql = new StringBuilder("DELETE FROM \"petType\" WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, id);
@@ -136,7 +136,7 @@ public final class PetTypePostgreSqlDAO extends SqlConnection implements PetType
     private String createSentenceFindByFilter(final PetTypeEntity filterEntity, final List<Object> parameters) {
         final var sql = new StringBuilder();
         sql.append("SELECT \"id\", \"name\" ");
-        sql.append("FROM \"PetType\" ");
+        sql.append("FROM \"petType\" ");
         createWhereClauseFindByFilter(sql, parameters, filterEntity);
         return sql.toString();
     }

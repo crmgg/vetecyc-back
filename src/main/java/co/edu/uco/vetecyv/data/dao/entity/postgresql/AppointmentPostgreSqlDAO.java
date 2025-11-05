@@ -29,8 +29,8 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         var sql = new StringBuilder();
-        sql.append("INSERT INTO \"Cita\" ");
-        sql.append("(\"id\", \"agenda\", \"estado\", \"mascota\", \"codigo\", \"fechaHoraInicio\", \"fechaHoraFin\") ");
+        sql.append("INSERT INTO \"appointment\" ");
+        sql.append("(\"id\", \"agenda\", \"state\", \"pet\", \"code\", \"dateTimeStart\", \"endDateTime\") ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         try (var preparedStatement = getConnection().prepareStatement(sql.toString())) {
@@ -44,12 +44,12 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
             preparedStatement.executeUpdate();
 
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_EXCEPTION_INSERTING_APPOINTMENT.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXCEPTION_INSERTING_APPOINTMENT.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_EXCEPTION_INSERTING_APPOINTMENT.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXCEPTION_INSERTING_APPOINTMENT.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_EXCEPTION_INSERTING_APPOINTMENT.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_EXCEPTION_INSERTING_APPOINTMENT.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_EXCEPTION_INSERTING_APPOINTMENT.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_EXCEPTION_INSERTING_APPOINTMENT.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -59,32 +59,32 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         var sql = new StringBuilder();
-        sql.append("UPDATE \"Cita\" SET ");
+        sql.append("UPDATE \"appointment\" SET ");
         sql.append("\"agenda\" = ?, ");
-        sql.append("\"estado\" = ?, ");
-        sql.append("\"mascota\" = ?, ");
-        sql.append("\"codigo\" = ?, ");
-        sql.append("\"fechaHoraInicio\" = ?, ");
-        sql.append("\"fechaHoraFin\" = ? ");
+        sql.append("\"state\" = ?, ");
+        sql.append("\"pet\" = ?, ");
+        sql.append("\"code\" = ?, ");
+        sql.append("\"dateTimeStart\" = ?, ");
+        sql.append("\"endDateTime\" = ? ");
         sql.append("WHERE \"id\" = ?");
 
         try (var preparedStatement = getConnection().prepareStatement(sql.toString())) {
-            preparedStatement.setObject(1, entity.getId());
-            preparedStatement.setObject(2, entity.getAgenda().getId());
-            preparedStatement.setObject(3, entity.getState().getId());
-            preparedStatement.setObject(4, entity.getPet().getId());
-            preparedStatement.setObject(5, entity.getCode());
-            preparedStatement.setTimestamp(6, new Timestamp(DateHelper.getDefault(entity.getDateTimeStart()).getTime()));
-            preparedStatement.setTimestamp(7, new Timestamp(DateHelper.getDefault(entity.getEndDateTime()).getTime()));
-            preparedStatement.setObject(11, entity.getId());
+            preparedStatement.setObject(1, entity.getAgenda().getId());
+            preparedStatement.setObject(2, entity.getState().getId());
+            preparedStatement.setObject(3, entity.getPet().getId());
+            preparedStatement.setObject(4, entity.getCode());
+            preparedStatement.setTimestamp(5, new Timestamp(DateHelper.getDefault(entity.getDateTimeStart()).getTime()));
+            preparedStatement.setTimestamp(6, new Timestamp(DateHelper.getDefault(entity.getEndDateTime()).getTime()));
+            preparedStatement.setObject(7, entity.getId());
+            preparedStatement.executeUpdate();
 
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_EXCEPTION_UPDATING_APPOINTMENT.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXCEPTION_UPDATING_APPOINTMENT.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_EXCEPTION_UPDATING_APPOINTMENT.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXCEPTION_UPDATING_APPOINTMENT.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_EXCEPTION_UPDATING_APPOINTMENT.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_EXCEPTION_UPDATING_APPOINTMENT.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_EXCEPTION_UPDATING_APPOINTMENT.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_EXCEPTION_UPDATING_APPOINTMENT.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -93,19 +93,19 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        var sql = new StringBuilder("DELETE FROM \"Cita\" WHERE \"id\" = ?");
+        var sql = new StringBuilder("DELETE FROM \"appointment\" WHERE \"id\" = ?");
 
         try (var preparedStatement = getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, id);
             preparedStatement.executeUpdate();
 
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.USER_ERROR_SQL_EXCEPTION_DELETING_APPOINTMENT.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXCEPTION_DELETING_APPOINTMENT.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_EXCEPTION_DELETING_APPOINTMENT.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXCEPTION_DELETING_APPOINTMENT.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_EXCEPTION_DELETING_APPOINTMENT.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_EXCEPTION_DELETING_APPOINTMENT.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.USER_ERROR_UNEXPECTED_EXCEPTION_DELETING_APPOINTMENT.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_UNEXPECTED_EXCEPTION_DELETING_APPOINTMENT.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -150,8 +150,8 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
     private String createSentenceFindByFilter(final AppointmentEntity filterEntity, final List<Object> parametersList) {
 
         var sql = new StringBuilder();
-        sql.append("SELECT \"id\", \"agenda\", \"estado\", \"mascota\", \"codigo\", \"fechaHoraInicio\", \"fechaHoraFin\" ");
-        sql.append("FROM \"Cita\" ");
+        sql.append("SELECT \"id\", \"agenda\", \"state\", \"pet\", \"code\", \"dateTimeStart\", \"endDateTime\" ");
+        sql.append("FROM \"appointment\" ");
 
         createWhereClauseFindByFilter(sql, parametersList, filterEntity);
         return sql.toString();
@@ -172,23 +172,23 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
 
         addCondition(conditions, parametersList,
                 !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getState()),
-                "\"estado\" = ", filterEntityValidated.getState().getId());
+                "\"state\" = ", filterEntityValidated.getState().getId());
 
         addCondition(conditions, parametersList,
                 !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getPet()),
-                "\"mascota\" = ", filterEntityValidated.getPet().getId());
+                "\"pet\" = ", filterEntityValidated.getPet().getId());
 
         addCondition(conditions, parametersList,
                 !TextHelper.isEmptyWithTrim(filterEntityValidated.getCode()),
-                "\"codigo\" = ", filterEntityValidated.getCode());
+                "\"code\" = ", filterEntityValidated.getCode());
 
         addCondition(conditions, parametersList,
                 !DateHelper.isValid(filterEntityValidated.getDateTimeStart()),
-                "\"fechaHoraInicio\" = ", new Timestamp(filterEntityValidated.getDateTimeStart().getTime()));
+                "\"dateTimeStart\" = ", new Timestamp(filterEntityValidated.getDateTimeStart().getTime()));
 
         addCondition(conditions, parametersList,
                 !DateHelper.isValid(filterEntityValidated.getEndDateTime()),
-                "\"fechaHoraFin\" = ", new Timestamp(filterEntityValidated.getEndDateTime().getTime()));
+                "\"endDateTime\" = ", new Timestamp(filterEntityValidated.getEndDateTime().getTime()));
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
@@ -215,14 +215,14 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
                 var appointment = new AppointmentEntity();
                 appointment.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
                 appointment.setAgenda(new AgendaEntity(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("agenda"))));
-                appointment.setState(new StateEntity(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("estado"))));
-                appointment.setPet(new PetEntity(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("mascota"))));
-                appointment.setCode(String.valueOf(resultSet.getObject("codigo", Integer.class)));
+                appointment.setState(new StateEntity(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("state"))));
+                appointment.setPet(new PetEntity(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("pet"))));
+                appointment.setCode(String.valueOf(resultSet.getObject("code", Integer.class)));
 
-                var dateTimeStart = resultSet.getTimestamp("fechaHoraInicio");
+                var dateTimeStart = resultSet.getTimestamp("dateTimeStart");
                 appointment.setDateTimeStart(dateTimeStart != null ? new java.util.Date(dateTimeStart.getTime()) : null);
 
-                var dateTimeEnd = resultSet.getTimestamp("fechaHoraFin");
+                var dateTimeEnd = resultSet.getTimestamp("endDateTime");
                 appointment.setEndDateTime(dateTimeEnd != null ? new java.util.Date(dateTimeEnd.getTime()) : null);
 
                 appointments.add(appointment);

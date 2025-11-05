@@ -53,7 +53,7 @@ public final class SpecialityPostgreSqlDAO extends SqlConnection implements Spec
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE \"Speciality\" SET ");
+        sql.append("UPDATE \"speciality\" SET ");
         sql.append("\"code\" = ?, ");
         sql.append("\"name\" = ? ");
         sql.append("WHERE \"id\" = ?");
@@ -78,7 +78,7 @@ public final class SpecialityPostgreSqlDAO extends SqlConnection implements Spec
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        final var sql = new StringBuilder("DELETE FROM \"Speciality\" WHERE \"id\" = ?");
+        final var sql = new StringBuilder("DELETE FROM \"speciality\" WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, id);
@@ -130,7 +130,7 @@ public final class SpecialityPostgreSqlDAO extends SqlConnection implements Spec
     private String createSentenceFindByFilter(final SpecialityEntity filterEntity, final List<Object> parameters) {
         final var sql = new StringBuilder();
         sql.append("SELECT \"id\", \"code\", \"name\" ");
-        sql.append("FROM \"Speciality\" ");
+        sql.append("FROM \"speciality\" ");
         createWhereClauseFindByFilter(sql, parameters, filterEntity);
         return sql.toString();
     }

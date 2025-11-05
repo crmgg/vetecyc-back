@@ -30,7 +30,7 @@ public final class RacePostgreSqlDAO extends SqlConnection implements RaceDAO {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO \"Race\" (\"id\", \"petType\", \"name\") ");
+        sql.append("INSERT INTO \"race\" (\"id\", \"petType\", \"name\") ");
         sql.append("VALUES (?, ?, ?)");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
@@ -54,15 +54,15 @@ public final class RacePostgreSqlDAO extends SqlConnection implements RaceDAO {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE \"Race\" SET ");
+        sql.append("UPDATE \"race\" SET ");
         sql.append("\"petType\" = ?, ");
         sql.append("\"name\" = ? ");
         sql.append("WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
-            ps.setObject(1, entity.getId());
-            ps.setObject(2, entity.getPetType().getId());
-            ps.setString(3, entity.getName());
+            ps.setObject(1, entity.getPetType().getId());
+            ps.setString(2, entity.getName());
+            ps.setObject(3, entity.getId());
             ps.executeUpdate();
         } catch (final SQLException exception) {
             var userMessage = MessagesEnum.RACE_ERROR_SQL_UPDATE_RACE.getTitle();
@@ -79,7 +79,7 @@ public final class RacePostgreSqlDAO extends SqlConnection implements RaceDAO {
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        final var sql = new StringBuilder("DELETE FROM \"Race\" WHERE \"id\" = ?");
+        final var sql = new StringBuilder("DELETE FROM \"race\" WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, id);
@@ -131,7 +131,7 @@ public final class RacePostgreSqlDAO extends SqlConnection implements RaceDAO {
     private String createSentenceFindByFilter(final RaceEntity filterEntity, final List<Object> parameters) {
         final var sql = new StringBuilder();
         sql.append("SELECT \"id\", \"petType\", \"name\" ");
-        sql.append("FROM \"Race\" ");
+        sql.append("FROM \"race\" ");
         createWhereClauseFindByFilter(sql, parameters, filterEntity);
         return sql.toString();
     }

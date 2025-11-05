@@ -29,7 +29,7 @@ public final class ReceiptPostgreSqlDAO extends SqlConnection implements Receipt
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO \"Receipt\" (\"id\", \"administrator\", \"consultation\", \"code\", \"dateTime\", \"totalCoast\") ");
+        sql.append("INSERT INTO \"receipt\" (\"id\", \"administrator\", \"consultation\", \"code\", \"dateTime\", \"totalCoast\") ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?)");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
@@ -59,7 +59,7 @@ public final class ReceiptPostgreSqlDAO extends SqlConnection implements Receipt
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE \"Receipt\" SET ");
+        sql.append("UPDATE \"receipt\" SET ");
         sql.append("\"administrator\" = ?, ");
         sql.append("\"consultation\" = ?, ");
         sql.append("\"code\" = ?, ");
@@ -93,7 +93,7 @@ public final class ReceiptPostgreSqlDAO extends SqlConnection implements Receipt
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        final var sql = new StringBuilder("DELETE FROM \"Receipt\" WHERE \"id\" = ?");
+        final var sql = new StringBuilder("DELETE FROM \"receipt\" WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, id);
@@ -148,7 +148,7 @@ public final class ReceiptPostgreSqlDAO extends SqlConnection implements Receipt
     private String createSentenceFindByFilter(final ReceiptEntity filterEntity, final List<Object> parameters) {
         final var sql = new StringBuilder();
         sql.append("SELECT \"id\", \"administrator\", \"consultation\", \"code\", \"dateTime\", \"totalCoast\" ");
-        sql.append("FROM \"Receipt\" ");
+        sql.append("FROM \"receipt\" ");
         createWhereClauseFindByFilter(sql, parameters, filterEntity);
         return sql.toString();
     }

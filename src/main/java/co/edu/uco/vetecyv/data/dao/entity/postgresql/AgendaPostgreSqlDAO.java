@@ -28,7 +28,7 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO \"Agenda\"(id, \"especialidadDoctor\", \"codigo\", \"fechaInicio\", \"fechaFin\") ");
+        sql.append("INSERT INTO \"agenda\"(id, \"specialityDoctor\", \"code\", \"dateTime\", \"endDateTime\") ");
         sql.append("VALUES(?, ?, ?, ?, ?) ");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
@@ -42,12 +42,12 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
             preparedStatement.executeUpdate();
 
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.AGENDA_ERROR_SQL_INSERT_AGENDA.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_AGENDA.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.AGENDA_ERROR_SQL_INSERT_AGENDA.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_AGENDA.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.AGENDA_ERROR_SQL_UNEXPECTED_ERROR_INSERT_AGENDA.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_AGENDA.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.AGENDA_ERROR_SQL_UNEXPECTED_ERROR_INSERT_AGENDA.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_AGENDA.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -88,15 +88,15 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
 
         final var sql = new StringBuilder();
         sql.append("SELECT ");
-        sql.append("  a.\"id\" AS \"idAgenda\", ");
-        sql.append("  sd.\"id\" AS \"idEspecialidadDoctor\", ");
-        sql.append("  a.\"especialidadDoctor\" AS \"especialidadDoctor\", ");
-        sql.append("  a.\"codigo\" AS \"codigo\", ");
-        sql.append("  a.\"fechaInicio\" AS \"fechaInicio\", ");
-        sql.append("  a.\"fechaFin\" AS \"fechaFin\" ");
-        sql.append("FROM \"Agenda\" AS a ");
-        sql.append("INNER JOIN \"EspecialidadDoctor\" AS sd ");
-        sql.append("  ON a.\"especialidadDoctor\" = sd.\"id\" ");
+        sql.append("  a.\"id\" AS \"id\", ");
+        sql.append("  sd.\"id\" AS \"specialityDoctorId\", ");
+        sql.append("  a.\"specialityDoctor\" AS \"specialityDoctor\", ");
+        sql.append("  a.\"code\" AS \"code\", ");
+        sql.append("  a.\"dateTime\" AS \"dateTime\", ");
+        sql.append("  a.\"endDateTime\" AS \"endDateTime\" ");
+        sql.append("FROM \"agenda\" AS a ");
+        sql.append("INNER JOIN \"specialityDoctor\" AS sd ");
+        sql.append("  ON a.\"specialityDoctor\" = sd.\"id\" ");
 
         createWhereClauseFindByFilter(sql, parametersList, filterEntity);
 
@@ -115,19 +115,19 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
 
         addCondition(conditions, parametersList,
                 !UUIDHelper.getUUIDHelper().isDefaultUUID(filterEntityValidated.getSpecialityDoctor().getId()),
-                "a.\"especialidadDoctor\" = ", filterEntityValidated.getSpecialityDoctor().getId());
+                "a.\"specialityDoctor\" = ", filterEntityValidated.getSpecialityDoctor().getId());
 
         addCondition(conditions, parametersList,
                 !TextHelper.isEmptyWithTrim(filterEntityValidated.getCode()),
-                "a.\"codigo\" = ", filterEntityValidated.getCode());
+                "a.\"code\" = ", filterEntityValidated.getCode());
 
         addCondition(conditions, parametersList,
                 !DateHelper.isValid(filterEntityValidated.getDateTime()),
-                "a.\"fechaInicio\" = ", new Timestamp(filterEntityValidated.getDateTime().getTime()));
+                "a.\"dateTime\" = ", new Timestamp(filterEntityValidated.getDateTime().getTime()));
 
         addCondition(conditions, parametersList,
                 !DateHelper.isValid(filterEntityValidated.getEndDateTime()),
-                "a.\"fechaFin\" = ", new Timestamp(filterEntityValidated.getEndDateTime().getTime()));
+                "a.\"endDateTime\" = ", new Timestamp(filterEntityValidated.getEndDateTime().getTime()));
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
@@ -152,14 +152,14 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
             while (resultSet.next()) {
 
                 var speciality = new SpecialityDoctorEntity();
-                speciality.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idEspecialidadDoctor")));
+                speciality.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("specialityDoctorId")));
 
                 var agenda = new AgendaEntity();
-                agenda.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idAgenda")));
+                agenda.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
                 agenda.setSpecialityDoctor(speciality);
-                agenda.setCode(resultSet.getString("codigo"));
-                agenda.setDateTime(resultSet.getTimestamp("fechaInicio"));
-                agenda.setEndDateTime(resultSet.getTimestamp("fechaFin"));
+                agenda.setCode(resultSet.getString("code"));
+                agenda.setDateTime(resultSet.getTimestamp("dateTime"));
+                agenda.setEndDateTime(resultSet.getTimestamp("endDateTime"));
 
                 agendas.add(agenda);
             }
@@ -188,11 +188,11 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         var sql = new StringBuilder();
-        sql.append("UPDATE \"Agenda\" ");
-        sql.append("SET \"especialidadDoctor\" = ?, ");
-        sql.append("\"codigo\" = ?, ");
-        sql.append("\"fechaInicio\" = ?, ");
-        sql.append("\"fechaFin\" = ? ");
+        sql.append("UPDATE \"agenda\" ");
+        sql.append("SET \"specialityDoctor\" = ?, ");
+        sql.append("\"code\" = ?, ");
+        sql.append("\"dateTime\" = ?, ");
+        sql.append("\"endDateTime\" = ? ");
         sql.append("WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
@@ -222,7 +222,7 @@ public final class AgendaPostgreSqlDAO extends SqlConnection implements AgendaDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("DELETE FROM \"Agenda\" WHERE \"id\" = ?");
+        sql.append("DELETE FROM \"agenda\" WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, id);

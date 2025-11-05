@@ -28,7 +28,7 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO DOCTOR (id, identityDocument, nombre, primerApellido, segundoApellido, correoElectronico, numeroTelefono, contrasena, correoElectronicoConfirmado, numeroTelefonoConfirmado, estadoCuenta) ");
+        sql.append("INSERT INTO \"doctor\" (\"id\", \"identityDocument\", \"name\", \"firstLastName\", \"secondLastName\", \"email\", \"phoneNumber\", \"password\", \"emailConfirmation\", \"phoneConfirmation\", \"accountState\") ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
@@ -61,18 +61,18 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE DOCTOR ");
-        sql.append("SET identificationDocument = ?, ");
-        sql.append("    nombre = ?, ");
-        sql.append("    primerApellido = ?, ");
-        sql.append("    segundoApellido = ?, ");
-        sql.append("    correoElectronico = ?, ");
-        sql.append("    numeroTelefono = ?, ");
-        sql.append("    contrasena = ?, ");
-        sql.append("    correoElectronicoConfirmado = ?, ");
-        sql.append("    numeroTelefonoConfirmado = ?, ");
-        sql.append("    estadoCuenta = ? ");
-        sql.append("WHERE id = ?");
+        sql.append("UPDATE \"doctor\" ");
+        sql.append("SET \"identityDocument\" = ?, ");
+        sql.append("    \"name\" = ?, ");
+        sql.append("    \"firstLastName\" = ?, ");
+        sql.append("    \"secondLastName\" = ?, ");
+        sql.append("    \"email\" = ?, ");
+        sql.append("    \"phoneNumber\" = ?, ");
+        sql.append("    \"password\" = ?, ");
+        sql.append("    \"emailConfirmation\" = ?, ");
+        sql.append("    \"phoneConfirmation\" = ?, ");
+        sql.append("    \"accountState\" = ? ");
+        sql.append("WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setString(1, entity.getIdentityDocument());
@@ -89,12 +89,12 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
 
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UPDATE_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE_DOCTOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UPDATE_DOCTOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UPDATE_DOCTOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_DOCTOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_DOCTOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_UPDATE_DOCTOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -104,18 +104,18 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("DELETE FROM Doctor WHERE id = ?");
+        sql.append("DELETE FROM \"doctor\" WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, id);
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_DELETE_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DELETE_DOCTOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_DELETE_DOCTOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_DELETE_DOCTOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_ERROR_DELETE_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_DOCTOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_ERROR_DELETE_DOCTOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_DELETE_DOCTOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -135,8 +135,8 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         } catch (final VetecyvException exception) {
             throw exception;
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_EXECUTING_FIND_BY_FILTER_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_DOCTOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_EXECUTING_FIND_BY_FILTER_DOCTOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_DOCTOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
     }
@@ -153,8 +153,8 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
 
     private String createSentenceFindByFilter(final DoctorEntity filterEntity, final List<Object> parameterList) {
         final var sql = new StringBuilder();
-        sql.append("SELECT id, identificationDocument, nombre, primerApellido, segundoApellido, correoElectronico, numeroTelefono, contrasena, correoElectronicoConfirmado, numeroTelefonoConfirmado, estadoCuenta ");
-        sql.append("FROM DOCTOR ");
+        sql.append("SELECT \"id\", \"identityDocument\", \"name\", \"firstLastName\", \"secondLastName\", \"email\", \"phoneNumber\", \"password\", \"emailConfirmation\", \"phoneConfirmation\", \"accountState\" ");
+        sql.append("FROM \"doctor\" ");
         createWhereClauseFindByFilter(sql, parameterList, filterEntity);
         return sql.toString();
     }
@@ -166,47 +166,47 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
 
         addCondition(conditions, parameterList,
                 !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getId()),
-                "id = ", filter.getId());
+                "\"id\" = ", filter.getId());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getIdentityDocument()),
-                "identityonDocument = ", filter.getIdentityDocument());
+                "\"identityDocument\" = ", filter.getIdentityDocument());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getName()),
-                "nombre = ", filter.getName());
+                "\"name\" = ", filter.getName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getFirstLastName()),
-                "primerApellido = ", filter.getFirstLastName());
+                "\"firstLastName\" = ", filter.getFirstLastName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getSecondLastName()),
-                "segundoApellido = ", filter.getSecondLastName());
+                "\"secondLastName\" = ", filter.getSecondLastName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getEmail()),
-                "correoElectronico = ", filter.getEmail());
+                "\"email\" = ", filter.getEmail());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPhoneNumber()),
-                "numeroTelefono = ", filter.getPhoneNumber());
+                "\"phoneNumber\" = ", filter.getPhoneNumber());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPassword()),
-                "contrasena = ", filter.getPassword());
+                "\"password\" = ", filter.getPassword());
 
         addCondition(conditions, parameterList,
                 !filter.isEmailConfirmation(),
-                "\"correoElectronicoConfirmado\" = ", filter.isEmailConfirmation());
+                "\"emailConfirmation\" = ", filter.isEmailConfirmation());
 
         addCondition(conditions, parameterList,
                 !filter.isPhoneConfirmation(),
-                "\"numeroTelefonoMovilConfirmado\" = ", filter.isPhoneConfirmation());
+                "\"phoneConfirmation\" = ", filter.isPhoneConfirmation());
 
         addCondition(conditions, parameterList,
                 !filter.isAccountState(),
-                "\"cuentaConfirmada\" = ", filter.isAccountState());
+                "\"accountState\" = ", filter.isAccountState());
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
@@ -228,27 +228,27 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         try (var resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 var doctor = new DoctorEntity();
-                doctor.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
-                doctor.setIdentityDocument(resultSet.getString("identificationDocument"));
-                doctor.setName(resultSet.getString("nombre"));
-                doctor.setFirstLastName(resultSet.getString("primerApellido"));
-                doctor.setSecondLastName(resultSet.getString("segundoApellido"));
-                doctor.setEmail(resultSet.getString("correoElectronico"));
-                doctor.setPhoneNumber(resultSet.getString("numeroTelefono"));
-                doctor.setPassword(resultSet.getString("contrasena"));
-                doctor.setEmailConfirmation(resultSet.getBoolean("correoElectronicoConfirmado"));
-                doctor.setPhoneConfirmation(resultSet.getBoolean("numeroTelefonoConfirmado"));
-                doctor.setAccountState(resultSet.getBoolean("estadoCuenta"));
+                doctor.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("\"id\"")));
+                doctor.setIdentityDocument(resultSet.getString("\"identityDocument\""));
+                doctor.setName(resultSet.getString("\"name\""));
+                doctor.setFirstLastName(resultSet.getString("\"firstLastName\""));
+                doctor.setSecondLastName(resultSet.getString("\"secondLastName\""));
+                doctor.setEmail(resultSet.getString("\"email\""));
+                doctor.setPhoneNumber(resultSet.getString("\"phoneNumber\""));
+                doctor.setPassword(resultSet.getString("\"password\""));
+                doctor.setEmailConfirmation(resultSet.getBoolean("\"emailConfirmation\""));
+                doctor.setPhoneConfirmation(resultSet.getBoolean("\"phoneConfirmation\""));
+                doctor.setAccountState(resultSet.getBoolean("\"accountState\""));
 
                 doc.add(doctor);
             }
         } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_MAPPING_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_MAPPING_DOCTOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_MAPPING_DOCTOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_MAPPING_DOCTOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } catch (final Exception exception) {
-            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_MAPPING_DOCTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_MAPPING_DOCTOR.getContent() + exception.getMessage();
+            var userMessage = MessagesEnum.DOCTOR_ERROR_SQL_UNEXPECTED_MAPPING_DOCTOR.getTitle();
+            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_MAPPING_DOCTOR.getContent() + " - " + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
 

@@ -27,8 +27,8 @@ public final class MedicalRecordPostgreSqlDAO extends SqlConnection implements M
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO \"MedicalRecord\" (\"id\", \"pet\", \"code\", \"creationDate\") ");
-        sql.append("VALUES (?, ?, ?, ?)");
+        sql.append("INSERT INTO \"medicalRecord\" (\"id\", \"pet\", \"code\", \"creationDate\") ");
+        sql.append("VALUES (?, ?, ?, ?) ");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, entity.getId());
@@ -56,17 +56,16 @@ public final class MedicalRecordPostgreSqlDAO extends SqlConnection implements M
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE \"MedicalRecord\" SET ");
+        sql.append("UPDATE \"medicalRecord\" SET ");
         sql.append("\"pet\" = ?, ");
         sql.append("\"code\" = ?, ");
         sql.append("\"creationDate\" = ? ");
         sql.append("WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
-            ps.setObject(1, entity.getId());
-            ps.setObject(2, entity.getPet().getId());
-            ps.setObject(3, entity.getCode());
-            ps.setTimestamp(4, new Timestamp(DateHelper.getDefault(entity.getCreationDate()).getTime()));
+            ps.setObject(1, entity.getPet().getId());
+            ps.setObject(2, entity.getCode());
+            ps.setTimestamp(3, new Timestamp(DateHelper.getDefault(entity.getCreationDate()).getTime()));
             ps.setObject(4, entity.getId());
 
             ps.executeUpdate();
@@ -87,7 +86,7 @@ public final class MedicalRecordPostgreSqlDAO extends SqlConnection implements M
     public void delete(final UUID id) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        final var sql = new StringBuilder("DELETE FROM \"MedicalRecord\" WHERE \"id\" = ?");
+        final var sql = new StringBuilder("DELETE FROM \"medicalRecord\" WHERE \"id\" = ?");
 
         try (var ps = getConnection().prepareStatement(sql.toString())) {
             ps.setObject(1, id);
@@ -143,7 +142,7 @@ public final class MedicalRecordPostgreSqlDAO extends SqlConnection implements M
     private String createSentenceFindByFilter(final MedicalRecordEntity filterEntity, final List<Object> parameters) {
         final var sql = new StringBuilder();
         sql.append("SELECT \"id\", \"pet\", \"code\", \"creationDate\" ");
-        sql.append("FROM \"MedicalRecord\" ");
+        sql.append("FROM \"medicalRecord\" ");
         createWhereClauseFindByFilter(sql, parameters, filterEntity);
         return sql.toString();
     }
