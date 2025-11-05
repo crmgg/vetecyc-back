@@ -17,18 +17,12 @@ public interface AdministratorBusiness {
 
     List <AdministratorDomain> findAdministratorsByFilter (AdministratorDomain administratorFilters);
 
-    AdministratorDomain findSpecificAdministrator(UUID id);
+    AdministratorDomain findAdministratorById(UUID id);
 
     void confirmMobileNumber(UUID id, int confirmationCode);
 
     void confirmEmail (UUID id, int confirmationCode);
 
     void accountState (UUID id, int accountStateCode);
-
-    void sendMobileNumberConfirmation (UUID id);
-
-    void sendEmailConfirmation (UUID id);
-
-    void sendAccountState(UUID id);
 
 }

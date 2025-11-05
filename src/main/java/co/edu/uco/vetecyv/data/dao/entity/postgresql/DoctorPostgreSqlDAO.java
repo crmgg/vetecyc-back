@@ -28,7 +28,7 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO DOCTOR (id, identificationDocument, nombre, primerApellido, segundoApellido, correoElectronico, numeroTelefono, contrasena, correoElectronicoConfirmado, numeroTelefonoConfirmado, estadoCuenta) ");
+        sql.append("INSERT INTO DOCTOR (id, identityDocument, nombre, primerApellido, segundoApellido, correoElectronico, numeroTelefono, contrasena, correoElectronicoConfirmado, numeroTelefonoConfirmado, estadoCuenta) ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {

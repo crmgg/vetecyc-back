@@ -22,7 +22,7 @@ public final class SpecialityDTO {
         setDateTime(DateHelper.getDefault());
     }
 
-    public SpecialityDTO(final UUID id) {
+    public SpecialityDTO(final UUID id, String code, String name) {
         setId(id);
         setCode(TextHelper.getDefault());
         setName(TextHelper.getDefault());

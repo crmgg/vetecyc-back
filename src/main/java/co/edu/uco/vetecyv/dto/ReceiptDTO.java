@@ -14,7 +14,7 @@ public final class ReceiptDTO {
     private AdministratorDTO administrator;
     private ConsultationDTO consultation;
     private String code;
-    private Date date;
+    private Date dateTime;
     private Double totalCoast;
 
     public ReceiptDTO() {
@@ -22,7 +22,7 @@ public final class ReceiptDTO {
         setAdministrator(AdministratorDTO.getDefaultValue());
         setConsultation(ConsultationDTO.getDefaultValue());
         setCode(TextHelper.getDefault());
-        setDate(DateHelper.getDefault());
+        setDateTime(DateHelper.getDefault());
         setTotalCoast(NumericHelper.getDefaultWithZero());
     }
 
@@ -31,17 +31,17 @@ public final class ReceiptDTO {
         setAdministrator(AdministratorDTO.getDefaultValue());
         setConsultation(ConsultationDTO.getDefaultValue());
         setCode(TextHelper.getDefault());
-        setDate(DateHelper.getDefault());
+        setDateTime(DateHelper.getDefault());
         setTotalCoast(NumericHelper.getDefaultWithZero());
     }
 
     public ReceiptDTO(final UUID id, final AdministratorDTO administrator, final ConsultationDTO consultation,
-                      final String code, final Date date, final Double totalCoast) {
+                      final String code, final Date dateTime, final Double totalCoast) {
         setId(id);
         setAdministrator(administrator);
         setConsultation(consultation);
         setCode(code);
-        setDate(date);
+        setDateTime(dateTime);
         setTotalCoast(totalCoast);
     }
 
@@ -85,12 +85,12 @@ public final class ReceiptDTO {
         this.code = code;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(final Date date) {
-        this.date = DateHelper.getDefault(date);
+    public void setDateTime(final Date dateTime) {
+        this.dateTime = DateHelper.getDefault(dateTime);
     }
 
     public Double getTotalCoast() {

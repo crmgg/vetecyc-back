@@ -9,60 +9,60 @@ import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 public final class AdministratorDTO {
 
     private UUID id;
-    private String identificationDocument;
+    private String identityDocument;
     private String name;
     private String firstLastName;
     private String secondLastName;
     private String email;
     private String phoneNumber;
     private String password;
-    private boolean emailConfirmed;
-    private boolean phoneConfirmed;
+    private boolean emailConfirmation;
+    private boolean phoneConfirmation;
     private boolean accountState;
 
     public AdministratorDTO() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
-        setIdentificationDocument(TextHelper.getDefault());
+        setIdentityDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
         setEmail(TextHelper.getDefault());
         setPhoneNumber(TextHelper.getDefault());
         setPassword(TextHelper.getDefault());
-        setEmailConfirmed(false);
-        setPhoneConfirmed(false);
+        setEmailConfirmation(false);
+        setPhoneConfirmation(false);
         setAccountState(false);
     }
 
     public AdministratorDTO(final UUID id) {
         setId(id);
-        setIdentificationDocument(TextHelper.getDefault());
+        setIdentityDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
         setEmail(TextHelper.getDefault());
         setPhoneNumber(TextHelper.getDefault());
         setPassword(TextHelper.getDefault());
-        setEmailConfirmed(false);
-        setPhoneConfirmed(false);
+        setEmailConfirmation(false);
+        setPhoneConfirmation(false);
         setAccountState(false);
     }
 
-    public AdministratorDTO(final UUID id, final String identificationDocument, final String name,
+    public AdministratorDTO(final UUID id, final String identityDocument, final String name,
                             final String firstLastName, final String secondLastName,
                             final String email, final String phoneNumber, final String password,
-                            final boolean emailConfirmed, final boolean phoneConfirmed,
+                            final boolean emailConfirmation, final boolean phoneConfirmation,
                             final boolean accountState) {
         setId(id);
-        setIdentificationDocument(identificationDocument);
+        setIdentityDocument(identityDocument);
         setName(name);
         setFirstLastName(firstLastName);
         setSecondLastName(secondLastName);
         setEmail(email);
         setPhoneNumber(phoneNumber);
         setPassword(password);
-        setEmailConfirmed(emailConfirmed);
-        setPhoneConfirmed(phoneConfirmed);
+        setEmailConfirmation(emailConfirmation);
+        setPhoneConfirmation(phoneConfirmation);
         setAccountState(accountState);
     }
 
@@ -82,12 +82,12 @@ public final class AdministratorDTO {
         this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
-    public String getIdentificationDocument() {
-        return identificationDocument;
+    public String getIdentityDocument() {
+        return identityDocument;
     }
 
-    public void setIdentificationDocument(final String identificationDocument) {
-        this.identificationDocument = TextHelper.getDefaultWithTrim(identificationDocument);
+    public void setIdentityDocument(final String identityDocument) {
+        this.identityDocument = TextHelper.getDefaultWithTrim(identityDocument);
     }
 
     public String getName() {
@@ -138,20 +138,20 @@ public final class AdministratorDTO {
         this.password = TextHelper.getDefaultWithTrim(password);
     }
 
-    public boolean isEmailConfirmed() {
-        return emailConfirmed;
+    public boolean isEmailConfirmation() {
+        return emailConfirmation;
     }
 
-    public void setEmailConfirmed(final boolean emailConfirmed) {
-        this.emailConfirmed = emailConfirmed;
+    public void setEmailConfirmation(final boolean emailConfirmation) {
+        this.emailConfirmation = emailConfirmation;
     }
 
-    public boolean isPhoneConfirmed() {
-        return phoneConfirmed;
+    public boolean isPhoneConfirmation() {
+        return phoneConfirmation;
     }
 
-    public void setPhoneConfirmed(final boolean phoneConfirmed) {
-        this.phoneConfirmed = phoneConfirmed;
+    public void setPhoneConfirmation(final boolean phoneConfirmation) {
+        this.phoneConfirmation = phoneConfirmation;
     }
 
     public boolean isAccountState() {

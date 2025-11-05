@@ -39,7 +39,7 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
             preparedStatement.setObject(3, entity.getState().getId());
             preparedStatement.setObject(4, entity.getPet().getId());
             preparedStatement.setObject(5, entity.getCode());
-            preparedStatement.setTimestamp(6, new Timestamp(DateHelper.getDefault(entity.getDateTimeStare()).getTime()));
+            preparedStatement.setTimestamp(6, new Timestamp(DateHelper.getDefault(entity.getDateTimeStart()).getTime()));
             preparedStatement.setTimestamp(7, new Timestamp(DateHelper.getDefault(entity.getEndDateTime()).getTime()));
             preparedStatement.executeUpdate();
 
@@ -74,7 +74,7 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
             preparedStatement.setObject(3, entity.getState().getId());
             preparedStatement.setObject(4, entity.getPet().getId());
             preparedStatement.setObject(5, entity.getCode());
-            preparedStatement.setTimestamp(6, new Timestamp(DateHelper.getDefault(entity.getDateTimeStare()).getTime()));
+            preparedStatement.setTimestamp(6, new Timestamp(DateHelper.getDefault(entity.getDateTimeStart()).getTime()));
             preparedStatement.setTimestamp(7, new Timestamp(DateHelper.getDefault(entity.getEndDateTime()).getTime()));
             preparedStatement.setObject(11, entity.getId());
 
@@ -183,8 +183,8 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
                 "\"codigo\" = ", filterEntityValidated.getCode());
 
         addCondition(conditions, parametersList,
-                !DateHelper.isValid(filterEntityValidated.getDateTimeStare()),
-                "\"fechaHoraInicio\" = ", new Timestamp(filterEntityValidated.getDateTimeStare().getTime()));
+                !DateHelper.isValid(filterEntityValidated.getDateTimeStart()),
+                "\"fechaHoraInicio\" = ", new Timestamp(filterEntityValidated.getDateTimeStart().getTime()));
 
         addCondition(conditions, parametersList,
                 !DateHelper.isValid(filterEntityValidated.getEndDateTime()),
@@ -220,7 +220,7 @@ public final class AppointmentPostgreSqlDAO extends SqlConnection implements App
                 appointment.setCode(String.valueOf(resultSet.getObject("codigo", Integer.class)));
 
                 var dateTimeStart = resultSet.getTimestamp("fechaHoraInicio");
-                appointment.setDateTimeStare(dateTimeStart != null ? new java.util.Date(dateTimeStart.getTime()) : null);
+                appointment.setDateTimeStart(dateTimeStart != null ? new java.util.Date(dateTimeStart.getTime()) : null);
 
                 var dateTimeEnd = resultSet.getTimestamp("fechaHoraFin");
                 appointment.setEndDateTime(dateTimeEnd != null ? new java.util.Date(dateTimeEnd.getTime()) : null);

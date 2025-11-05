@@ -7,28 +7,22 @@ import co.edu.uco.vetecyv.business.domain.TutorDomain;
 
 public interface TutorBusiness {
 
-    void registerNewTutorInformation (TutorDomain tutorDomain);
+    void registerNewTutorInformation(TutorDomain tutorDomain);
 
-    void dropTutorInformation (UUID id);
+    void dropTutorInformation(UUID id);
 
-    void updateTutorInformation (UUID id, TutorDomain tutorDomain);
+    void updateTutorInformation(UUID id, TutorDomain tutorDomain);
 
-    List<TutorDomain> findAllTutors ();
+    List<TutorDomain> findAllTutors();
 
-    List <TutorDomain> findTutorsByFilter (TutorDomain tutorFilters);
+    List<TutorDomain> findTutorsByFilter(TutorDomain tutorFilters);
 
-    TutorDomain findSpecificTutor(UUID id);
+    TutorDomain findTutorById(UUID id);
 
     void confirmMobileNumber(UUID id, int confirmationCode);
 
-    void confirmEmail (UUID id, int confirmationCode);
+    void confirmEmail(UUID id, int confirmationCode);
 
-    void accountState (UUID id, int accountStateCode);
-
-    void sendMobileNumberConfirmation (UUID id);
-
-    void sendEmailConfirmation (UUID id);
-
-    void sendAccountState(UUID id);
+    void accountState(UUID id, int accountStateCode);
 
 }

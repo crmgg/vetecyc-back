@@ -6,50 +6,61 @@ import java.util.UUID;
 import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.UUIDHelper;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
+import co.edu.uco.vetecyv.crosscuting.helper.DateHelper;
 
-public class AgendaDomain extends Domain {
+public final class AgendaDomain extends Domain {
 
     private SpecialityDoctorDomain specialityDoctor;
     private String code;
     private Date dateTime;
     private Date endDateTime;
 
-    public AgendaDomain() {
+    AgendaDomain() {
         super(UUIDHelper.getUUIDHelper().getDefault());
         setCode(TextHelper.getDefault());
-        setSpecialityDoctor(new SpecialityDoctorDomain());
-        setDate(new Date());
-        setEndDateTime(new Date());
+        setSpecialityDoctor(SpecialityDoctorDomain.getDefaultValue());
+        setDate(DateHelper.getDefault());
+        setEndDateTime(DateHelper.getDefault());
     }
 
     public AgendaDomain(final UUID id) {
-        super(id);
+        super(ObjectHelper.getDefault(id, UUIDHelper.getUUIDHelper().getDefault()));
         setCode(TextHelper.getDefault());
-        setSpecialityDoctor(new SpecialityDoctorDomain());
-        setDate(new Date());
-        setEndDateTime(new Date());
+        setSpecialityDoctor(SpecialityDoctorDomain.getDefaultValue());
+        setDate(DateHelper.getDefault());
+        setEndDateTime(DateHelper.getDefault());
     }
 
-    public AgendaDomain(final UUID id, final String code) {
-        super(id);
-        this.code = TextHelper.getDefaultWithTrim(code);
-        setDate(new Date());
-        setEndDateTime(new Date());
+    public AgendaDomain(final UUID id, final String code, final SpecialityDoctorDomain specialityDoctor, final Date date,
+            final Date endDateTime) {
+        super(ObjectHelper.getDefault(id, UUIDHelper.getUUIDHelper().getDefault()));
+        setCode(code);
+        setSpecialityDoctor(specialityDoctor);
+        setDate(date);
+        setEndDateTime(endDateTime);
+    }
+
+    protected static AgendaDomain getDefaultValue() {
+        return new AgendaDomain();
+    }
+
+    static AgendaDomain getDefaultValue(final AgendaDomain agenda) {
+        return ObjectHelper.getDefault(agenda, getDefaultValue());
     }
 
     public SpecialityDoctorDomain getSpecialityDoctor() {
         return specialityDoctor;
     }
 
-    public void setSpecialityDoctor(SpecialityDoctorDomain specialityDoctor) {
-        this.specialityDoctor = ObjectHelper.getDefault(specialityDoctor, new SpecialityDoctorDomain());
+    public void setSpecialityDoctor(final SpecialityDoctorDomain specialityDoctor) {
+        this.specialityDoctor = ObjectHelper.getDefault(specialityDoctor, SpecialityDoctorDomain.getDefaultValue());
     }
 
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(final String code) {
         this.code = TextHelper.getDefaultWithTrim(code);
     }
 
@@ -57,15 +68,15 @@ public class AgendaDomain extends Domain {
         return dateTime;
     }
 
-    public void setDate(Date date) {
-        this.dateTime = ObjectHelper.getDefault(date, new Date());
+    public void setDate(final Date date) {
+        this.dateTime = ObjectHelper.getDefault(date, DateHelper.getDefault());
     }
 
     public Date getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(Date endDateTime) {
-        this.endDateTime = ObjectHelper.getDefault(endDateTime, new Date());
+    public void setEndDateTime(final Date endDateTime) {
+        this.endDateTime = ObjectHelper.getDefault(endDateTime, DateHelper.getDefault());
     }
 }

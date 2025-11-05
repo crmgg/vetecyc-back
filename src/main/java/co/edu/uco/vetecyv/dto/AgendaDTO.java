@@ -24,7 +24,7 @@ public final class AgendaDTO {
         setEndDateTime(DateHelper.getDefault());
     }
 
-    public AgendaDTO(final UUID id) {
+    public AgendaDTO(final UUID id, String code, SpecialityDoctorDTO dto, Date date, Date endDateTime) {
         setId(id);
         setCode(TextHelper.getDefault());
         setSpecialityDoctor(SpecialityDoctorDTO.getDefaultValue());

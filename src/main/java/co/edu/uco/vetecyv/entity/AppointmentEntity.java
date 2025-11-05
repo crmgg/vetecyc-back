@@ -14,7 +14,7 @@ public final class AppointmentEntity {
     private PetEntity petEntity;
     private StateEntity stateEntity;
     private String code;
-    private Date dateTimeStare;
+    private Date dateTimeStart;
     private Date endDateTime;
 
     public AppointmentEntity() {
@@ -23,7 +23,7 @@ public final class AppointmentEntity {
         setPetEntity(PetEntity.createDefault());
         setStateEntity(StateEntity.createDefault());
         setCode(TextHelper.getDefault());
-        setDateTimeStare(DateHelper.getDefault());
+        setDateTimeStart(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
@@ -33,18 +33,18 @@ public final class AppointmentEntity {
         setPetEntity(PetEntity.createDefault());
         setStateEntity(StateEntity.createDefault());
         setCode(TextHelper.getDefault());
-        setDateTimeStare(DateHelper.getDefault());
+        setDateTimeStart(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
     public AppointmentEntity(final UUID id, final AgendaEntity agenda, final PetEntity pet, final StateEntity state,
-                             final String code, final Date dateTimeStare, final Date endDateTime) {
+                             final String code, final Date dateTimeStart, final Date endDateTime) {
         setId(id);
         setAgendaEntity(agenda);
         setPetEntity(pet);
         setStateEntity(state);
         setCode(code);
-        setDateTimeStare(dateTimeStare);
+        setDateTimeStart(dateTimeStart);
         setEndDateTime(endDateTime);
     }
 
@@ -116,12 +116,12 @@ public final class AppointmentEntity {
         this.code = code;
     }
 
-    public Date getDateTimeStare() {
-        return dateTimeStare;
+    public Date getDateTimeStart() {
+        return dateTimeStart;
     }
 
-    public void setDateTimeStare(final Date dateTimeStare) {
-        this.dateTimeStare = DateHelper.getDefault(dateTimeStare);
+    public void setDateTimeStart(final Date dateTimeStare) {
+        this.dateTimeStart = DateHelper.getDefault(dateTimeStare);
     }
 
     public Date getEndDateTime() {

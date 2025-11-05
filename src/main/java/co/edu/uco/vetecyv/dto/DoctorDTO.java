@@ -9,7 +9,7 @@ import java.util.UUID;
 public final class DoctorDTO {
 
     private UUID id;
-    private String identificationDocument;
+    private String identityDocument;
     private String name;
     private String firstLastName;
     private String secondLastName;
@@ -22,7 +22,7 @@ public final class DoctorDTO {
 
     public DoctorDTO() {
         setId(UUIDHelper.getUUIDHelper().getDefault());
-        setIdentificationDocument(TextHelper.getDefault());
+        setIdentityDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
@@ -36,7 +36,7 @@ public final class DoctorDTO {
 
     public DoctorDTO(final UUID id) {
         setId(id);
-        setIdentificationDocument(TextHelper.getDefault());
+        setIdentityDocument(TextHelper.getDefault());
         setName(TextHelper.getDefault());
         setFirstLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
@@ -48,13 +48,13 @@ public final class DoctorDTO {
         setAccountState(false);
     }
 
-    public DoctorDTO(final UUID id, final String identificationDocument, final String name,
+    public DoctorDTO(final UUID id, final String identityDocument, final String name,
                      final String firstLastName, final String secondLastName,
                      final String email, final String phoneNumber, final String password,
                      final boolean emailConfirmed, final boolean phoneConfirmed,
                      final boolean accountState) {
         setId(id);
-        setIdentificationDocument(identificationDocument);
+        setIdentityDocument(identityDocument);
         setName(name);
         setFirstLastName(firstLastName);
         setSecondLastName(secondLastName);
@@ -82,12 +82,12 @@ public final class DoctorDTO {
         this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
 
-    public String getIdentificationDocument() {
-        return identificationDocument;
+    public String getIdentityDocument() {
+        return identityDocument;
     }
 
-    public void setIdentificationDocument(final String identificationDocument) {
-        this.identificationDocument = TextHelper.getDefaultWithTrim(identificationDocument);
+    public void setIdentityDocument(final String identityDocument) {
+        this.identityDocument = TextHelper.getDefaultWithTrim(identityDocument);
     }
 
     public String getName() {

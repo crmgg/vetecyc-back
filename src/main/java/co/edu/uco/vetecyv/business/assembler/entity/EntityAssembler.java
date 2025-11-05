@@ -1,13 +1,15 @@
+// java
 package co.edu.uco.vetecyv.business.assembler.entity;
 
 import java.util.List;
 
-public interface EntityAssembler <E, D> {
+public interface EntityAssembler<E, D> {
 
     E toEntity(D domain);
 
     D toDomain(E entity);
 
-    List<E> toDTO(List<D> domain);
+    List<E> toEntityList(List<D> domainList);
 
+    List<D> toDomainList(List<E> entityList);
 }

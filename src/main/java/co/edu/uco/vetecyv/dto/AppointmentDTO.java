@@ -15,7 +15,7 @@ public final class AppointmentDTO {
     private PetDTO pet;
     private StateDTO state;
     private String code;
-    private Date dateTimeStare;
+    private Date dateTimeStart;
     private Date endDateTime;
 
     public AppointmentDTO() {
@@ -24,7 +24,7 @@ public final class AppointmentDTO {
         setPet(PetDTO.getDefaultValue());
         setState(StateDTO.getDefaultValue());
         setCode(TextHelper.getDefault());
-        setDateTimeStare(DateHelper.getDefault());
+        setDateTimeStart(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
@@ -34,18 +34,18 @@ public final class AppointmentDTO {
         setPet(PetDTO.getDefaultValue());
         setState(StateDTO.getDefaultValue());
         setCode(TextHelper.getDefault());
-        setDateTimeStare(DateHelper.getDefault());
+        setDateTimeStart(DateHelper.getDefault());
         setEndDateTime(DateHelper.getDefault());
     }
 
     public AppointmentDTO(final UUID id, final AgendaDTO agenda, final PetDTO pet, final StateDTO state,
-                          final String code, final Date dateTimeStare, final Date endDateTime) {
+                          final String code, final Date dateTimeStart, final Date endDateTime) {
         setId(id);
         setAgenda(agenda);
         setPet(pet);
         setState(state);
         setCode(code);
-        setDateTimeStare(dateTimeStare);
+        setDateTimeStart(dateTimeStart);
         setEndDateTime(endDateTime);
     }
 
@@ -97,12 +97,12 @@ public final class AppointmentDTO {
         this.code = TextHelper.getDefaultWithTrim(code);
     }
 
-    public Date getDateTimeStare() {
-        return dateTimeStare;
+    public Date getDateTimeStart() {
+        return dateTimeStart;
     }
 
-    public void setDateTimeStare(final Date dateTimeStare) {
-        this.dateTimeStare = DateHelper.getDefault(dateTimeStare);
+    public void setDateTimeStart(final Date dateTimeStart) {
+        this.dateTimeStart = DateHelper.getDefault(dateTimeStart);
     }
 
     public Date getEndDateTime() {

@@ -49,7 +49,7 @@
             setAccountState(false);
         }
 
-        public TutorDTO(final UUID id, final String identityDocument, final String name, final String firstLastName, final String secondLastName,
+        public TutorDTO(final String identityDocument, final String name, final String firstLastName, final String secondLastName,
                         final String email, final String phoneNumber, final String password,
                         final boolean emailConfirmed, final boolean phoneConfirmed,
                         final boolean accountState) {

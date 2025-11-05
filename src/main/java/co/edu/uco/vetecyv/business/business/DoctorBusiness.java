@@ -1,35 +1,28 @@
 package co.edu.uco.vetecyv.business.business;
 
-import co.edu.uco.vetecyv.business.domain.DoctorDomain;
-
 import java.util.List;
 import java.util.UUID;
 
+import co.edu.uco.vetecyv.business.domain.DoctorDomain;
 
 public interface DoctorBusiness {
 
-    void registerNewTutorInformation (DoctorDomain doctorDomain);
+    void registerNewDoctorInformation(DoctorDomain doctorDomain);
 
-    void dropTutorInformation (UUID id);
+    void dropDoctorInformation(UUID id);
 
-    void updateTutorInformation (UUID id, DoctorDomain doctorDomain);
+    void updateDoctorInformation(UUID id, DoctorDomain doctorDomain);
 
-    List<DoctorDomain> findAllDoctors ();
+    List<DoctorDomain> findAllDoctors();
 
-    List <DoctorDomain> finDoctorsByFilter (DoctorDomain doctorFilters);
+    List<DoctorDomain> findDoctorsByFilter(DoctorDomain doctorFilters);
 
-    DoctorDomain findSpecificDoctor(UUID id);
+    DoctorDomain findDoctorById(UUID id);
 
     void confirmMobileNumber(UUID id, int confirmationCode);
 
-    void confirmEmail (UUID id, int confirmationCode);
+    void confirmEmail(UUID id, int confirmationCode);
 
-    void accountState (UUID id, int accountStateCode);
-
-    void sendMobileNumberConfirmation (UUID id);
-
-    void sendEmailConfirmation (UUID id);
-
-    void sendAccountState(UUID id);
+    void accountState(UUID id, int accountStateCode);
 
 }
