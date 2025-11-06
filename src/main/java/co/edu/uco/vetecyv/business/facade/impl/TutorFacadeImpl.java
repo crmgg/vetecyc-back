@@ -31,7 +31,7 @@ public final class TutorFacadeImpl implements TutorFacade {
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
             var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getTitle();
-            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getContent() + " - " + exception.getMessage();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getContent() + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
@@ -74,12 +74,13 @@ public final class TutorFacadeImpl implements TutorFacade {
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
             var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getTitle();
-            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getContent() + " - " + exception.getMessage();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getContent() + exception.getMessage();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
     }
+
 
     @Override
     public List<TutorDTO> findAllTutors() {
@@ -94,7 +95,7 @@ public final class TutorFacadeImpl implements TutorFacade {
         } catch (final Exception exception) {
             throw VetecyvException.create(exception,
                     MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getContent() + " - " + exception.getMessage());
+                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getContent() + exception.getMessage());
         } finally {
             daoFactory.closeConnection();
         }
@@ -114,7 +115,7 @@ public final class TutorFacadeImpl implements TutorFacade {
         } catch (final Exception exception) {
             throw VetecyvException.create(exception,
                     MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getContent() + " - " + exception.getMessage());
+                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getContent() + exception.getMessage());
         } finally {
             daoFactory.closeConnection();
         }
@@ -133,7 +134,7 @@ public final class TutorFacadeImpl implements TutorFacade {
         } catch (final Exception exception) {
             throw VetecyvException.create(exception,
                     MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getContent() + " - " + exception.getMessage());
+                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getContent() + exception.getMessage());
         } finally {
             daoFactory.closeConnection();
         }

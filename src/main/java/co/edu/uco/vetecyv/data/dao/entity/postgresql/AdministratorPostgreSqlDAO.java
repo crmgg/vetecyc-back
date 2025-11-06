@@ -229,17 +229,17 @@ public final class AdministratorPostgreSqlDAO extends SqlConnection implements A
         try (var resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 var administrator = new AdministratorEntity();
-                administrator.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("\"id\"")));
-                administrator.setIdentityDocument(resultSet.getString("\"identityDocument\""));
-                administrator.setName(resultSet.getString("\"name\""));
-                administrator.setFirstLastName(resultSet.getString("\"firstLastName\""));
-                administrator.setSecondLastName(resultSet.getString("\"secondLastName\""));
-                administrator.setEmail(resultSet.getString("\"email\""));
-                administrator.setPhoneNumber(resultSet.getString("\"phoneNumber\""));
-                administrator.setPassword(resultSet.getString("\"password\""));
-                administrator.setEmailConfirmation(resultSet.getBoolean("\"emailConfirmation\""));
-                administrator.setPhoneConfirmation(resultSet.getBoolean("\"phoneConfirmation\""));
-                administrator.setAccountState(resultSet.getBoolean("\"accountState\""));
+                administrator.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
+                administrator.setIdentityDocument(resultSet.getString("identityDocument"));
+                administrator.setName(resultSet.getString("name"));
+                administrator.setFirstLastName(resultSet.getString("firstLastName"));
+                administrator.setSecondLastName(resultSet.getString("secondLastName"));
+                administrator.setEmail(resultSet.getString("email"));
+                administrator.setPhoneNumber(resultSet.getString("phoneNumber"));
+                administrator.setPassword(resultSet.getString("password"));
+                administrator.setEmailConfirmation(resultSet.getBoolean("emailConfirmation"));
+                administrator.setPhoneConfirmation(resultSet.getBoolean("phoneConfirmation"));
+                administrator.setAccountState(resultSet.getBoolean("accountState"));
 
                 admin.add(administrator);
             }

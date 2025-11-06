@@ -228,17 +228,17 @@ public final class DoctorPostgreSqlDAO extends SqlConnection implements DoctorDA
         try (var resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 var doctor = new DoctorEntity();
-                doctor.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("\"id\"")));
-                doctor.setIdentityDocument(resultSet.getString("\"identityDocument\""));
-                doctor.setName(resultSet.getString("\"name\""));
-                doctor.setFirstLastName(resultSet.getString("\"firstLastName\""));
-                doctor.setSecondLastName(resultSet.getString("\"secondLastName\""));
-                doctor.setEmail(resultSet.getString("\"email\""));
-                doctor.setPhoneNumber(resultSet.getString("\"phoneNumber\""));
-                doctor.setPassword(resultSet.getString("\"password\""));
-                doctor.setEmailConfirmation(resultSet.getBoolean("\"emailConfirmation\""));
-                doctor.setPhoneConfirmation(resultSet.getBoolean("\"phoneConfirmation\""));
-                doctor.setAccountState(resultSet.getBoolean("\"accountState\""));
+                doctor.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
+                doctor.setIdentityDocument(resultSet.getString("identityDocument"));
+                doctor.setName(resultSet.getString("name"));
+                doctor.setFirstLastName(resultSet.getString("firstLastName"));
+                doctor.setSecondLastName(resultSet.getString("secondLastName"));
+                doctor.setEmail(resultSet.getString("email"));
+                doctor.setPhoneNumber(resultSet.getString("phoneNumber"));
+                doctor.setPassword(resultSet.getString("password"));
+                doctor.setEmailConfirmation(resultSet.getBoolean("emailConfirmation"));
+                doctor.setPhoneConfirmation(resultSet.getBoolean("phoneConfirmation"));
+                doctor.setAccountState(resultSet.getBoolean("accountState"));
 
                 doc.add(doctor);
             }

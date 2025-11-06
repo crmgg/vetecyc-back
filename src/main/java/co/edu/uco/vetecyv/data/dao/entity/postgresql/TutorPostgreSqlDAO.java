@@ -28,7 +28,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO TUTOR (id, identityDocument, nombre, primerApellido, segundoApellido, correoElectronico, numeroTelefono, contrasena, correoElectronicoConfirmado, numeroTelefonoConfirmado, estadoCuenta) ");
+        sql.append("INSERT INTO tutor (id, identityDocument, name, firstLastName, secondLastName, email, phoneNumber, password, emailConfirmation, phoneConfirmation, accountState) ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
@@ -62,7 +62,8 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
 
         final var sql = new StringBuilder();
         sql.append("UPDATE \"tutor\" ");
-        sql.append("SET \"name\" = ?, ");
+        sql.append("SET \"identityDocument\" = ?, ");
+        sql.append("    \"name\" = ?, ");
         sql.append("    \"firstLastName\" = ?, ");
         sql.append("    \"secondLastName\" = ?, ");
         sql.append("    \"email\" = ?, ");
@@ -74,16 +75,17 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
         sql.append("WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
-            preparedStatement.setString(1, entity.getName());
-            preparedStatement.setString(2, entity.getFirstLastName());
-            preparedStatement.setString(3, entity.getSecondLastName());
-            preparedStatement.setString(4, entity.getEmail());
-            preparedStatement.setString(5, entity.getPhoneNumber());
-            preparedStatement.setString(6, entity.getPassword());
-            preparedStatement.setBoolean(7, entity.isEmailConfirmation());
-            preparedStatement.setBoolean(8, entity.isPhoneConfirmation());
-            preparedStatement.setBoolean(9, entity.isAccountState());
-            preparedStatement.setObject(10, entity.getId());
+            preparedStatement.setString(1, entity.getIdentityDocument());
+            preparedStatement.setString(2, entity.getName());
+            preparedStatement.setString(3, entity.getFirstLastName());
+            preparedStatement.setString(4, entity.getSecondLastName());
+            preparedStatement.setString(5, entity.getEmail());
+            preparedStatement.setString(6, entity.getPhoneNumber());
+            preparedStatement.setString(7, entity.getPassword());
+            preparedStatement.setBoolean(8, entity.isEmailConfirmation());
+            preparedStatement.setBoolean(9, entity.isPhoneConfirmation());
+            preparedStatement.setBoolean(10, entity.isAccountState());
+            preparedStatement.setObject(11, entity.getId());
 
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
@@ -102,7 +104,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("DELETE FROM Tutor WHERE id = ?");
+        sql.append("DELETE FROM \"tutor\" WHERE \"id\" = ?");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, id);
@@ -151,7 +153,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
 
     private String createSentenceFindByFilter(final TutorEntity filterEntity, final List<Object> parameterList) {
         final var sql = new StringBuilder();
-        sql.append("SELECT \"id\", \"name\", \"firstLastName\", \"secondLastName\", \"email\", \"phoneNumber\", \"password\", \"emailConfirmation\", \"phoneConfirmation\", \"accountState\" ");
+        sql.append("SELECT \"id\", \"identityDocument\", \"name\", \"firstLastName\", \"secondLastName\", \"email\", \"phoneNumber\", \"password\", \"emailConfirmation\", \"phoneConfirmation\", \"accountState\" ");
         sql.append("FROM \"tutor\" ");
         createWhereClauseFindByFilter(sql, parameterList, filterEntity);
         return sql.toString();
@@ -168,43 +170,43 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getIdentityDocument()),
-                "Identity Document = ", filter.getIdentityDocument());
+                "\"identityDocument\" = ", filter.getIdentityDocument());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getName()),
-                "nombre = ", filter.getName());
+                "name = ", filter.getName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getFirstLastName()),
-                "primerApellido = ", filter.getFirstLastName());
+                "\"firstLastName\" = ", filter.getFirstLastName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getSecondLastName()),
-                "segundoApellido = ", filter.getSecondLastName());
+                "\"secondLastName\" = ", filter.getSecondLastName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getEmail()),
-                "correoElectronico = ", filter.getEmail());
+                "email = ", filter.getEmail());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPhoneNumber()),
-                "numeroTelefono = ", filter.getPhoneNumber());
+                "\"phoneNumber\" = ", filter.getPhoneNumber());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPassword()),
-                "contrasena = ", filter.getPassword());
+                "password = ", filter.getPassword());
 
         addCondition(conditions, parameterList,
                 !filter.isEmailConfirmation(),
-                "\"correoElectronicoConfirmado\" = ", filter.isEmailConfirmation());
+                "\"emailConfirmation\" = ", filter.isEmailConfirmation());
 
         addCondition(conditions, parameterList,
                 !filter.isPhoneConfirmation(),
-                "\"numeroTelefonoMovilConfirmado\" = ", filter.isPhoneConfirmation());
+                "\"phoneConfirmation\" = ", filter.isPhoneConfirmation());
 
         addCondition(conditions, parameterList,
                 !filter.isAccountState(),
-                "\"cuentaConfirmada\" = ", filter.isAccountState());
+                "\"accountState\" = ", filter.isAccountState());
 
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
@@ -227,6 +229,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
             while (resultSet.next()) {
                 var tutor = new TutorEntity();
                 tutor.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
+                tutor.setIdentityDocument(resultSet.getString("identityDocument"));
                 tutor.setName(resultSet.getString("name"));
                 tutor.setFirstLastName(resultSet.getString("firstLastName"));
                 tutor.setSecondLastName(resultSet.getString("secondLastName"));
