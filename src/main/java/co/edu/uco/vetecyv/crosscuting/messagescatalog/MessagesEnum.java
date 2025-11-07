@@ -202,6 +202,9 @@ public enum MessagesEnum {
             "El segundo apellido no debe contener espacios y debe comenzar con mayúscula; no se puede registrar."),
     TUTOR_ERROR_INVALID_EMAIL("Email inválido.",
             "El email no debe contener espacios y debe tener un formato válido."),
+    // Nuevo: email debe contener al menos un carácter especial
+    TUTOR_ERROR_INVALID_EMAIL_SPECIAL_CHAR("Email inválido.",
+            "El email debe contener al menos un carácter especial; no se puede registrar."),
     TUTOR_ERROR_INVALID_PASSWORD("Password inválido.",
             "La contraseña no puede contener espacios y debe tener entre 8 y 26 caracteres; no se puede registrar."),
     TUTOR_ERROR_INVALID_PHONE("Teléfono inválido.",

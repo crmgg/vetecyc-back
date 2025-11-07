@@ -49,6 +49,12 @@ public class TutorDataValidator {
             throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_EMAIL.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_EMAIL.getContent());
         }
 
+        // Email: debe contener al menos un carácter especial
+        // Consideramos caracteres especiales como cualquier carácter distinto de letras, números y los símbolos comunes en emails (@ . _ % + -)
+        if (!tutor.getEmail().matches(".*[^A-Za-z0-9@._%+-].*")) {
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_EMAIL_SPECIAL_CHAR.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_EMAIL_SPECIAL_CHAR.getContent());
+        }
+
         // Password: mínimo 8, máximo 26
         if (TextHelper.isEmptyWithTrim(tutor.getPassword()) || tutor.getPassword().length() < 8 || tutor.getPassword().length() > 26) {
             throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD_LENGTH.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD_LENGTH.getContent());
