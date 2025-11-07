@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import co.edu.uco.vetecyv.business.assembler.dto.impl.DoctorDTOAssembler;
-import co.edu.uco.vetecyv.business.business.impl.DoctorBusinessImpl;
 import co.edu.uco.vetecyv.business.facade.DoctorFacade;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
