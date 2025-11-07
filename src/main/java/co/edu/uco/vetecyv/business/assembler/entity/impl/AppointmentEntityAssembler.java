@@ -61,24 +61,12 @@
       }
 
       @Override
-      public List<AppointmentEntity> toEntityList(final List<AppointmentDomain> domainList) {
-          var safeList = ObjectHelper.getDefault(domainList, new ArrayList<AppointmentDomain>());
-          var entityList = new ArrayList<AppointmentEntity>();
-
-          for (var domain : safeList) {
-              entityList.add(toEntity(domain));
-          }
-          return entityList;
-      }
-
-      @Override
       public List<AppointmentDomain> toDomainList(final List<AppointmentEntity> entityList) {
-          var safeList = ObjectHelper.getDefault(entityList, new ArrayList<AppointmentEntity>());
-          var domainList = new ArrayList<AppointmentDomain>();
+          var appointmentDomainList = new ArrayList<AppointmentDomain>();
 
-          for (var entity : safeList) {
-              domainList.add(toDomain(entity));
+          for (var appointmentEntity : entityList) {
+              appointmentDomainList.add(toDomain(appointmentEntity));
           }
-          return domainList;
+          return appointmentDomainList;
       }
   }

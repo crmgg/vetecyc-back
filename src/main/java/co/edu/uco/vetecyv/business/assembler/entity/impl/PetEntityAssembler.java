@@ -68,24 +68,12 @@ public final class PetEntityAssembler implements EntityAssembler<PetEntity, PetD
     }
 
     @Override
-    public List<PetEntity> toEntityList(final List<PetDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<PetDomain>());
-        var entityList = new ArrayList<PetEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<PetDomain> toDomainList(final List<PetEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<PetEntity>());
-        var domainList = new ArrayList<PetDomain>();
+        var petDomainList = new ArrayList<PetDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var petEntity : entityList) {
+            petDomainList.add(toDomain(petEntity));
         }
-        return domainList;
+        return petDomainList;
     }
 }

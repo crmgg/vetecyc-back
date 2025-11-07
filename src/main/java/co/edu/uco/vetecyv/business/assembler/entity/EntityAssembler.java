@@ -9,7 +9,5 @@ public interface EntityAssembler<E, D> {
 
     D toDomain(E entity);
 
-    List<E> toEntityList(List<D> domainList);
-
     List<D> toDomainList(List<E> entityList);
 }

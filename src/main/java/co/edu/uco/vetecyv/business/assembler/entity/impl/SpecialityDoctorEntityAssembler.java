@@ -52,24 +52,12 @@ public final class SpecialityDoctorEntityAssembler implements EntityAssembler<Sp
     }
 
     @Override
-    public List<SpecialityDoctorEntity> toEntityList(final List<SpecialityDoctorDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<SpecialityDoctorDomain>());
-        var entityList = new ArrayList<SpecialityDoctorEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<SpecialityDoctorDomain> toDomainList(final List<SpecialityDoctorEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<SpecialityDoctorEntity>());
-        var domainList = new ArrayList<SpecialityDoctorDomain>();
+        var specialityDoctorDomainList = new ArrayList<SpecialityDoctorDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var specialityDoctorEntity : entityList) {
+            specialityDoctorDomainList.add(toDomain(specialityDoctorEntity));
         }
-        return domainList;
+        return specialityDoctorDomainList;
     }
 }

@@ -49,24 +49,12 @@ public final class MedicalRecordEntityAssembler implements EntityAssembler<Medic
     }
 
     @Override
-    public List<MedicalRecordEntity> toEntityList(List<MedicalRecordDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<MedicalRecordDomain>());
-        var entityList = new ArrayList<MedicalRecordEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<MedicalRecordDomain> toDomainList(final List<MedicalRecordEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<MedicalRecordEntity>());
-        var domainList = new ArrayList<MedicalRecordDomain>();
+        var medicalRecordDomainList = new ArrayList<MedicalRecordDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var medicalRecordEntity : entityList) {
+            medicalRecordDomainList.add(toDomain(medicalRecordEntity));
         }
-        return domainList;
+        return medicalRecordDomainList;
     }
 }

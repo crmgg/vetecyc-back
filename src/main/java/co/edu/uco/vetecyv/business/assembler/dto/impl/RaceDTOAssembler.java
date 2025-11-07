@@ -48,12 +48,11 @@ public final class RaceDTOAssembler implements DTOAssembler<RaceDTO, RaceDomain>
 
     @Override
     public List<RaceDTO> toDTO(final List<RaceDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<RaceDomain>());
-        var dtoList = new ArrayList<RaceDTO>();
+        var raceDtoList = new ArrayList<RaceDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var petDomain : domainList) {
+            raceDtoList.add(toDTO(petDomain));
         }
-        return dtoList;
+        return raceDtoList;
     }
 }

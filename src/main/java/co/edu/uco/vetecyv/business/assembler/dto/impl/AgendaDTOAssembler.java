@@ -23,6 +23,7 @@ public final class AgendaDTOAssembler implements DTOAssembler<AgendaDTO, AgendaD
     @Override
     public AgendaDTO toDTO(final AgendaDomain domain) {
         var domainTmp = ObjectHelper.getDefault(domain, new AgendaDomain(UUIDHelper.getUUIDHelper().getDefault()));
+        var specialityDoctorTmp = domainTmp.getSpecialityDoctor();
         return new AgendaDTO(
                 UUIDHelper.getUUIDHelper().getDefault(domainTmp.getId()),
                 domainTmp.getCode(),
@@ -35,6 +36,7 @@ public final class AgendaDTOAssembler implements DTOAssembler<AgendaDTO, AgendaD
     @Override
     public AgendaDomain toDomain(final AgendaDTO dto) {
         var dtoTmp = ObjectHelper.getDefault(dto, new AgendaDTO());
+        var specialityDoctorDomainTmp = SpecialityDoctorDTOAssembler.getSpecialityDoctorDTOAssembler().toDomain(dtoTmp.getSpecialityDoctor());
         return new AgendaDomain(
                 UUIDHelper.getUUIDHelper().getDefault(dtoTmp.getId()),
                 dtoTmp.getCode(),
@@ -46,10 +48,11 @@ public final class AgendaDTOAssembler implements DTOAssembler<AgendaDTO, AgendaD
 
     @Override
     public List<AgendaDTO> toDTO(final List<AgendaDomain> domainList) {
-        var dtoList = new ArrayList<AgendaDTO>();
-        for (var domain : domainList) {
-            dtoList.add(toDTO(domain));
+        var agendadtoList = new ArrayList<AgendaDTO>();
+
+        for (var agendaDomain : domainList) {
+            agendadtoList.add(toDTO(agendaDomain));
         }
-        return dtoList;
+        return agendadtoList;
     }
 }

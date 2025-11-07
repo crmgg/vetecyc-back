@@ -55,12 +55,11 @@ public final class ConsultationDTOAssembler implements DTOAssembler<Consultation
 
     @Override
     public List<ConsultationDTO> toDTO(final List<ConsultationDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<ConsultationDomain>());
-        var dtoList = new ArrayList<ConsultationDTO>();
+        var consultationdtoList = new ArrayList<ConsultationDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var consultationDomain : domainList) {
+            consultationdtoList.add(toDTO(consultationDomain));
         }
-        return dtoList;
+        return consultationdtoList;
     }
 }

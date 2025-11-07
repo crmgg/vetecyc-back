@@ -50,12 +50,11 @@ public final class MedicalRecordDTOAssembler implements DTOAssembler<MedicalReco
 
     @Override
     public List<MedicalRecordDTO> toDTO(final List<MedicalRecordDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<MedicalRecordDomain>());
-        var dtoList = new ArrayList<MedicalRecordDTO>();
+        var medialRecordDtoList = new ArrayList<MedicalRecordDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var medicalRecordDomain : domainList) {
+            medialRecordDtoList.add(toDTO(medicalRecordDomain));
         }
-        return dtoList;
+        return medialRecordDtoList;
     }
 }
