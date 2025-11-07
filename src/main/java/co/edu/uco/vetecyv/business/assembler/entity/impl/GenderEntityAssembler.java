@@ -39,24 +39,12 @@ public final class GenderEntityAssembler implements EntityAssembler<GenderEntity
     }
 
     @Override
-    public List<GenderEntity> toEntityList(List<GenderDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<GenderDomain>());
-        var entityList = new ArrayList<GenderEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<GenderDomain> toDomainList(final List<GenderEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<GenderEntity>());
-        var domainList = new ArrayList<GenderDomain>();
+        var genderDomainList = new ArrayList<GenderDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var genderEntity : entityList) {
+            genderDomainList.add(toDomain(genderEntity));
         }
-        return domainList;
+        return genderDomainList;
     }
 }

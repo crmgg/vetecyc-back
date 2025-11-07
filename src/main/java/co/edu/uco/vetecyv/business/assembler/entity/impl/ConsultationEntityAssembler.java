@@ -54,24 +54,12 @@ public final class ConsultationEntityAssembler implements EntityAssembler<Consul
     }
 
     @Override
-    public List<ConsultationEntity> toEntityList(final List<ConsultationDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<ConsultationDomain>());
-        var entityList = new ArrayList<ConsultationEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<ConsultationDomain> toDomainList(final List<ConsultationEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<ConsultationEntity>());
-        var domainList = new ArrayList<ConsultationDomain>();
+        var consultationDomainList = new ArrayList<ConsultationDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var consultationEntity : entityList) {
+            consultationDomainList.add(toDomain(consultationEntity));
         }
-        return domainList;
+        return consultationDomainList;
     }
 }

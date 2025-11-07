@@ -54,24 +54,12 @@ public final class DetailEntityAssembler implements EntityAssembler<DetailEntity
     }
 
     @Override
-    public List<DetailEntity> toEntityList(final List<DetailDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<DetailDomain>());
-        var entityList = new ArrayList<DetailEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<DetailDomain> toDomainList(final List<DetailEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<DetailEntity>());
-        var domainList = new ArrayList<DetailDomain>();
+        var detailDomainList = new ArrayList<DetailDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var detailEntity : entityList) {
+            detailDomainList.add(toDomain(detailEntity));
         }
-        return domainList;
+        return detailDomainList;
     }
 }

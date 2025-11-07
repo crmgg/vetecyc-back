@@ -48,21 +48,11 @@ public final class AgendaEntityAssembler implements EntityAssembler<AgendaEntity
 
     @Override
     public List<AgendaDomain> toDomainList(final List<AgendaEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<AgendaEntity>());
-        var domainList = new ArrayList<AgendaDomain>();
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
-        }
-        return domainList;
-    }
+        var agendaDomainList = new ArrayList<AgendaDomain>();
 
-    @Override
-    public List<AgendaEntity> toEntityList(final List<AgendaDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<AgendaDomain>());
-        var entityList = new ArrayList<AgendaEntity>();
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
+        for (var agendaEntity : entityList) {
+            agendaDomainList.add(toDomain(agendaEntity));
         }
-        return entityList;
+        return agendaDomainList;
     }
 }

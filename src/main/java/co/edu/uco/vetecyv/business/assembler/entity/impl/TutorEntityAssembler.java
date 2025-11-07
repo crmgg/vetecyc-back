@@ -57,24 +57,12 @@ public final class TutorEntityAssembler implements EntityAssembler<TutorEntity, 
     }
 
     @Override
-    public List<TutorEntity> toEntityList(final List<TutorDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<TutorDomain>());
-        var entityList = new ArrayList<TutorEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<TutorDomain> toDomainList(final List<TutorEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<TutorEntity>());
-        var domainList = new ArrayList<TutorDomain>();
+        var tutorDomainList = new ArrayList<TutorDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var tutorEntity : entityList) {
+            tutorDomainList.add(toDomain(tutorEntity));
         }
-        return domainList;
+        return tutorDomainList;
     }
 }

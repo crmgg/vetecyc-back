@@ -47,24 +47,12 @@ public final class RaceEntityAssembler implements EntityAssembler<RaceEntity, Ra
     }
 
     @Override
-    public List<RaceEntity> toEntityList(final List<RaceDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<RaceDomain>());
-        var entityList = new ArrayList<RaceEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<RaceDomain> toDomainList(final List<RaceEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<RaceEntity>());
-        var domainList = new ArrayList<RaceDomain>();
+        var raceDomainList = new ArrayList<RaceDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var raceEntity : entityList) {
+            raceDomainList.add(toDomain(raceEntity));
         }
-        return domainList;
+        return raceDomainList;
     }
 }

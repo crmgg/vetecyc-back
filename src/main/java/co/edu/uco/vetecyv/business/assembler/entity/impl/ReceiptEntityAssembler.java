@@ -56,24 +56,12 @@ public final class ReceiptEntityAssembler implements EntityAssembler<ReceiptEnti
     }
 
     @Override
-    public List<ReceiptEntity> toEntityList(final List<ReceiptDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<ReceiptDomain>());
-        var entityList = new ArrayList<ReceiptEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<ReceiptDomain> toDomainList(final List<ReceiptEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<ReceiptEntity>());
-        var domainList = new ArrayList<ReceiptDomain>();
+        var receiptDomainList = new ArrayList<ReceiptDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var receiptEntity : entityList) {
+            receiptDomainList.add(toDomain(receiptEntity));
         }
-        return domainList;
+        return receiptDomainList;
     }
 }

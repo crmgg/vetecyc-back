@@ -39,24 +39,12 @@ public final class StateEntityAssembler implements EntityAssembler<StateEntity, 
     }
 
     @Override
-    public List<StateEntity> toEntityList(final List<StateDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<StateDomain>());
-        var entityList = new ArrayList<StateEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<StateDomain> toDomainList(final List<StateEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<StateEntity>());
-        var domainList = new ArrayList<StateDomain>();
+        var stateDomainList = new ArrayList<StateDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var stateEntity : entityList) {
+            stateDomainList.add(toDomain(stateEntity));
         }
-        return domainList;
+        return stateDomainList;
     }
 }

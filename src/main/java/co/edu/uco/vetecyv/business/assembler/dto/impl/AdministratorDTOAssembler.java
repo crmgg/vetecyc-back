@@ -58,10 +58,11 @@ public final class AdministratorDTOAssembler implements DTOAssembler<Administrat
 
     @Override
     public List<AdministratorDTO> toDTO(final List<AdministratorDomain> domainList) {
-        var dtoList = new ArrayList<AdministratorDTO>();
-        for (var domain : domainList) {
-            dtoList.add(toDTO(domain));
+        var administratordtoList = new ArrayList<AdministratorDTO>();
+
+        for (var administratorDomain : domainList) {
+            administratordtoList.add(toDTO(administratorDomain));
         }
-        return dtoList;
+        return administratordtoList;
     }
 }

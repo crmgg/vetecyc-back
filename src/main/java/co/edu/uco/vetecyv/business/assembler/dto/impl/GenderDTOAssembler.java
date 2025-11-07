@@ -40,12 +40,11 @@ public final class GenderDTOAssembler implements DTOAssembler<GenderDTO, GenderD
 
     @Override
     public List<GenderDTO> toDTO(final List<GenderDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<GenderDomain>());
-        var dtoList = new ArrayList<GenderDTO>();
+        var genderDtoList = new ArrayList<GenderDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var genderDomain : domainList) {
+            genderDtoList.add(toDTO(genderDomain));
         }
-        return dtoList;
+        return genderDtoList;
     }
 }

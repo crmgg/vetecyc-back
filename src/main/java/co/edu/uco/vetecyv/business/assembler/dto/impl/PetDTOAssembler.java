@@ -68,12 +68,11 @@ public final class PetDTOAssembler implements DTOAssembler<PetDTO, PetDomain> {
 
     @Override
     public List<PetDTO> toDTO(final List<PetDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<PetDomain>());
-        var dtoList = new ArrayList<PetDTO>();
+        var petDtoList = new ArrayList<PetDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var petDomain : domainList) {
+            petDtoList.add(toDTO(petDomain));
         }
-        return dtoList;
+        return petDtoList;
     }
 }

@@ -38,23 +38,13 @@ public final class PetTypeEntityAssembler implements EntityAssembler<PetTypeEnti
         );
     }
 
-    @Override
-    public List<PetTypeEntity> toEntityList(final List<PetTypeDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<PetTypeDomain>());
-        var entityList = new ArrayList<PetTypeEntity>();
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
 
     @Override
     public List<PetTypeDomain> toDomainList(final List<PetTypeEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<PetTypeEntity>());
-        var domainList = new ArrayList<PetTypeDomain>();
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        var petTypeDomainList = new ArrayList<PetTypeDomain>();
+        for (var petTypeEntity : entityList) {
+            petTypeDomainList.add(toDomain(petTypeEntity));
         }
-        return domainList;
+        return petTypeDomainList;
     }
 }

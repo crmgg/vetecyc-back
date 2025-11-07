@@ -55,12 +55,11 @@ public final class DetailDTOAssembler implements DTOAssembler<DetailDTO, DetailD
 
     @Override
     public List<DetailDTO> toDTO(final List<DetailDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<DetailDomain>());
-        var dtoList = new ArrayList<DetailDTO>();
+        var detaildtoList = new ArrayList<DetailDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var detailDomain : domainList) {
+            detaildtoList.add(toDTO(detailDomain));
         }
-        return dtoList;
+        return detaildtoList;
     }
 }

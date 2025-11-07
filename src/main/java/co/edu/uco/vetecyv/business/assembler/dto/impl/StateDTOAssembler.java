@@ -40,12 +40,11 @@ public final class StateDTOAssembler implements DTOAssembler<StateDTO, StateDoma
 
     @Override
     public List<StateDTO> toDTO(final List<StateDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<StateDomain>());
-        var dtoList = new ArrayList<StateDTO>();
+        var stateDtoList = new ArrayList<StateDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var stateDomain : domainList) {
+            stateDtoList.add(toDTO(stateDomain));
         }
-        return dtoList;
+        return stateDtoList;
     }
 }

@@ -56,12 +56,11 @@ public final class TutorDTOAssembler implements DTOAssembler<TutorDTO, TutorDoma
 
     @Override
     public List<TutorDTO> toDTO(final List<TutorDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<TutorDomain>());
-        var dtoList = new ArrayList<TutorDTO>();
+        var tutorDtoList = new ArrayList<TutorDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var tutorDomain : domainList) {
+            tutorDtoList.add(toDTO(tutorDomain));
         }
-        return dtoList;
+        return tutorDtoList;
     }
 }

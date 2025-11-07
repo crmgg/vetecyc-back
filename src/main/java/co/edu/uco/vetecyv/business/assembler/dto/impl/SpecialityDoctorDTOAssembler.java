@@ -53,12 +53,11 @@ public final class SpecialityDoctorDTOAssembler implements DTOAssembler<Speciali
 
     @Override
     public List<SpecialityDoctorDTO> toDTO(final List<SpecialityDoctorDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<SpecialityDoctorDomain>());
-        var dtoList = new ArrayList<SpecialityDoctorDTO>();
+        var specialityDoctorDtoList = new ArrayList<SpecialityDoctorDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var specialityDoctorDomain : domainList) {
+            specialityDoctorDtoList.add(toDTO(specialityDoctorDomain));
         }
-        return dtoList;
+        return specialityDoctorDtoList;
     }
 }

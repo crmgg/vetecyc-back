@@ -62,12 +62,11 @@ public final class AppointmentDTOAssembler implements DTOAssembler<AppointmentDT
 
     @Override
     public List<AppointmentDTO> toDTO(final List<AppointmentDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<AppointmentDomain>());
-        var dtoList = new ArrayList<AppointmentDTO>();
+        var appointmentdtoList = new ArrayList<AppointmentDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var domain : domainList) {
+            appointmentdtoList.add(toDTO(new AppointmentDomain()));
         }
-        return dtoList;
+        return appointmentdtoList;
     }
 }

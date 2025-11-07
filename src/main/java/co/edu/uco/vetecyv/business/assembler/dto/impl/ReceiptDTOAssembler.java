@@ -57,12 +57,11 @@ public final class ReceiptDTOAssembler implements DTOAssembler<ReceiptDTO, Recei
 
     @Override
     public List<ReceiptDTO> toDTO(final List<ReceiptDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<ReceiptDomain>());
-        var dtoList = new ArrayList<ReceiptDTO>();
+        var receiptDtoList = new ArrayList<ReceiptDTO>();
 
-        for (var domain : safeList) {
-            dtoList.add(toDTO(domain));
+        for (var receiptDomain : domainList) {
+            receiptDtoList.add(toDTO(receiptDomain));
         }
-        return dtoList;
+        return receiptDtoList;
     }
 }

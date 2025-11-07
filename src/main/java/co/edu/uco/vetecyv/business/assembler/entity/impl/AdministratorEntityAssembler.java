@@ -58,22 +58,12 @@ public final class AdministratorEntityAssembler implements EntityAssembler<Admin
     }
 
     @Override
-    public List<AdministratorEntity> toEntityList(final List<AdministratorDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<AdministratorDomain>());
-        var entityList = new ArrayList<AdministratorEntity>();
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<AdministratorDomain> toDomainList(final List<AdministratorEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<AdministratorEntity>());
-        var domainList = new ArrayList<AdministratorDomain>();
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        var administratorDomainList = new ArrayList<AdministratorDomain>();
+
+        for (var administratorEntity : entityList) {
+            administratorDomainList.add(toDomain(administratorEntity));
         }
-        return domainList;
+        return administratorDomainList;
     }
 }

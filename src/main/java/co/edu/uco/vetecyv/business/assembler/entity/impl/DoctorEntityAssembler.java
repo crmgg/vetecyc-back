@@ -57,24 +57,12 @@ public final class DoctorEntityAssembler implements EntityAssembler<DoctorEntity
     }
 
     @Override
-    public List<DoctorEntity> toEntityList(final List<DoctorDomain> domainList) {
-        var safeList = ObjectHelper.getDefault(domainList, new ArrayList<DoctorDomain>());
-        var entityList = new ArrayList<DoctorEntity>();
-
-        for (var domain : safeList) {
-            entityList.add(toEntity(domain));
-        }
-        return entityList;
-    }
-
-    @Override
     public List<DoctorDomain> toDomainList(final List<DoctorEntity> entityList) {
-        var safeList = ObjectHelper.getDefault(entityList, new ArrayList<DoctorEntity>());
-        var domainList = new ArrayList<DoctorDomain>();
+        var doctorDomainList = new ArrayList<DoctorDomain>();
 
-        for (var entity : safeList) {
-            domainList.add(toDomain(entity));
+        for (var doctorEntity : entityList) {
+            doctorDomainList.add(toDomain(doctorEntity));
         }
-        return domainList;
+        return doctorDomainList;
     }
 }
