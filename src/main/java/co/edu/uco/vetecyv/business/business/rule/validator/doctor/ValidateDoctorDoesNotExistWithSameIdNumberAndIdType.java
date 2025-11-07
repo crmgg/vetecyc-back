@@ -1,6 +1,6 @@
 package co.edu.uco.vetecyv.business.business.rule.validator.doctor;
 
-import co.edu.uco.vetecyv.business.business.rule.doctor.DoctorDoesNotExistWithSameIdNumberAndIdTypeRule;
+import co.edu.uco.vetecyv.business.business.rule.doctor.DoctorDoesNotExistWithSameIdNumberRule;
 import co.edu.uco.vetecyv.business.business.rule.validator.Validator;
 
 public class ValidateDoctorDoesNotExistWithSameIdNumberAndIdType implements Validator {
@@ -16,6 +16,6 @@ public class ValidateDoctorDoesNotExistWithSameIdNumberAndIdType implements Vali
 
     @Override
     public void validate(Object... data) {
-        DoctorDoesNotExistWithSameIdNumberAndIdTypeRule.executeRule(data);
+        DoctorDoesNotExistWithSameIdNumberRule.executeRule(data);
     }
 }

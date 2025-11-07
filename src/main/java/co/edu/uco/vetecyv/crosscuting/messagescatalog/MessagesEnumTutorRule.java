@@ -3,6 +3,7 @@ package co.edu.uco.vetecyv.crosscuting.messagescatalog;
 public enum MessagesEnumTutorRule {
     TUTOR_RULE_DATA_IS_NULL("Datos inválidos","Los datos de entrada son nulos o inválidos."),
     TUTOR_RULE_DATA_LENGTH_INVALID("Datos inválidos","La cantidad de datos esperada es 2 o 3."),
+    TUTOR_RULE_INVALID_DATA_TYPES("Datos inválidos","Los tipos de datos enviados a la regla son inválidos."),
     TUTOR_RULE_TUTOR_ALREADY_EXISTS("Tutor existente","Ya existe un tutor con número de identificación %s."),
     TUTOR_RULE_NOT_FOUND("Tutor no encontrado","No existe tutor con id %s."),
 

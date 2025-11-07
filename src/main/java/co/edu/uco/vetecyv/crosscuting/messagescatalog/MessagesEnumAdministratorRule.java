@@ -2,7 +2,8 @@ package co.edu.uco.vetecyv.crosscuting.messagescatalog;
 
 public enum MessagesEnumAdministratorRule {
     ADMINISTRATOR_RULE_DATA_IS_NULL("Datos inválidos","Los datos de entrada son nulos o inválidos."),
-    ADMINISTRATOR_RULE_DATA_LENGTH_INVALID("Datos inválidos","La cantidad de datos esperada es 2 o 3."),
+    // Se aclara que se esperan 2 parámetros: idNumber y daoFactory. Se evita mencionar 'tipo' o 'tipo de documento'.
+    ADMINISTRATOR_RULE_DATA_LENGTH_INVALID("Datos inválidos","La cantidad de datos esperada es 2 (idNumber, daoFactory)."),
     ADMINISTRATOR_RULE_INVALID_DATA_TYPES("Datos inválidos","Los tipos de datos enviados a la regla son inválidos."),
     ADMINISTRATOR_RULE_ADMINISTRATOR_ALREADY_EXISTS("Administrador existente","Ya existe un administrador con número de identificación %s."),
     ADMINISTRATOR_RULE_NOT_FOUND("Administrador no encontrado","No existe administrador con id %s."),
@@ -35,4 +36,3 @@ public enum MessagesEnumAdministratorRule {
         return content;
     }
 }
-

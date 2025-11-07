@@ -1,6 +1,6 @@
 package co.edu.uco.vetecyv.business.business.rule.validator.administrator;
 
-import co.edu.uco.vetecyv.business.business.rule.administrator.AdministratorDoesNotExistWithSameIdNumberAndIdTypeRule;
+import co.edu.uco.vetecyv.business.business.rule.administrator.AdministratorDoesNotExistWithSameIdNumberRule;
 import co.edu.uco.vetecyv.business.business.rule.validator.Validator;
 
 public class ValidateAdministratorDoesNotExistWithSameIdNumberAndIdType implements Validator {
@@ -16,6 +16,6 @@ public class ValidateAdministratorDoesNotExistWithSameIdNumberAndIdType implemen
 
     @Override
     public void validate(Object... data) {
-        AdministratorDoesNotExistWithSameIdNumberAndIdTypeRule.executeRule(data);
+        AdministratorDoesNotExistWithSameIdNumberRule.executeRule(data);
     }
 }

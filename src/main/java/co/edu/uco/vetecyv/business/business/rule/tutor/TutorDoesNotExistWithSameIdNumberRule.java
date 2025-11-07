@@ -10,11 +10,11 @@ import co.edu.uco.vetecyv.entity.TutorEntity;
 
 import java.util.List;
 
-public class TutorDoesNotExistWithSameIdNumberAndIdTypeRule implements Rule {
+public class TutorDoesNotExistWithSameIdNumberRule implements Rule {
 
-    private static final TutorDoesNotExistWithSameIdNumberAndIdTypeRule INSTANCE = new TutorDoesNotExistWithSameIdNumberAndIdTypeRule();
+    private static final TutorDoesNotExistWithSameIdNumberRule INSTANCE = new TutorDoesNotExistWithSameIdNumberRule();
 
-    private TutorDoesNotExistWithSameIdNumberAndIdTypeRule() {
+    private TutorDoesNotExistWithSameIdNumberRule() {
     }
 
     public static void executeRule(final Object... data) {
@@ -41,10 +41,12 @@ public class TutorDoesNotExistWithSameIdNumberAndIdTypeRule implements Rule {
 
         try {
             idNumber = (String) data[0];
-            daoFactory = (DAOFactory) (data.length == 2 ? data[1] : data[2]);
+            // Tomamos siempre el último parámetro como DAOFactory para soportar llamadas con
+            // (idNumber, daoFactory) o (idNumber, idType, daoFactory) sin interpretar el idType.
+            daoFactory = (DAOFactory) data[data.length - 1];
         } catch (ClassCastException ex) {
-            var userMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_IS_NULL.getTitle();
-            var technicalMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_IS_NULL.getTitle();
+            var userMessage = MessagesEnumTutorRule.TUTOR_MOBILE_INVALID_DATA_TYPES.getTitle();
+            var technicalMessage = MessagesEnumTutorRule.TUTOR_MOBILE_INVALID_DATA_TYPES.getContent();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
 

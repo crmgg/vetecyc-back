@@ -10,11 +10,11 @@ import co.edu.uco.vetecyv.entity.AdministratorEntity;
 
 import java.util.List;
 
-public class AdministratorDoesNotExistWithSameIdNumberAndIdTypeRule implements Rule {
+public class AdministratorDoesNotExistWithSameIdNumberRule implements Rule {
 
-    private static final Rule instance = new AdministratorDoesNotExistWithSameIdNumberAndIdTypeRule();
+    private static final Rule instance = new AdministratorDoesNotExistWithSameIdNumberRule();
 
-    private AdministratorDoesNotExistWithSameIdNumberAndIdTypeRule() {
+    private AdministratorDoesNotExistWithSameIdNumberRule() {
     }
 
     public static void executeRule(final Object... data) {
@@ -41,7 +41,11 @@ public class AdministratorDoesNotExistWithSameIdNumberAndIdTypeRule implements R
 
         try {
             idNumber = (String) data[0];
-            daoFactory = (DAOFactory) (data.length == 2 ? data[1] : data[2]);
+            // Antes se usaba una condición que tomaba data[1] o data[2].
+            // Para soportar llamadas con 2 o 3 parámetros (por compatibilidad) siempre tomamos el último parámetro
+            // como el DAOFactory. De esta forma, si se llama con (idNumber, daoFactory) o con (idNumber, idType, daoFactory)
+            // el daoFactory será correctamente obtenido.
+            daoFactory = (DAOFactory) data[data.length - 1];
         } catch (ClassCastException ex) {
             var userMessage = MessagesEnumAdministratorRule.ADMINISTRATOR_RULE_INVALID_DATA_TYPES.getTitle();
             var technicalMessage = MessagesEnumAdministratorRule.ADMINISTRATOR_RULE_INVALID_DATA_TYPES.getContent();

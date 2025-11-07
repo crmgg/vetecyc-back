@@ -10,11 +10,11 @@ import co.edu.uco.vetecyv.entity.DoctorEntity;
 
 import java.util.List;
 
-public class DoctorDoesNotExistWithSameIdNumberAndIdTypeRule implements Rule {
+public class DoctorDoesNotExistWithSameIdNumberRule implements Rule {
 
-    private static final DoctorDoesNotExistWithSameIdNumberAndIdTypeRule INSTANCE = new DoctorDoesNotExistWithSameIdNumberAndIdTypeRule();
+    private static final DoctorDoesNotExistWithSameIdNumberRule INSTANCE = new DoctorDoesNotExistWithSameIdNumberRule();
 
-    private DoctorDoesNotExistWithSameIdNumberAndIdTypeRule() {
+    private DoctorDoesNotExistWithSameIdNumberRule() {
     }
 
     public static void executeRule(final Object... data) {
@@ -41,9 +41,11 @@ public class DoctorDoesNotExistWithSameIdNumberAndIdTypeRule implements Rule {
 
         try {
             idNumber = (String) data[0];
-            daoFactory = (DAOFactory) (data.length == 2 ? data[1] : data[2]);
+            // Tomamos siempre el último parámetro como DAOFactory para soportar llamadas con
+            // (idNumber, daoFactory) o (idNumber, idType, daoFactory) sin interpretar el idType.
+            daoFactory = (DAOFactory) data[data.length - 1];
         } catch (ClassCastException ex) {
-            var userMessage = MessagesEnumDoctorRule.DOCTOR_RULE_DATA_IS_NULL.getTitle();
+            var userMessage = MessagesEnumDoctorRule.DOCTOR_RULE_INVALID_DATA_TYPES.getTitle();
             var technicalMessage = MessagesEnumDoctorRule.DOCTOR_RULE_INVALID_DATA_TYPES.getContent();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
