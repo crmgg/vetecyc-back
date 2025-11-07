@@ -26,12 +26,10 @@ public final class TutorBusinessImpl implements TutorBusiness {
 
     @Override
     public void registerNewTutorInformation(final TutorDomain tutorDomain) {
-        // Llamadas directas a los validadores (datos + duplicados)
         TutorDataValidator.validate(tutorDomain);
         TutorDuplicateValidator.validate(tutorDomain, daoFactory);
 
         UUID id = UUID.randomUUID();
-        // Asegurar id único (si existe, generar otro)
         while (!ObjectHelper.isNull(daoFactory.getTutorDAO().findById(id))) {
             id = UUID.randomUUID();
         }
@@ -85,7 +83,6 @@ public final class TutorBusinessImpl implements TutorBusiness {
     public void confirmMobileNumber(final UUID id, final int confirmationCode) {
         var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
 
-        // Validación del código no implementada (adaptar si se persiste código)
         var domain = TutorEntityAssembler.getTutorEntityAssembler().toDomain(entity);
         domain.setPhoneConfirmation(true);
 
@@ -98,7 +95,6 @@ public final class TutorBusinessImpl implements TutorBusiness {
     public void confirmEmail(final UUID id, final int confirmationCode) {
         var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
 
-        // Validación del código no implementada (adaptar si se persiste código)
         var domain = TutorEntityAssembler.getTutorEntityAssembler().toDomain(entity);
         domain.setEmailConfirmation(true);
 
@@ -118,7 +114,6 @@ public final class TutorBusinessImpl implements TutorBusiness {
         daoFactory.getTutorDAO().update(updated);
     }
 
-    /* Placeholders para envío de códigos */
 
     public void sendMobileNumberConfirmation(final UUID id) {
         var entity = TutorExistenceValidator.ensureExists(id, daoFactory);

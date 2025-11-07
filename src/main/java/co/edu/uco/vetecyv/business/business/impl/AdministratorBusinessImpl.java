@@ -28,7 +28,6 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
         validateDuplicatedAdministrator(administratorDomain);
 
         UUID id = UUID.randomUUID();
-        // Asegurar id único (si existe, generar otro)
         while (!ObjectHelper.isNull(daoFactory.getAdministratorDAO().findById(id))) {
             id = UUID.randomUUID();
         }
@@ -100,7 +99,6 @@ public final class AdministratorBusinessImpl implements AdministratorBusiness {
             throw VetecyvException.create(MessagesEnum.ADMIN_ERROR_NOT_FOUND.getTitle(), MessagesEnum.ADMIN_ERROR_NOT_FOUND.getContent());
         }
 
-        // Validación del código debe implementarse si se persiste; aquí sólo se marca confirmado.
         var domain = AdministratorEntityAssembler.getAdministratorEntityAssembler().toDomain(entity);
         domain.setEmailConfirmation(true);
 

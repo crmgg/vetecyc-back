@@ -27,7 +27,6 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
         validateDuplicatedDoctor(doctorDomain);
 
         UUID id = UUID.randomUUID();
-        // Reintentar mientras el id ya exista
         while (!ObjectHelper.isNull(daoFactory.getDoctorDAO().findById(id))) {
             id = UUID.randomUUID();
         }
@@ -46,6 +45,8 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     public void updateDoctorInformation(final UUID id, final DoctorDomain doctorDomain) {
         var existing = daoFactory.getDoctorDAO().findById(id);
         if (ObjectHelper.isNull(existing)) {
+            
+            
             throw VetecyvException.create("Doctor no encontrado", "No existe doctor con id proporcionado");
         }
 

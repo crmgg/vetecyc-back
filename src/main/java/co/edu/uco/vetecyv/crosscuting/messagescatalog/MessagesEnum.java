@@ -218,6 +218,21 @@ public enum MessagesEnum {
             "Otro tutor ya usa ese documento de identidad."),
     TUTOR_ERROR_DUPLICATED_PHONE_ON_UPDATE("Teléfono duplicado en actualización.",
             "Otro tutor ya usa ese teléfono."),
+    // Nuevos mensajes específicos para validaciones
+    TUTOR_ERROR_INVALID_IDENTITYDOCUMENT_LENGTH("Documento de identidad inválido.",
+            "El documento de identidad debe tener entre 7 y 10 caracteres."),
+    TUTOR_ERROR_INVALID_NAME_FORMAT("Nombre inválido.",
+            "El nombre no debe contener espacios y debe comenzar con letra mayúscula (longitud 1-7)."),
+    TUTOR_ERROR_INVALID_FIRSTLASTNAME_FORMAT("Primer apellido inválido.",
+            "El primer apellido no debe contener espacios y debe comenzar con letra mayúscula (longitud 1-7)."),
+    TUTOR_ERROR_INVALID_SECONDLASTNAME_FORMAT("Segundo apellido inválido.",
+            "El segundo apellido no debe contener espacios y debe comenzar con letra mayúscula (longitud 1-7)."),
+    TUTOR_ERROR_INVALID_PASSWORD_LENGTH("Password inválido.",
+            "El password debe tener entre 8 y 26 caracteres."),
+    TUTOR_ERROR_INVALID_EMAIL_LENGTH("Email inválido.",
+            "El email debe tener como máximo 100 caracteres."),
+    TUTOR_ERROR_INVALID_PHONE_LENGTH("Teléfono inválido.",
+            "El número de teléfono debe contener exactamente 10 dígitos."),
 
     /*Detail*/
     DETAIL_ERROR_SQL_INSERT_DETAIL("No se pudo registrar el detalle",
