@@ -9,9 +9,12 @@ import co.edu.uco.vetecyv.business.business.DoctorBusiness;
 import co.edu.uco.vetecyv.business.domain.DoctorDomain;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
+import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnumDoctorRule;
 import co.edu.uco.vetecyv.data.dao.factory.DAOFactory;
-import co.edu.uco.vetecyv.entity.DoctorEntity;
+import co.edu.uco.vetecyv.business.business.rule.validator.doctor.DoctorDataValidator;
+import co.edu.uco.vetecyv.business.business.rule.validator.doctor.ValidateDoctorDoesNotExistWithSameIdNumberAndIdType;
+import co.edu.uco.vetecyv.business.business.rule.validator.doctor.ValidateDataDoctorEmailDoesNotExist;
+import co.edu.uco.vetecyv.business.business.rule.validator.doctor.ValidateDataDoctorMobileDoesNotExist;
 
 public final class DoctorBusinessImpl implements DoctorBusiness {
 
@@ -45,9 +48,7 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     public void updateDoctorInformation(final UUID id, final DoctorDomain doctorDomain) {
         var existing = daoFactory.getDoctorDAO().findById(id);
         if (ObjectHelper.isNull(existing)) {
-            
-            
-            throw VetecyvException.create("Doctor no encontrado", "No existe doctor con id proporcionado");
+            throw VetecyvException.create(MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getContent());
         }
 
         validateDoctorData(doctorDomain);
@@ -81,7 +82,7 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     public void confirmMobileNumber(final UUID id, final int confirmationCode) {
         var entity = daoFactory.getDoctorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Doctor no encontrado", "No existe doctor con id proporcionado");
+            throw VetecyvException.create(MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getContent());
         }
 
         // Validación del código debe implementarse si se persiste; aquí sólo se marca confirmado.
@@ -97,7 +98,7 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     public void confirmEmail(final UUID id, final int confirmationCode) {
         var entity = daoFactory.getDoctorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Doctor no encontrado", "No existe doctor con id proporcionado");
+            throw VetecyvException.create(MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getContent());
         }
 
         // Validación del código debe implementarse si se persiste; aquí sólo se marca confirmado.
@@ -113,7 +114,7 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     public void accountState(final UUID id, final int accountStateCode) {
         var entity = daoFactory.getDoctorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Doctor no encontrado", "No existe doctor con id proporcionado");
+            throw VetecyvException.create(MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getContent());
         }
 
         var domain = DoctorEntityAssembler.getDoctorEntityAssembler().toDomain(entity);
@@ -128,7 +129,7 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     public void sendMobileNumberConfirmation(final UUID id) {
         var entity = daoFactory.getDoctorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Doctor no encontrado", "No existe doctor con id proporcionado");
+            throw VetecyvException.create(MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getContent());
         }
         int code = ThreadLocalRandom.current().nextInt(100000, 1_000_000);
         System.out.printf("Enviar código de confirmación móvil %d al doctor %s%n", code, entity.getPhoneNumber());
@@ -137,7 +138,7 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     public void sendEmailConfirmation(final UUID id) {
         var entity = daoFactory.getDoctorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Doctor no encontrado", "No existe doctor con id proporcionado");
+            throw VetecyvException.create(MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getContent());
         }
         int code = ThreadLocalRandom.current().nextInt(100000, 1_000_000);
         System.out.printf("Enviar código de confirmación por email %d al doctor %s%n", code, entity.getEmail());
@@ -146,7 +147,7 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     public void sendAccountState(final UUID id) {
         var entity = daoFactory.getDoctorDAO().findById(id);
         if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create("Doctor no encontrado", "No existe doctor con id proporcionado");
+            throw VetecyvException.create(MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnumDoctorRule.DOCTOR_ERROR_NOT_FOUND.getContent());
         }
         var domain = DoctorEntityAssembler.getDoctorEntityAssembler().toDomain(entity);
         System.out.printf("Notificar estado de cuenta (%s) al doctor %s / %s%n",
@@ -156,70 +157,18 @@ public final class DoctorBusinessImpl implements DoctorBusiness {
     /* Helpers privados */
 
     private void validateDoctorData(final DoctorDomain doctor) {
-        if (ObjectHelper.isNull(doctor)) {
-            throw VetecyvException.create("Doctor inválido", "El objeto DoctorDomain es nulo");
-        }
-
-        if (TextHelper.isEmptyWithTrim(doctor.getName()) || doctor.getName().length() > 50) {
-            throw VetecyvException.create("Nombre inválido", "Nombre del doctor nulo o demasiado largo");
-        }
-
-        if (TextHelper.isEmptyWithTrim(doctor.getFirstLastName()) || doctor.getFirstLastName().length() > 50) {
-            throw VetecyvException.create("Primer apellido inválido", "Primer apellido nulo o demasiado largo");
-        }
-
-        if (TextHelper.isEmptyWithTrim(doctor.getSecondLastName()) || doctor.getSecondLastName().length() > 50) {
-            throw VetecyvException.create("Segundo apellido inválido", "Segundo apellido nulo o demasiado largo");
-        }
-
-        if (!TextHelper.isValidEmail(doctor.getEmail()) || doctor.getEmail().length() > 250) {
-            throw VetecyvException.create("Email inválido", "Email nulo o con formato incorrecto");
-        }
-
-        if (TextHelper.isEmptyWithTrim(doctor.getPassword()) || doctor.getPassword().length() > 100) {
-            throw VetecyvException.create("Password inválido", "Password nulo o demasiado largo");
-        }
-
-        if (!TextHelper.isValidPhoneNumber(doctor.getPhoneNumber()) || doctor.getPhoneNumber().length() > 20) {
-            throw VetecyvException.create("Teléfono inválido", "Número de teléfono nulo o con formato incorrecto");
-        }
+        DoctorDataValidator.validate(doctor);
     }
 
     private void validateDuplicatedDoctor(final DoctorDomain doctor) {
-        var doctorEntity = DoctorEntityAssembler.getDoctorEntityAssembler().toEntity(doctor);
-        var dao = daoFactory.getDoctorDAO();
-
-        var byEmail = new DoctorEntity();
-        byEmail.setEmail(doctorEntity.getEmail());
-        var existingByEmail = dao.findByFilter(byEmail);
-        if (!existingByEmail.isEmpty()) {
-            throw VetecyvException.create("Email duplicado", "Ya existe un doctor con ese email");
-        }
-
-        var byPhone = new DoctorEntity();
-        byPhone.setPhoneNumber(doctorEntity.getPhoneNumber());
-        var existingByPhone = dao.findByFilter(byPhone);
-        if (!existingByPhone.isEmpty()) {
-            throw VetecyvException.create("Teléfono duplicado", "Ya existe un doctor con ese número de teléfono");
-        }
+        // Usar validadores existentes para evitar duplicar lógica y mensajes hard-coded
+        ValidateDoctorDoesNotExistWithSameIdNumberAndIdType.executeValidation(doctor.getIdentityDocument(), daoFactory);
+        ValidateDataDoctorEmailDoesNotExist.executeValidation(doctor.getEmail(), daoFactory);
+        ValidateDataDoctorMobileDoesNotExist.executeValidation(doctor.getPhoneNumber(), daoFactory);
     }
 
     private void validateDuplicatedDoctorOnUpdate(final UUID id, final DoctorDomain doctor) {
-        var doctorEntity = DoctorEntityAssembler.getDoctorEntityAssembler().toEntity(doctor);
-        var dao = daoFactory.getDoctorDAO();
-
-        var byEmail = new DoctorEntity();
-        byEmail.setEmail(doctorEntity.getEmail());
-        var existingByEmail = dao.findByFilter(byEmail);
-        if (!existingByEmail.isEmpty() && !existingByEmail.get(0).getId().equals(id)) {
-            throw VetecyvException.create("Email duplicado", "Otro doctor ya usa ese email");
-        }
-
-        var byPhone = new DoctorEntity();
-        byPhone.setPhoneNumber(doctorEntity.getPhoneNumber());
-        var existingByPhone = dao.findByFilter(byPhone);
-        if (!existingByPhone.isEmpty() && !existingByPhone.get(0).getId().equals(id)) {
-            throw VetecyvException.create("Teléfono duplicado", "Otro doctor ya usa ese teléfono");
-        }
+        // Delegar la validación específica de actualización al validador (fully-qualified para evitar problemas de import)
+        co.edu.uco.vetecyv.business.business.rule.validator.doctor.DoctorDuplicateOnUpdateValidator.validate(id, doctor, daoFactory);
     }
 }

@@ -37,15 +37,13 @@ public class StringHasNoWhitespaceAndStartsWithUppercaseRule implements Rule {
 
         // Prohibir cualquier whitespace en la cadena
         if (value.matches(".*\\s+.*")) {
-            var userMessage = String.format("%s contiene espacios en blanco no permitidos", fieldName);
-            throw VetecyvException.create(userMessage, userMessage);
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID.getContent(), MessagesEnum.TUTOR_ERROR_INVALID.getContent());
         }
 
         // Primera letra debe ser mayúscula
         var firstChar = value.charAt(0);
         if (!Character.isUpperCase(firstChar)) {
-            var userMessage = String.format("%s debe comenzar con letra mayúscula", fieldName);
-            throw VetecyvException.create(userMessage, userMessage);
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID.getContent(), MessagesEnum.TUTOR_ERROR_INVALID.getContent());
         }
     }
 }

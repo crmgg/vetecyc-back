@@ -44,7 +44,7 @@ public class TutorDoesNotExistWithSameIdNumberAndIdTypeRule implements Rule {
             daoFactory = (DAOFactory) (data.length == 2 ? data[1] : data[2]);
         } catch (ClassCastException ex) {
             var userMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_IS_NULL.getTitle();
-            var technicalMessage = "Los tipos de datos enviados a la regla son inválidos.";
+            var technicalMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_IS_NULL.getTitle();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
 

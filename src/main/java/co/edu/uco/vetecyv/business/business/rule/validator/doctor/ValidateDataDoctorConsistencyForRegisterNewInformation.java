@@ -12,7 +12,7 @@ import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnumGeneric;
 public class ValidateDataDoctorConsistencyForRegisterNewInformation implements Validator {
 
     private static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
-    private static final String MOBILE_PHONE_REGEX = "^[0-9]{1,20}$";
+    private static final String MOBILE_PHONE_REGEX = "^[0-9]{10}$"; // exactly 10 digits
 
     private static final Validator instance = new ValidateDataDoctorConsistencyForRegisterNewInformation();
 
@@ -49,17 +49,17 @@ public class ValidateDataDoctorConsistencyForRegisterNewInformation implements V
 
     private void validateDataLength(final DoctorDomain data) {
 
-        StringLengthValuesIsValidRule.executeRule(data.getIdentityDocument(), MessagesEnumGeneric.GENERIC_ID_NUMBER_LABEL.getContent(), 1, 25, true);
-        StringLengthValuesIsValidRule.executeRule(data.getName(), MessagesEnumGeneric.GENERIC_FIRST_NAME_LABEL.getContent(), 1, 20, true);
+        StringLengthValuesIsValidRule.executeRule(data.getIdentityDocument(), MessagesEnumGeneric.GENERIC_ID_NUMBER_LABEL.getContent(), 8, 10, true);
+        StringLengthValuesIsValidRule.executeRule(data.getName(), MessagesEnumGeneric.GENERIC_FIRST_NAME_LABEL.getContent(), 1, 50, true);
 
         if (!TextHelper.isEmptyWithTrim(data.getSecondLastName())){
-            StringLengthValuesIsValidRule.executeRule(data.getSecondLastName(), MessagesEnumGeneric.GENERIC_SECOND_SURNAME_LABEL.getContent(), 1, 20, true);
+            StringLengthValuesIsValidRule.executeRule(data.getSecondLastName(), MessagesEnumGeneric.GENERIC_SECOND_SURNAME_LABEL.getContent(), 1, 50, true);
         }
 
-        StringLengthValuesIsValidRule.executeRule(data.getFirstLastName(), MessagesEnumGeneric.GENERIC_FIRST_SURNAME_LABEL.getContent(), 1, 20, true);
+        StringLengthValuesIsValidRule.executeRule(data.getFirstLastName(), MessagesEnumGeneric.GENERIC_FIRST_SURNAME_LABEL.getContent(), 1, 50, true);
 
-        StringLengthValuesIsValidRule.executeRule(data.getEmail(), MessagesEnumGeneric.GENERIC_EMAIL_LABEL.getContent(), 1, 250, true);
-        StringLengthValuesIsValidRule.executeRule(data.getPhoneNumber(), MessagesEnumGeneric.GENERIC_MOBILE_LABEL.getContent(), 1, 20, true);
+        StringLengthValuesIsValidRule.executeRule(data.getEmail(), MessagesEnumGeneric.GENERIC_EMAIL_LABEL.getContent(), 1, 100, true);
+        StringLengthValuesIsValidRule.executeRule(data.getPhoneNumber(), MessagesEnumGeneric.GENERIC_MOBILE_LABEL.getContent(), 10, 10, true);
     }
 
     private void validateDataFormat(final DoctorDomain data) {

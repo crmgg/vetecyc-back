@@ -16,26 +16,31 @@ public class TutorDataValidator {
             throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID.getContent());
         }
 
-        // Identity document: mínimo 7, máximo 10
-        if (TextHelper.isEmptyWithTrim(tutor.getIdentityDocument()) || tutor.getIdentityDocument().length() < 7 || tutor.getIdentityDocument().length() > 10) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID.getContent());
+        // Identity document: mínimo 8, máximo 10
+        if (TextHelper.isEmptyWithTrim(tutor.getIdentityDocument()) || tutor.getIdentityDocument().length() < 8 || tutor.getIdentityDocument().length() > 10) {
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_IDENTITYDOCUMENT_LENGTH.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_IDENTITYDOCUMENT_LENGTH.getContent());
         }
 
-        // Name: mínimo 1, máximo 7
+        // Identity document: no puede contener espacios
+        if (tutor.getIdentityDocument().matches(".*\\s+.*")) {
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_IDENTITYDOCUMENT_FORMAT.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_IDENTITYDOCUMENT_FORMAT.getContent());
+        }
+
+        // Name: mínimo 1, máximo 50
         if (TextHelper.isEmptyWithTrim(tutor.getName()) || tutor.getName().length() > 50) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_NAME.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_NAME.getContent());
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_NAME_FORMAT.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_NAME_FORMAT.getContent());
         }
         StringHasNoWhitespaceAndStartsWithUppercaseRule.executeRule(tutor.getName(), "Nombre");
 
-        // First last name: mínimo 1, máximo 7
+        // First last name: mínimo 1, máximo 50
         if (TextHelper.isEmptyWithTrim(tutor.getFirstLastName()) || tutor.getFirstLastName().length() > 50) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_FIRSTLASTNAME.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_FIRSTLASTNAME.getContent());
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_FIRSTLASTNAME_FORMAT.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_FIRSTLASTNAME_FORMAT.getContent());
         }
         StringHasNoWhitespaceAndStartsWithUppercaseRule.executeRule(tutor.getFirstLastName(), "Primer apellido");
 
-        // Second last name: mínimo 1, máximo 7
+        // Second last name: mínimo 1, máximo 50
         if (TextHelper.isEmptyWithTrim(tutor.getSecondLastName()) || tutor.getSecondLastName().length() > 50) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_SECONDLASTNAME.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_SECONDLASTNAME.getContent());
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_SECONDLASTNAME_FORMAT.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_SECONDLASTNAME_FORMAT.getContent());
         }
         StringHasNoWhitespaceAndStartsWithUppercaseRule.executeRule(tutor.getSecondLastName(), "Segundo apellido");
 
@@ -46,12 +51,17 @@ public class TutorDataValidator {
 
         // Password: mínimo 8, máximo 26
         if (TextHelper.isEmptyWithTrim(tutor.getPassword()) || tutor.getPassword().length() < 8 || tutor.getPassword().length() > 26) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD.getContent());
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD_LENGTH.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD_LENGTH.getContent());
+        }
+
+        // Password: no puede contener espacios
+        if (tutor.getPassword().matches(".*\\s+.*")) {
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD_FORMAT.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD_FORMAT.getContent());
         }
 
         // Requerir exactamente 10 caracteres y formato de teléfono válido
         if (tutor.getPhoneNumber() == null || !TextHelper.isValidPhoneNumber(tutor.getPhoneNumber()) || tutor.getPhoneNumber().length() != 10) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_PHONE.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_PHONE.getContent());
+            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_PHONE_LENGTH.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_PHONE_LENGTH.getContent());
         }
     }
 }
