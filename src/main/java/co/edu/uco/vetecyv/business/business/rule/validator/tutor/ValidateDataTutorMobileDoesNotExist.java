@@ -1,7 +1,8 @@
 package co.edu.uco.vetecyv.business.business.rule.validator.tutor;
 
-import co.edu.uco.vetecyv.business.business.rule.tutor.TutorMobileDoesNotExistRule;
 import co.edu.uco.vetecyv.business.business.rule.validator.Validator;
+import co.edu.uco.vetecyv.business.domain.TutorDomain;
+import co.edu.uco.vetecyv.data.dao.factory.DAOFactory;
 
 public class ValidateDataTutorMobileDoesNotExist implements Validator {
 
@@ -17,6 +18,9 @@ public class ValidateDataTutorMobileDoesNotExist implements Validator {
 
     @Override
     public void validate(Object... data) {
-        TutorMobileDoesNotExistRule.executeRule(data);
+        // Se espera: data[0] = TutorDomain, data[1] = DAOFactory
+        var tutor = (TutorDomain) data[0];
+        var daoFactory = (DAOFactory) data[1];
+        TutorDuplicateValidator.validate(tutor, daoFactory);
     }
 }

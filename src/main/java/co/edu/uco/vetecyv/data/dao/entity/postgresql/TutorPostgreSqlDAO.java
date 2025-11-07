@@ -28,7 +28,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO tutor (id, identityDocument, name, firstLastName, secondLastName, email, phoneNumber, password, emailConfirmation, phoneConfirmation, accountState) ");
+        sql.append("INSERT INTO tutor (id, \"identityDocument\", name, \"firstLastName\", \"secondLastName\", email, \"phoneNumber\", password, \"emailConfirmation\", \"phoneConfirmation\", \"accountState\") ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
@@ -127,24 +127,51 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
         var parameterList = new ArrayList<Object>();
         var sql = createSentenceFindByFilter(filterEntity, parameterList);
 
-        try (var preparedStatement = this.getConnection().prepareStatement(sql)) {
-            for (int index = 0; index < parameterList.size(); index++) {
-                preparedStatement.setObject(index + 1, parameterList.get(index));
+        // Protección contra bucles infinitos por errores de construcción del filtro
+        final int MAX_ATTEMPTS = 3;
+        int attempts = 0;
+        List<TutorEntity> results = new ArrayList<>();
+
+        while (attempts < MAX_ATTEMPTS) {
+            try (var preparedStatement = getConnection().prepareStatement(sql)) {
+                for (int index = 0; index < parameterList.size(); index++) {
+                    preparedStatement.setObject(index + 1, parameterList.get(index));
+                }
+
+                results = executeSentenceFindByFilter(preparedStatement);
+                break; // si la ejecución es exitosa, salir
+
+            } catch (final SQLException exception) {
+                attempts++;
+                if (attempts >= MAX_ATTEMPTS) {
+                    var userMessage = MessagesEnum.TUTOR_ERROR_SQL_EXECUTING_FIND_BY_FILTER_TUTOR.getContent();
+                    var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_TUTOR.getContent()
+                            + " Intentos fallidos: " + MAX_ATTEMPTS + ". Detalle: " + exception.getMessage();
+                    throw VetecyvException.create(exception, userMessage, technicalMessage);
+                }
             }
-            return executeSentenceFindByFilter(preparedStatement);
-        } catch (final VetecyvException exception) {
-            throw exception;
-        } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.TUTOR_ERROR_SQL_EXECUTING_FIND_BY_FILTER_TUTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_EXECUTING_FIND_BY_FILTER_TUTOR.getContent() + exception.getMessage();
-            throw VetecyvException.create(exception, userMessage, technicalMessage);
         }
+
+        return results;
     }
+
 
     @Override
     public TutorEntity findById(final UUID id) {
-        return findByFilter(new TutorEntity(id)).stream().findFirst().orElse(new TutorEntity());
+        if (ObjectHelper.isNull(id)) {
+            return null; // ID inválido
+        }
+
+        var results = findByFilter(new TutorEntity(id));
+
+        // Si no hay resultados, devolver null (no una entidad vacía)
+        if (results == null || results.isEmpty()) {
+            return null;
+        }
+
+        return results.get(0);
     }
+
 
     @Override
     public List<TutorEntity> findAll() {
@@ -166,7 +193,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
 
         addCondition(conditions, parameterList,
                 !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getId()),
-                "id = ", filter.getId());
+                "\"id\"= ", filter.getId());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getIdentityDocument()),
@@ -174,7 +201,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getName()),
-                "name = ", filter.getName());
+                "\"name\" = ", filter.getName());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getFirstLastName()),
@@ -186,7 +213,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getEmail()),
-                "email = ", filter.getEmail());
+                "\"email\" = ", filter.getEmail());
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPhoneNumber()),
@@ -194,7 +221,7 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
 
         addCondition(conditions, parameterList,
                 !TextHelper.isEmptyWithTrim(filter.getPassword()),
-                "password = ", filter.getPassword());
+                "\"password\" = ", filter.getPassword());
 
         addCondition(conditions, parameterList,
                 !filter.isEmailConfirmation(),

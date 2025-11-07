@@ -7,12 +7,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import co.edu.uco.vetecyv.business.assembler.entity.impl.TutorEntityAssembler;
 import co.edu.uco.vetecyv.business.business.TutorBusiness;
 import co.edu.uco.vetecyv.business.domain.TutorDomain;
-import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
 import co.edu.uco.vetecyv.crosscuting.helper.ObjectHelper;
-import co.edu.uco.vetecyv.crosscuting.helper.TextHelper;
-import co.edu.uco.vetecyv.crosscuting.messagescatalog.MessagesEnum;
 import co.edu.uco.vetecyv.data.dao.factory.DAOFactory;
-import co.edu.uco.vetecyv.entity.TutorEntity;
+
+// Import de los validadores: usar los nuevos en business.business.rule.validator.tutor
+import co.edu.uco.vetecyv.business.business.rule.validator.tutor.TutorDataValidator;
+import co.edu.uco.vetecyv.business.business.rule.validator.tutor.TutorDuplicateValidator;
+import co.edu.uco.vetecyv.business.business.rule.validator.tutor.TutorDuplicateOnUpdateValidator;
+import co.edu.uco.vetecyv.business.business.rule.validator.tutor.TutorExistenceValidator;
 
 public final class TutorBusinessImpl implements TutorBusiness {
 
@@ -24,8 +26,9 @@ public final class TutorBusinessImpl implements TutorBusiness {
 
     @Override
     public void registerNewTutorInformation(final TutorDomain tutorDomain) {
-        validateTutorData(tutorDomain);
-        validateDuplicatedTutor(tutorDomain);
+        // Llamadas directas a los validadores (datos + duplicados)
+        TutorDataValidator.validate(tutorDomain);
+        TutorDuplicateValidator.validate(tutorDomain, daoFactory);
 
         UUID id = UUID.randomUUID();
         // Asegurar id único (si existe, generar otro)
@@ -40,18 +43,19 @@ public final class TutorBusinessImpl implements TutorBusiness {
 
     @Override
     public void dropTutorInformation(final UUID id) {
+        // Delegar la verificación de existencia al validador
+        TutorExistenceValidator.ensureExists(id, daoFactory);
         daoFactory.getTutorDAO().delete(id);
     }
 
     @Override
     public void updateTutorInformation(final UUID id, final TutorDomain tutorDomain) {
-        var existing = daoFactory.getTutorDAO().findById(id);
-        if (ObjectHelper.isNull(existing)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnum.TUTOR_ERROR_NOT_FOUND.getContent());
-        }
+        // Delegar verificación de existencia
+        TutorExistenceValidator.ensureExists(id, daoFactory);
 
-        validateTutorData(tutorDomain);
-        validateDuplicatedTutorOnUpdate(id, tutorDomain);
+        // Llamadas directas a los validadores (datos + duplicados en update)
+        TutorDataValidator.validate(tutorDomain);
+        TutorDuplicateOnUpdateValidator.validate(id, tutorDomain, daoFactory);
 
         var tutorEntity = TutorEntityAssembler.getTutorEntityAssembler().toEntity(tutorDomain);
         tutorEntity.setId(id);
@@ -73,16 +77,13 @@ public final class TutorBusinessImpl implements TutorBusiness {
 
     @Override
     public TutorDomain findTutorById(final UUID id) {
-        var entity = daoFactory.getTutorDAO().findById(id);
+        var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
         return TutorEntityAssembler.getTutorEntityAssembler().toDomain(entity);
     }
 
     @Override
     public void confirmMobileNumber(final UUID id, final int confirmationCode) {
-        var entity = daoFactory.getTutorDAO().findById(id);
-        if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnum.TUTOR_ERROR_NOT_FOUND.getContent());
-        }
+        var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
 
         // Validación del código no implementada (adaptar si se persiste código)
         var domain = TutorEntityAssembler.getTutorEntityAssembler().toDomain(entity);
@@ -95,10 +96,7 @@ public final class TutorBusinessImpl implements TutorBusiness {
 
     @Override
     public void confirmEmail(final UUID id, final int confirmationCode) {
-        var entity = daoFactory.getTutorDAO().findById(id);
-        if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnum.TUTOR_ERROR_NOT_FOUND.getContent());
-        }
+        var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
 
         // Validación del código no implementada (adaptar si se persiste código)
         var domain = TutorEntityAssembler.getTutorEntityAssembler().toDomain(entity);
@@ -111,10 +109,7 @@ public final class TutorBusinessImpl implements TutorBusiness {
 
     @Override
     public void accountState(final UUID id, final int accountStateCode) {
-        var entity = daoFactory.getTutorDAO().findById(id);
-        if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnum.TUTOR_ERROR_NOT_FOUND.getContent());
-        }
+        var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
 
         var domain = TutorEntityAssembler.getTutorEntityAssembler().toDomain(entity);
         domain.setAccountState(accountStateCode == 1);
@@ -126,100 +121,21 @@ public final class TutorBusinessImpl implements TutorBusiness {
     /* Placeholders para envío de códigos */
 
     public void sendMobileNumberConfirmation(final UUID id) {
-        var entity = daoFactory.getTutorDAO().findById(id);
-        if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnum.TUTOR_ERROR_NOT_FOUND.getContent());
-        }
+        var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
         int code = ThreadLocalRandom.current().nextInt(100000, 1_000_000);
         System.out.printf("Enviar código de confirmación móvil %d al tutor %s%n", code, entity.getPhoneNumber());
     }
 
     public void sendEmailConfirmation(final UUID id) {
-        var entity = daoFactory.getTutorDAO().findById(id);
-        if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnum.TUTOR_ERROR_NOT_FOUND.getContent());
-        }
+        var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
         int code = ThreadLocalRandom.current().nextInt(100000, 1_000_000);
         System.out.printf("Enviar código de confirmación por email %d al tutor %s%n", code, entity.getEmail());
     }
 
     public void sendAccountState(final UUID id) {
-        var entity = daoFactory.getTutorDAO().findById(id);
-        if (ObjectHelper.isNull(entity)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_NOT_FOUND.getTitle(), MessagesEnum.TUTOR_ERROR_NOT_FOUND.getContent());
-        }
+        var entity = TutorExistenceValidator.ensureExists(id, daoFactory);
         var domain = TutorEntityAssembler.getTutorEntityAssembler().toDomain(entity);
         System.out.printf("Notificar estado de cuenta (%s) al tutor %s / %s%n",
                 domain.isAccountState() ? "ACTIVO" : "INACTIVO", domain.getName(), domain.getEmail());
-    }
-
-    /* Helpers privados */
-
-    private void validateTutorData(final TutorDomain tutor) {
-        if (ObjectHelper.isNull(tutor)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID.getContent());
-        }
-
-        if (TextHelper.isEmptyWithTrim(tutor.getName()) || tutor.getName().length() > 50) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_NAME.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_NAME.getContent());
-        }
-
-        if (TextHelper.isEmptyWithTrim(tutor.getFirstLastName()) || tutor.getFirstLastName().length() > 50) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_FIRSTLASTNAME.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_FIRSTLASTNAME.getContent());
-        }
-
-        if (TextHelper.isEmptyWithTrim(tutor.getSecondLastName()) || tutor.getSecondLastName().length() > 50) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_SECONDLASTNAME.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_SECONDLASTNAME.getContent());
-        }
-
-        if (!TextHelper.isValidEmail(tutor.getEmail()) || tutor.getEmail().length() > 250) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_EMAIL.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_EMAIL.getContent());
-        }
-
-        if (TextHelper.isEmptyWithTrim(tutor.getPassword()) || tutor.getPassword().length() > 100) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_PASSWORD.getContent());
-        }
-
-        if (!TextHelper.isValidPhoneNumber(tutor.getPhoneNumber()) || tutor.getPhoneNumber().length() > 20) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_INVALID_PHONE.getTitle(), MessagesEnum.TUTOR_ERROR_INVALID_PHONE.getContent());
-        }
-    }
-
-    private void validateDuplicatedTutor(final TutorDomain tutor) {
-        var tutorEntity = TutorEntityAssembler.getTutorEntityAssembler().toEntity(tutor);
-        var dao = daoFactory.getTutorDAO();
-
-        var byEmail = new TutorEntity();
-        byEmail.setEmail(tutorEntity.getEmail());
-        var existingByEmail = dao.findByFilter(byEmail);
-        if (!existingByEmail.isEmpty()) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_DUPLICATED_EMAIL.getTitle(), MessagesEnum.TUTOR_ERROR_DUPLICATED_EMAIL.getContent());
-        }
-
-        var byPhone = new TutorEntity();
-        byPhone.setPhoneNumber(tutorEntity.getPhoneNumber());
-        var existingByPhone = dao.findByFilter(byPhone);
-        if (!existingByPhone.isEmpty()) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_DUPLICATED_PHONE.getTitle(), MessagesEnum.TUTOR_ERROR_DUPLICATED_PHONE.getContent());
-        }
-    }
-
-    private void validateDuplicatedTutorOnUpdate(final UUID id, final TutorDomain tutor) {
-        var tutorEntity = TutorEntityAssembler.getTutorEntityAssembler().toEntity(tutor);
-        var dao = daoFactory.getTutorDAO();
-
-        var byEmail = new TutorEntity();
-        byEmail.setEmail(tutorEntity.getEmail());
-        var existingByEmail = dao.findByFilter(byEmail);
-        if (!existingByEmail.isEmpty() && !existingByEmail.get(0).getId().equals(id)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_DUPLICATED_EMAIL_ON_UPDATE.getTitle(), MessagesEnum.TUTOR_ERROR_DUPLICATED_EMAIL_ON_UPDATE.getContent());
-        }
-
-        var byPhone = new TutorEntity();
-        byPhone.setPhoneNumber(tutorEntity.getPhoneNumber());
-        var existingByPhone = dao.findByFilter(byPhone);
-        if (!existingByPhone.isEmpty() && !existingByPhone.get(0).getId().equals(id)) {
-            throw VetecyvException.create(MessagesEnum.TUTOR_ERROR_DUPLICATED_PHONE_ON_UPDATE.getTitle(), MessagesEnum.TUTOR_ERROR_DUPLICATED_PHONE_ON_UPDATE.getContent());
-        }
     }
 }
