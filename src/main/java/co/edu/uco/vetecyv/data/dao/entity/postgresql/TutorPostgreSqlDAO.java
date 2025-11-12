@@ -2,6 +2,7 @@ package co.edu.uco.vetecyv.data.dao.entity.postgresql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,32 +28,75 @@ public final class TutorPostgreSqlDAO extends SqlConnection implements TutorDAO 
     public void create(final TutorEntity entity) {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
-        final var sql = new StringBuilder();
-        sql.append("INSERT INTO tutor (id, \"identityDocument\", name, \"firstLastName\", \"secondLastName\", email, \"phoneNumber\", password, \"emailConfirmation\", \"phoneConfirmation\", \"accountState\") ");
-        sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // Si la entidad trae el id por defecto (UUID cero), dejamos que la BD genere el id
+        boolean hasDefaultId = UUIDHelper.getUUIDHelper().isDefaultUUID(entity.getId());
 
-        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
-            preparedStatement.setObject(1, entity.getId());
-            preparedStatement.setString(2, entity.getIdentityDocument());
-            preparedStatement.setString(3, entity.getName());
-            preparedStatement.setString(4, entity.getFirstLastName());
-            preparedStatement.setString(5, entity.getSecondLastName());
-            preparedStatement.setString(6, entity.getEmail());
-            preparedStatement.setString(7, entity.getPhoneNumber());
-            preparedStatement.setString(8, entity.getPassword());
-            preparedStatement.setBoolean(9, entity.isEmailConfirmation());
-            preparedStatement.setBoolean(10, entity.isPhoneConfirmation());
-            preparedStatement.setBoolean(11, entity.isAccountState());
+        if (hasDefaultId) {
+            final var sql = new StringBuilder();
+            sql.append("INSERT INTO tutor (\"identityDocument\", name, \"firstLastName\", \"secondLastName\", email, \"phoneNumber\", password, \"emailConfirmation\", \"phoneConfirmation\", \"accountState\") ");
+            sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id");
 
-            preparedStatement.executeUpdate();
-        } catch (final SQLException exception) {
-            var userMessage = MessagesEnum.TUTOR_ERROR_SQL_INSERT_TUTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_TUTOR.getContent() + exception.getMessage();
-            throw VetecyvException.create(exception, userMessage, technicalMessage);
-        } catch (final Exception exception) {
-            var userMessage = MessagesEnum.TUTOR_ERROR_SQL_UNEXPECTED_ERROR_INSERT_TUTOR.getContent();
-            var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_TUTOR.getContent() + exception.getMessage();
-            throw VetecyvException.create(exception, userMessage, technicalMessage);
+            try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
+                preparedStatement.setString(1, entity.getIdentityDocument());
+                preparedStatement.setString(2, entity.getName());
+                preparedStatement.setString(3, entity.getFirstLastName());
+                preparedStatement.setString(4, entity.getSecondLastName());
+                preparedStatement.setString(5, entity.getEmail());
+                preparedStatement.setString(6, entity.getPhoneNumber());
+                preparedStatement.setString(7, entity.getPassword());
+                preparedStatement.setBoolean(8, entity.isEmailConfirmation());
+                preparedStatement.setBoolean(9, entity.isPhoneConfirmation());
+                preparedStatement.setBoolean(10, entity.isAccountState());
+
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    if (rs.next()) {
+                        Object idObj = rs.getObject(1);
+                        if (idObj instanceof UUID) {
+                            entity.setId((UUID) idObj);
+                        } else if (idObj instanceof String) {
+                            entity.setId(UUID.fromString((String) idObj));
+                        }
+                    }
+                }
+
+            } catch (final SQLException exception) {
+                var userMessage = MessagesEnum.TUTOR_ERROR_SQL_INSERT_TUTOR.getContent();
+                var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_TUTOR.getContent() + exception.getMessage();
+                throw VetecyvException.create(exception, userMessage, technicalMessage);
+            } catch (final Exception exception) {
+                var userMessage = MessagesEnum.TUTOR_ERROR_SQL_UNEXPECTED_ERROR_INSERT_TUTOR.getContent();
+                var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_TUTOR.getContent() + exception.getMessage();
+                throw VetecyvException.create(exception, userMessage, technicalMessage);
+            }
+
+        } else {
+            final var sql = new StringBuilder();
+            sql.append("INSERT INTO tutor (id, \"identityDocument\", name, \"firstLastName\", \"secondLastName\", email, \"phoneNumber\", password, \"emailConfirmation\", \"phoneConfirmation\", \"accountState\") ");
+            sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
+                preparedStatement.setObject(1, entity.getId());
+                preparedStatement.setString(2, entity.getIdentityDocument());
+                preparedStatement.setString(3, entity.getName());
+                preparedStatement.setString(4, entity.getFirstLastName());
+                preparedStatement.setString(5, entity.getSecondLastName());
+                preparedStatement.setString(6, entity.getEmail());
+                preparedStatement.setString(7, entity.getPhoneNumber());
+                preparedStatement.setString(8, entity.getPassword());
+                preparedStatement.setBoolean(9, entity.isEmailConfirmation());
+                preparedStatement.setBoolean(10, entity.isPhoneConfirmation());
+                preparedStatement.setBoolean(11, entity.isAccountState());
+
+                preparedStatement.executeUpdate();
+            } catch (final SQLException exception) {
+                var userMessage = MessagesEnum.TUTOR_ERROR_SQL_INSERT_TUTOR.getContent();
+                var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_INSERT_TUTOR.getContent() + exception.getMessage();
+                throw VetecyvException.create(exception, userMessage, technicalMessage);
+            } catch (final Exception exception) {
+                var userMessage = MessagesEnum.TUTOR_ERROR_SQL_UNEXPECTED_ERROR_INSERT_TUTOR.getContent();
+                var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_UNEXPECTED_ERROR_INSERT_TUTOR.getContent() + exception.getMessage();
+                throw VetecyvException.create(exception, userMessage, technicalMessage);
+            }
         }
     }
 

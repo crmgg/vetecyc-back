@@ -1,4 +1,3 @@
-// java
 package co.edu.uco.vetecyv.controller;
 
 import java.util.List;
@@ -57,11 +56,11 @@ public class TutorController {
     public ResponseEntity<Response<TutorDTO>> registerNewTutor(@RequestBody TutorDTO tutor) {
 
         Response<TutorDTO> responseObjectData = Response.createSuccededResponse();
-        HttpStatusCode responseStatusCode = HttpStatus.CREATED;
+        HttpStatusCode responseStatusCode = HttpStatus.OK;
 
         try {
             TutorFacadeImpl facade = new TutorFacadeImpl();
-            var created = facade.registerNewInformation(tutor);
+            facade.registerNewInformation(tutor);
 
             responseObjectData.addMessage(MessagesEnum.SUCCESS_REGISTERED.getTitle());
 
