@@ -1,4 +1,4 @@
-package co.edu.uco.vetecyv.business.business.rule.tutor;
+package co.edu.uco.vetecyv.business.business.rule.generics.tutor;
 
 import co.edu.uco.vetecyv.business.business.rule.Rule;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
@@ -11,11 +11,11 @@ import co.edu.uco.vetecyv.entity.TutorEntity;
 
 import java.util.List;
 
-public class TutorEmailDoesNotExistRule implements Rule {
+public class TutorIdentityDocumentDoesNotExistRule implements Rule {
 
-    private static final Rule instance = new TutorEmailDoesNotExistRule();
+    private static final Rule instance = new TutorIdentityDocumentDoesNotExistRule();
 
-    private TutorEmailDoesNotExistRule() {
+    private TutorIdentityDocumentDoesNotExistRule() {
     }
 
     public static void executeRule(final Object... data) {
@@ -26,37 +26,37 @@ public class TutorEmailDoesNotExistRule implements Rule {
     public void execute(Object... data) {
 
         if (ObjectHelper.isNull(data)) {
-            var userMessage = MessagesEnumTutorRule.TUTOR_EMAIL_DATA_IS_NULL.getTitle();
-            var technicalMessage = MessagesEnumTutorRule.TUTOR_EMAIL_DATA_IS_NULL.getContent();
+            var userMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_IS_NULL.getTitle();
+            var technicalMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_IS_NULL.getContent();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
 
         if (data.length < 2) {
-            var userMessage = MessagesEnumTutorRule.TUTOR_EMAIL_DATA_LENGTH_INVALID.getTitle();
-            var technicalMessage = MessagesEnumTutorRule.TUTOR_EMAIL_DATA_LENGTH_INVALID.getContent();
+            var userMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_LENGTH_INVALID.getTitle();
+            var technicalMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_LENGTH_INVALID.getContent();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
 
-        final String email;
+        final String identityDocument;
         final DAOFactory daoFactory;
 
         try {
-            email = (String) data[0];
+            identityDocument = (String) data[0];
             daoFactory = (DAOFactory) data[1];
         } catch (ClassCastException ex) {
-            var userMessage = MessagesEnumTutorRule.TUTOR_EMAIL_INVALID_DATA_TYPES.getTitle();
-            var technicalMessage = MessagesEnumTutorRule.TUTOR_EMAIL_INVALID_DATA_TYPES.getContent();
+            var userMessage = MessagesEnumTutorRule.TUTOR_RULE_INVALID_DATA_TYPES.getTitle();
+            var technicalMessage = MessagesEnumTutorRule.TUTOR_RULE_INVALID_DATA_TYPES.getContent();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
 
-        if (TextHelper.isEmptyWithTrim(email) || daoFactory == null) {
-            var userMessage = MessagesEnumTutorRule.TUTOR_EMAIL_DATA_IS_NULL.getTitle();
-            var technicalMessage = MessagesEnumTutorRule.TUTOR_EMAIL_DATA_IS_NULL.getContent();
+        if (TextHelper.isEmptyWithTrim(identityDocument) || daoFactory == null) {
+            var userMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_IS_NULL.getTitle();
+            var technicalMessage = MessagesEnumTutorRule.TUTOR_RULE_DATA_IS_NULL.getContent();
             throw VetecyvException.create(userMessage, technicalMessage);
         }
 
         var tutorFilter = new TutorEntity();
-        tutorFilter.setEmail(TextHelper.getDefaultWithTrim(email));
+        tutorFilter.setIdentityDocument(TextHelper.getDefaultWithTrim(identityDocument));
 
         List<TutorEntity> results = List.of();
         if (daoFactory.getTutorDAO() != null) {
@@ -68,12 +68,10 @@ public class TutorEmailDoesNotExistRule implements Rule {
                 .orElse(new TutorEntity());
 
         if (!UUIDHelper.getUUIDHelper().isDefaultUUID(tutor.getId())) {
-            var userMessage = MessagesEnumTutorRule.TUTOR_EMAIL_ALREADY_EXISTS.getTitle();
-            var technicalMessage = String.format(
-                    MessagesEnumTutorRule.TUTOR_EMAIL_ALREADY_EXISTS.getContent(),
-                    email
-            );
+            var userMessage = MessagesEnumTutorRule.TUTOR_RULE_TUTOR_ALREADY_EXISTS.getTitle();
+            var technicalMessage = String.format(MessagesEnumTutorRule.TUTOR_RULE_TUTOR_ALREADY_EXISTS.getContent(), identityDocument);
             throw VetecyvException.create(userMessage, technicalMessage);
         }
     }
 }
+

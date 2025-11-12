@@ -7,7 +7,7 @@ import co.edu.uco.vetecyv.business.domain.TutorDomain;
 
 public interface TutorBusiness {
 
-    void registerNewTutorInformation(TutorDomain tutorDomain);
+    TutorDomain registerNewTutorInformation(TutorDomain tutorDomain);
 
     void dropTutorInformation(UUID id);
 
@@ -24,5 +24,11 @@ public interface TutorBusiness {
     void confirmEmail(UUID id, int confirmationCode);
 
     void accountState(UUID id, int accountStateCode);
+
+    void sendMobileNumberConfirmation(UUID id);
+
+    void sendEmailConfirmation(UUID id);
+
+    void sendAccountStateConfirmation(UUID id);
 
 }

@@ -57,11 +57,12 @@ public class TutorController {
     public ResponseEntity<Response<TutorDTO>> registerNewTutor(@RequestBody TutorDTO tutor) {
 
         Response<TutorDTO> responseObjectData = Response.createSuccededResponse();
-        HttpStatusCode responseStatusCode = HttpStatus.OK;
+        HttpStatusCode responseStatusCode = HttpStatus.CREATED;
 
         try {
             TutorFacadeImpl facade = new TutorFacadeImpl();
-            facade.registerNewInformation(tutor);
+            var created = facade.registerNewInformation(tutor);
+
             responseObjectData.addMessage(MessagesEnum.SUCCESS_REGISTERED.getTitle());
 
         } catch (final VetecyvException exception) {

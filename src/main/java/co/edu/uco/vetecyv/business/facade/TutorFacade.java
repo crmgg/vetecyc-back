@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface TutorFacade {
 
-    void registerNewInformation(TutorDTO tutorDTO);
+    TutorDTO registerNewInformation(TutorDTO tutorDTO);
 
     void dropTutorInformation(UUID id);
 

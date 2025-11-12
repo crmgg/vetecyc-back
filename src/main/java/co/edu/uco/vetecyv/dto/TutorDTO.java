@@ -53,7 +53,6 @@ public final class TutorDTO {
                     final boolean emailConfirmed, final boolean phoneConfirmed,
                     final boolean accountState) {
 
-        setId(id);
         setIdentityDocument(identityDocument);
         setName(name);
         setFirstLastName(firstLastName);

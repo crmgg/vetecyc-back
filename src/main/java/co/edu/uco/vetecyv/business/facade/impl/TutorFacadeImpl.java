@@ -14,127 +14,178 @@ import co.edu.uco.vetecyv.dto.TutorDTO;
 public final class TutorFacadeImpl implements TutorFacade {
 
     @Override
-    public void registerNewInformation(TutorDTO tutorDTO) {
+    public TutorDTO registerNewInformation(final TutorDTO tutorDTO) {
+
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
 
         try {
+
             daoFactory.initTransaction();
 
             var domain = TutorDTOAssembler.getTutorDTOAssembler().toDomain(tutorDTO);
-            business.registerNewTutorInformation(domain);
+
+            var createdDomain = business.registerNewTutorInformation(domain);
 
             daoFactory.commitTransaction();
+
+            return TutorDTOAssembler.getTutorDTOAssembler().toDTO(createdDomain);
+
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getTitle();
-            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getContent() + exception.getMessage();
+
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_REGISTER.getContent();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
+
     }
 
     @Override
-    public void dropTutorInformation(UUID id) {
+    public void dropTutorInformation(final UUID id) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
+
             daoFactory.initTransaction();
+
             business.dropTutorInformation(id);
+
             daoFactory.commitTransaction();
+
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_DELETE.getTitle();
-            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_DELETE.getContent() + " - " + exception.getMessage();
+
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_DELETE.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_DELETE.getContent();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
+
     }
 
     @Override
-    public void updateTutorInformation(UUID id, TutorDTO tutorDTO) {
+    public void updateTutorInformation(final UUID id, final TutorDTO tutorDTO) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
+
             daoFactory.initTransaction();
-            var domain = TutorDTOAssembler.getTutorDTOAssembler().toDomain(tutorDTO);
-            business.updateTutorInformation(id, domain);
+
+            var tutorDomain = TutorDTOAssembler.getTutorDTOAssembler().toDomain(tutorDTO);
+
+            business.updateTutorInformation(id, tutorDomain);
+
             daoFactory.commitTransaction();
+
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getTitle();
-            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getContent() + exception.getMessage();
+
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_UPDATE.getContent();
             throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
-    }
 
+    }
 
     @Override
     public List<TutorDTO> findAllTutors() {
+
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
+
             daoFactory.initTransaction();
-            var domains = business.findAllTutors();
-            return TutorDTOAssembler.getTutorDTOAssembler().toDTO(domains);
+
+            var tutorDomainList = business.findAllTutors();
+
+            return TutorDTOAssembler.getTutorDTOAssembler().toDTO(tutorDomainList);
+
+
         } catch (final VetecyvException exception) {
             throw exception;
         } catch (final Exception exception) {
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getContent() + exception.getMessage());
+
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_ALL.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
+
+        } finally {
+            daoFactory.closeConnection();
+        }
+
+
+    }
+
+    @Override
+    public List<TutorDTO> findTutorsByFilter(final TutorDTO filter) {
+        var daoFactory = DAOFactory.getFactory();
+        var business = new TutorBusinessImpl(daoFactory);
+
+        try {
+
+            daoFactory.initTransaction();
+
+            var tutorDomain = TutorDTOAssembler.getTutorDTOAssembler().toDomain(filter);
+
+            return TutorDTOAssembler.getTutorDTOAssembler().toDTO(business.findTutorsByFilter(tutorDomain));
+
+
+        } catch (final VetecyvException exception) {
+            throw exception;
+        } catch (final Exception exception) {
+
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
     }
 
     @Override
-    public List<TutorDTO> findTutorsByFilter(TutorDTO filter) {
+    public TutorDTO findTutorById(final UUID id) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
-        try {
-            daoFactory.initTransaction();
-            var domainFilter = TutorDTOAssembler.getTutorDTOAssembler().toDomain(filter);
-            var domains = business.findTutorsByFilter(domainFilter);
-            return TutorDTOAssembler.getTutorDTOAssembler().toDTO(domains);
-        } catch (final VetecyvException exception) {
-            throw exception;
-        } catch (final Exception exception) {
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_FILTER.getContent() + exception.getMessage());
-        } finally {
-            daoFactory.closeConnection();
-        }
-    }
 
-    @Override
-    public TutorDTO findTutorById(UUID id) {
-        var daoFactory = DAOFactory.getFactory();
-        var business = new TutorBusinessImpl(daoFactory);
         try {
+
             daoFactory.initTransaction();
-            var domain = business.findTutorById(id);
-            return TutorDTOAssembler.getTutorDTOAssembler().toDTO(domain);
+
+            var tutorDomain = business.findTutorById(id);
+
+            return TutorDTOAssembler.getTutorDTOAssembler().toDTO(tutorDomain);
+
+
         } catch (final VetecyvException exception) {
             throw exception;
         } catch (final Exception exception) {
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getContent() + exception.getMessage());
+
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_FIND_BY_ID.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
+
         } finally {
             daoFactory.closeConnection();
         }
@@ -144,18 +195,21 @@ public final class TutorFacadeImpl implements TutorFacade {
     public void confirmPhoneNumber(UUID id, int confirmationCode) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
             daoFactory.initTransaction();
+
             business.confirmMobileNumber(id, confirmationCode);
+
             daoFactory.commitTransaction();
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_PHONE.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_PHONE.getContent() + " - " + exception.getMessage());
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_PHONE.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_PHONE.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -165,18 +219,21 @@ public final class TutorFacadeImpl implements TutorFacade {
     public void confirmEmail(UUID id, int confirmationCode) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
             daoFactory.initTransaction();
+
             business.confirmEmail(id, confirmationCode);
+
             daoFactory.commitTransaction();
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_EMAIL.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_EMAIL.getContent() + " - " + exception.getMessage());
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_EMAIL.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_EMAIL.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -186,18 +243,21 @@ public final class TutorFacadeImpl implements TutorFacade {
     public void confirmAccountStatus(UUID id, int confirmationCode) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
             daoFactory.initTransaction();
+
             business.accountState(id, confirmationCode);
+
             daoFactory.commitTransaction();
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_ACCOUNT_STATUS.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_ACCOUNT_STATUS.getContent() + " - " + exception.getMessage());
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_ACCOUNT_STATUS.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_CONFIRM_ACCOUNT_STATUS.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -207,18 +267,21 @@ public final class TutorFacadeImpl implements TutorFacade {
     public void sendPhoneNumberConfirmationCode(UUID id) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
             daoFactory.initTransaction();
+
             business.sendMobileNumberConfirmation(id);
+
             daoFactory.commitTransaction();
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_PHONE_CODE.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_PHONE_CODE.getContent() + " - " + exception.getMessage());
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_PHONE_CODE.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_PHONE_CODE.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -228,18 +291,21 @@ public final class TutorFacadeImpl implements TutorFacade {
     public void sendEmailConfirmationCode(UUID id) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
             daoFactory.initTransaction();
+
             business.sendEmailConfirmation(id);
+
             daoFactory.commitTransaction();
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_EMAIL_CODE.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_EMAIL_CODE.getContent() + " - " + exception.getMessage());
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_EMAIL_CODE.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_EMAIL_CODE.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }
@@ -249,18 +315,21 @@ public final class TutorFacadeImpl implements TutorFacade {
     public void sendAccountStatusConfirmationCode(UUID id) {
         var daoFactory = DAOFactory.getFactory();
         var business = new TutorBusinessImpl(daoFactory);
+
         try {
             daoFactory.initTransaction();
-            business.sendAccountState(id);
+
+            business.sendAccountStateConfirmation(id);
+
             daoFactory.commitTransaction();
         } catch (final VetecyvException exception) {
             daoFactory.rollbackTransaction();
             throw exception;
         } catch (final Exception exception) {
             daoFactory.rollbackTransaction();
-            throw VetecyvException.create(exception,
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_ACCOUNT_STATUS.getTitle(),
-                    MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_ACCOUNT_STATUS.getContent() + " - " + exception.getMessage());
+            var userMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_ACCOUNT_STATUS.getContent();
+            var technicalMessage = MessagesEnum.TUTOR_FACADE_ERROR_UNEXPECTED_SEND_ACCOUNT_STATUS.getContent();
+            throw VetecyvException.create(exception, userMessage, technicalMessage);
         } finally {
             daoFactory.closeConnection();
         }

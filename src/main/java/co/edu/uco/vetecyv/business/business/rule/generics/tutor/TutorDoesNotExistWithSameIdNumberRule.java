@@ -1,4 +1,4 @@
-package co.edu.uco.vetecyv.business.business.rule.tutor;
+package co.edu.uco.vetecyv.business.business.rule.generics.tutor;
 
 import co.edu.uco.vetecyv.business.business.rule.Rule;
 import co.edu.uco.vetecyv.crosscuting.exception.VetecyvException;
@@ -10,9 +10,9 @@ import co.edu.uco.vetecyv.entity.TutorEntity;
 
 import java.util.List;
 
-public class TutorDoesNotExistWithSameIdNumberRule implements Rule {
+public final class TutorDoesNotExistWithSameIdNumberRule implements Rule {
 
-    private static final TutorDoesNotExistWithSameIdNumberRule INSTANCE = new TutorDoesNotExistWithSameIdNumberRule();
+    private static final Rule INSTANCE = new TutorDoesNotExistWithSameIdNumberRule();
 
     private TutorDoesNotExistWithSameIdNumberRule() {
     }

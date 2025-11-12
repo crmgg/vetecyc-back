@@ -1,4 +1,4 @@
-package co.edu.uco.vetecyv.business.business.rule.validator;
+package co.edu.uco.vetecyv.business.business.validator;
 
 public interface Validator {
 

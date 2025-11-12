@@ -23,7 +23,7 @@ public final class TutorDTOAssembler implements DTOAssembler<TutorDTO, TutorDoma
     @Override
     public TutorDTO toDTO(final TutorDomain domain) {
         var domainTmp = ObjectHelper.getDefault(domain, new TutorDomain(UUIDHelper.getUUIDHelper().getDefault()));
-        return new TutorDTO(
+        var dto = new TutorDTO(
                 domainTmp.getIdentityDocument(),
                 domainTmp.getName(),
                 domainTmp.getFirstLastName(),
@@ -35,6 +35,8 @@ public final class TutorDTOAssembler implements DTOAssembler<TutorDTO, TutorDoma
                 domainTmp.isPhoneConfirmation(),
                 domainTmp.isAccountState()
         );
+        dto.setId(domainTmp.getId());
+        return dto;
     }
 
     @Override
