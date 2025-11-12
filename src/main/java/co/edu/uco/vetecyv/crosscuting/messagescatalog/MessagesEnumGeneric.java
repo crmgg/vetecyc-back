@@ -11,7 +11,7 @@ public enum MessagesEnumGeneric {
     // Mensajes requeridos por StringLengthValueIsValidRule
     TECHNICAL_ERROR_STRING_LENGTH_VALUE("Error técnico","Error técnico validando longitud de cadena."),
     TECHNICAL_ERROR_WRONG_STRING_LENGTH_VALUE("Error técnico","La cantidad de datos esperada para validación de longitud es inválida o se proporcionaron parámetros incorrectos."),
-    USER_ERROR_WRONG_LENGTH("Longitud inválida","El valor de %s debe tener entre %s y %s caracteres."),
+    USER_ERROR_WRONG_LENGTH("Longitud inválida","El valor debe tener entre 8 y 100 caracteres."),
     TECHNICAL_ERROR_WRONG_LENGTH("Error técnico","El valor no cumple con la longitud esperada caracteres."),
 
     STRING_FORMAT_VALUES_IS_VALID_RULE_DATA_IS_NULL("Datos inválidos","Los datos de entrada para validación de formato son nulos o inválidos."),

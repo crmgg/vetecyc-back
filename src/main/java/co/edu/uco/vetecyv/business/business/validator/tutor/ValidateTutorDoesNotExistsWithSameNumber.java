@@ -1,6 +1,6 @@
 package co.edu.uco.vetecyv.business.business.validator.tutor;
 
-import co.edu.uco.vetecyv.business.business.rule.generics.tutor.TutorPhoneNumberDoesNotExistRule;
+import co.edu.uco.vetecyv.business.business.rule.tutor.TutorPhoneNumberDoesNotExistRule;
 import co.edu.uco.vetecyv.business.business.validator.Validator;
 
 public class ValidateTutorDoesNotExistsWithSameNumber implements Validator {

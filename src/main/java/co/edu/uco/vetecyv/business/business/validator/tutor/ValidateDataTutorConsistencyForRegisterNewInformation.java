@@ -54,7 +54,6 @@ public final class ValidateDataTutorConsistencyForRegisterNewInformation impleme
         StringValueIsPresentRule.executeRule(data.getFirstLastName(), MessagesEnumGeneric.GENERIC_FIRST_SURNAME_LABEL.getContent(), true);
         StringValueIsPresentRule.executeRule(data.getEmail(), MessagesEnumGeneric.GENERIC_EMAIL_LABEL.getContent(), true);
         StringValueIsPresentRule.executeRule(data.getPhoneNumber(), MessagesEnumGeneric.GENERIC_MOBILE_LABEL.getContent(), true);
-        // Contraseña no tiene etiqueta genérica en el catálogo, usar literal
         StringValueIsPresentRule.executeRule(data.getPassword(), "contraseña", true);
 
     }
@@ -66,7 +65,7 @@ public final class ValidateDataTutorConsistencyForRegisterNewInformation impleme
         StringLengthValueIsValidRule.executeRule(data.getFirstLastName(), MessagesEnumGeneric.GENERIC_FIRST_SURNAME_LABEL.getContent(), 1, 50, true);
         StringLengthValueIsValidRule.executeRule(data.getEmail(), MessagesEnumGeneric.GENERIC_EMAIL_LABEL.getContent(), 1, 100, true);
         StringLengthValueIsValidRule.executeRule(data.getPhoneNumber(), MessagesEnumGeneric.GENERIC_MOBILE_LABEL.getContent(), 1, 10, true);
-        StringLengthValueIsValidRule.executeRule(data.getPassword(), "contraseña", 6, 100, true);
+        StringLengthValueIsValidRule.executeRule(data.getPassword(), "contraseña", 8, 100, true);
 
         if (!TextHelper.isEmptyWithTrim(data.getSecondLastName())) {
             StringLengthValueIsValidRule.executeRule(data.getSecondLastName(), MessagesEnumGeneric.GENERIC_SECOND_SURNAME_LABEL.getContent(), 1, 100, true);

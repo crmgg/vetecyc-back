@@ -1,4 +1,4 @@
-package co.edu.uco.vetecyv.business.business.rule.generics.tutor;
+package co.edu.uco.vetecyv.business.business.rule.tutor;
 
 import java.util.UUID;
 
